@@ -1,0 +1,16 @@
+{
+    "name": "virtuos/studip-plugin-x5",
+    "description": "An X5 Stud.IP plugin.",
+    "type": "project",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Nils Oesting",
+            "email": "noesting@uos.de"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^5.5 || ^7.0"
+    }
+}
