@@ -5,6 +5,7 @@
  */
 class X5Plugin extends StudIPPlugin implements
     /* Plugin Interfaces */
+    SystemPlugin,
     StandardPlugin
 {
     public function __construct()
@@ -21,14 +22,13 @@ class X5Plugin extends StudIPPlugin implements
      * This method dispatches all actions.
      *
      * @param string   part of the dispatch path that was not consumed
-     *
-     * @return void
      */
-    public function perform($unconsumedPath) {
+    public function perform($unconsumedPath)
+    {
         $args = explode('/', $unconsumedPath);
 
         $trailsRoot = $this->getPluginPath();
-        $trailsUri  = rtrim(PluginEngine::getLink($this, [], null, true), '/');
+        $trailsUri = rtrim(PluginEngine::getLink($this, [], null, true), '/');
 
         $dispatcher = new Trails_Dispatcher($trailsRoot, $trailsUri, 'oer');
         $dispatcher->plugin = $this;
@@ -56,9 +56,11 @@ class X5Plugin extends StudIPPlugin implements
      *  admin_url    admin link for this plugin (if any)
      *  admin_title  title for admin link (default: Administration)
      *
-     * @return object   template object to render or NULL
+     * @return object template object to render or NULL
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    function getInfoTemplate($course_id)
+    public function getInfoTemplate($courseId)
     {
         return null;
     }
@@ -73,13 +75,15 @@ class X5Plugin extends StudIPPlugin implements
      * By convention, new or changed plugin content is indicated
      * by a different icon and a corresponding tooltip.
      *
-     * @param  string   $course_id   course or institute range id
-     * @param  int      $last_visit  time of user's last visit
-     * @param  string   $user_id     the user to get the navigation for
+     * @param string $courseId  course or institute range id
+     * @param int    $lastVisit time of user's last visit
+     * @param string $userId    the user to get the navigation for
      *
-     * @return object   navigation item to render or NULL
+     * @return object navigation item to render or NULL
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    function getIconNavigation($course_id, $last_visit, $user_id)
+    public function getIconNavigation($courseId, $lastVisit, $userId)
     {
         return null;
     }
@@ -94,39 +98,58 @@ class X5Plugin extends StudIPPlugin implements
      * By convention, new or changed plugin content is indicated
      * by a different icon and a corresponding tooltip.
      *
-     * @param  string   $course_id   course or institute range id
+     * @param string $courseId course or institute range id
      *
-     * @return array    navigation item to render or NULL
+     * @return array navigation item to render or NULL
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    function getTabNavigation($course_id)
+    public function getTabNavigation($courseId)
     {
-        return [ 'oer' => new Navigation('Zusatzmaterialien',
-            PluginEngine::getURL($this, [], '')
-        )];
+        $navigation = new Navigation(
+            dgettext('x5', 'Zusatzmaterialien'),
+            $url = PluginEngine::getURL($this, [], 'oer')
+        );
+        $navigation->addSubNavigation(
+            'index',
+            new Navigation(dgettext('x5', 'Übersicht'), $url)
+        );
+        return [
+            'oer' => $navigation
+        ];
     }
-
 
     /**
      * Provides metadata like a descriptional text for this module that
      * is shown on the course "+" page to inform users about what the
      * module acutally does. Additionally, a URL can be specified.
      *
-     * @return array    metadata containg description and/or url
+     * @return array metadata containg description and/or url
      */
-    function getMetadata()
+    public function getMetadata()
     {
         return [];
     }
 
     private function setupNavigation()
     {
-        if (\Navigation::hasItem('/browse')) {
-            $navigation = new Navigation(
-                'Zusatzmaterialien',
-                PluginEngine::getURL($this, [], '')
-            );
+        if ($this->currentUserIsDozent()) {
+            if (\Navigation::hasItem('/browse')) {
+                $navigation = new Navigation(
+                    'Zusatzmaterialien',
+                    PluginEngine::getURL($this, [], 'browse')
+                );
 
-            Navigation::addItem('/browse/oer', $navigation);
+                Navigation::addItem('/browse/oer', $navigation);
+            }
         }
+    }
+
+    /**
+     * @SuppressWarnings(PHPMD.Superglobals)
+     */
+    private function currentUserIsDozent()
+    {
+        return $GLOBALS['perm']->have_perm('dozent');
     }
 }
