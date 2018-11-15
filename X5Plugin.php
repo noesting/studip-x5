@@ -16,6 +16,8 @@ class X5Plugin extends StudIPPlugin implements
         bindtextdomain('x5', dirname(__FILE__).'/locale');
 
         $this->setupNavigation();
+
+        PageLayout::addStylesheet($this->getpluginUrl() . '/stylesheets/X5Plugin.css');
     }
 
     /**
