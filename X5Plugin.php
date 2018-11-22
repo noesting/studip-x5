@@ -114,8 +114,12 @@ class X5Plugin extends StudIPPlugin implements
         );
         $navigation->addSubNavigation(
             'index',
-            new Navigation(dgettext('x5', 'Übersicht'), $url)
+            new Navigation(dgettext('x5', 'Dozentenansicht'), $url)
         );
+        // $navigation->addSubNavigation(
+        //     'student_view',
+        //     new Navigation(dgettext('x5', 'Studentenansicht'), $url)
+        // );
         return [
             'oer' => $navigation
         ];
@@ -139,10 +143,18 @@ class X5Plugin extends StudIPPlugin implements
             if (\Navigation::hasItem('/browse')) {
                 $navigation = new Navigation(
                     'Zusatzmaterialien',
-                    PluginEngine::getURL($this, [], 'browse')
+                    $url = PluginEngine::getURL($this, [], 'browse')
                 );
 
                 Navigation::addItem('/browse/oer', $navigation);
+                $navigation->addSubNavigation(
+                    'index',
+                    new Navigation(dgettext('x5', 'Übersicht'), $url)
+                );
+                $navigation->addSubNavigation(
+                    'marcus',
+                    new Navigation(dgettext('x5', 'Marcus'), PluginEngine::getURL($this, [], 'browse/foo/'.'17'))
+                );
             }
         }
     }
