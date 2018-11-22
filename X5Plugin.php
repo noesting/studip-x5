@@ -4,16 +4,16 @@
  * X5 Stud.IP plugin.
  */
 class X5Plugin extends StudIPPlugin implements
-    /* Plugin Interfaces */
-    SystemPlugin,
-    StandardPlugin
+/* Plugin Interfaces */
+SystemPlugin,
+StandardPlugin
 {
     public function __construct()
     {
         parent::__construct();
 
         require_once 'vendor/autoload.php';
-        bindtextdomain('x5', dirname(__FILE__).'/locale');
+        bindtextdomain('x5', dirname(__FILE__) . '/locale');
 
         $this->setupNavigation();
 
@@ -108,21 +108,20 @@ class X5Plugin extends StudIPPlugin implements
      */
     public function getTabNavigation($courseId)
     {
-        $navigation = new Navigation(
-            dgettext('x5', 'Zusatzmaterialien'),
-            $url = PluginEngine::getURL($this, [], 'oer')
-        );
-        $navigation->addSubNavigation(
-            'index',
-            new Navigation(dgettext('x5', 'Dozentenansicht'), $url)
-        );
-        // $navigation->addSubNavigation(
-        //     'student_view',
-        //     new Navigation(dgettext('x5', 'Studentenansicht'), $url)
+        // $navigation = new Navigation(
+        //     dgettext('x5', 'Zusatzmaterialien'),
+        //     $url = PluginEngine::getURL($this, [], 'oer')
         // );
-        return [
-            'oer' => $navigation
-        ];
+        // $navigation->addSubNavigation('index', new Navigation(dgettext('x5', 'Dozentesnansicht'), $url));
+        // $navigation->addSubNavigation('student_view', new Navigation(dgettext('x5', 'Studentenansicht'), $url));
+        // return [
+        //     'oer' => $navigation,
+        // ];
+        $navigation = new Navigation('X5GON Material', $url = PluginEngine::getURL($this, [], 'oer'));
+        $navigation->addSubNavigation('dozent_view', new Navigation('Dozent/in', $url));
+        $navigation->addSubNavigation('student_view', new Navigation('Student/in', PluginEngine::getURL($this, [], 'oer/foo')));
+
+        return array('oer' => $navigation);
     }
 
     /**
@@ -153,7 +152,7 @@ class X5Plugin extends StudIPPlugin implements
                 );
                 $navigation->addSubNavigation(
                     'marcus',
-                    new Navigation(dgettext('x5', 'Marcus'), PluginEngine::getURL($this, [], 'browse/foo/'.'17'))
+                    new Navigation(dgettext('x5', 'Marcus'), PluginEngine::getURL($this, [], 'browse/foo/' . '17'))
                 );
             }
         }
