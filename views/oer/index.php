@@ -72,6 +72,40 @@ if (isset($flash['message'])) {
                 <h3><?=new Icon('arr_1right')?></h3>
             </div>
         </div>
+
+        <div class="x5_list_item">
+            <div class="x5_list_item_thumbnail">
+            </div>
+
+            <div class="x5_list_item_title">
+                Anwendungsmöglichkeiten von WLAN Fingerprinting basierter indoor-Lokalisierung in Lernmanagementsystemen am Beispiel von Stud.IP
+            </div>
+
+            <div class="x5_list_item_subtitle">
+                2016: Oesting, N.
+            </div>
+
+            <div class="x5_list_item_action">
+                <h3><?=new Icon('arr_1right')?></h3>
+            </div>
+        </div>
+
+        <div class="x5_list_item">
+            <div class="x5_list_item_thumbnail">
+            </div>
+
+            <div class="x5_list_item_title">
+                Seismische Vibrationsmessung für Rasterkraftelektronenmikroskopie
+            </div>
+
+            <div class="x5_list_item_subtitle">
+                2018: Leißner, J.-F.
+            </div>
+
+            <div class="x5_list_item_action">
+                <h3><?=new Icon('arr_1right')?></h3>
+            </div>
+        </div>
     </div>
 
     <div class="x5_custom_list">
