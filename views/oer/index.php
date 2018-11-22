@@ -69,7 +69,7 @@ if (isset($flash['message'])) {
             </div>
 
             <div class="x5_list_item_action">
-                <h3><?=new Icon('action')?></h3>
+                <h3><?=new Icon('arr_1right')?></h3>
             </div>
         </div>
     </div>
