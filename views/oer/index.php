@@ -11,17 +11,17 @@ if (isset($flash['message'])) {
 <div class="x5_dozent_view_container">
     <!-- <div class="box a">A</div>
     <div class="box b">B</div> -->
-    <div class="c x5_search_area">
-        <div class="x5_headline">
+    <div class="c x5_list_header">
+        <div class="x5_headline x5_list_header_section">
             Vorschläge
         </div>
 
-        <div class="x5_searchbar">
+        <div class="x5_searchbar x5_list_header_section">
             <input type="text" placeholder="Suche in X5" name="x5-search">
             <?=new Icon('search')?>
         </div>
 
-        <div class="x5_button_line">
+        <div class="x5_button_line x5_list_header_section">
             <div class="x5_button_container">
                 <?=\Studip\Button::create('Filter', 'filterButton', array('data-dialog-button' => '1', 'data-hallo' => 'welt'));?>
             </div>
@@ -32,28 +32,46 @@ if (isset($flash['message'])) {
         </div>
     </div>
 
-    <div class="d x5_list_managing_area">
-        <div class="x5_headline">
+    <div class="d x5_list_header">
+        <div class="x5_headline x5_list_header_section">
             Meine Listen
         </div>
 
-        <div class="x5_button_line">
+        <div class="x5_button_line x5_list_header_section">
             <div class="x5_button_container">
                 <?=\Studip\Button::create('Liste auswählen', 'filterButton', array('data-dialog-button' => '1', 'data-hallo' => 'welt'));?>
             </div>
 
-            <div class="x5_button_container">
+            <div class="x5_button_container x5_list_header_section">
                 <?=\Studip\Button::create('Neue Liste', 'sortButton', array('data-dialog-button' => '1', 'data-hallo' => 'welt'));?>
             </div>
         </div>
 
         <div class="x5_current_list">
-            Liste
-            <?=new Icon('action')?>
+            *Atomphysik*
+            <div class="x5_item_action">
+                <?=new Icon('action')?>
+            </div>
         </div>
     </div>
 
     <div class="x5_material_list">
+        <div class="x5_list_item">
+            <div class="x5_list_item_thumbnail">
+            </div>
+
+            <div class="x5_list_item_title">
+                Möbelindustrie 2030: Super krasse Möbel möblieren das ohnehin fantastische Mobiliar
+            </div>
+
+            <div class="x5_list_item_subtitle">
+                2016: Feyen F.
+            </div>
+
+            <div class="x5_list_item_action">
+                <h3><?=new Icon('action')?></h3>
+            </div>
+        </div>
     </div>
 
     <div class="x5_custom_list">
