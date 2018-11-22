@@ -8,243 +8,69 @@ if (isset($flash['message'])) {
 }
 ?>
 
-<div>
-    <?= \Studip\Button::create('Vorschläge', 'klickMichButton', array('data-dialog-button' => '1', 'data-hallo' => 'welt')); ?>
-    <?= \Studip\Button::create('Suche', 'klickMichButton', array('data-dialog-button' => '1', 'data-hallo' => 'welt')); ?>
-    <?= \Studip\Button::create('Meine Listen', 'klickMichButton', array('data-dialog-button' => '1', 'data-hallo' => 'welt')); ?>
-</div>
-
-<br>
-
-<h1>Meine Listen</h1>
-
-
-<div class="x5-default-list">
-    <h3>Meine Materialien</h3>
-
-    <div class="x5-default-list-item">
-        <div class="x5-item-thumbnail">
+<div class="x5_dozent_view_container">
+    <!-- <div class="box a">A</div>
+    <div class="box b">B</div> -->
+    <div class="c x5_search_area">
+        <div class="x5_headline">
+            Vorschläge
         </div>
 
-        <div class="x5-item-inner">
-            Möbelindustrue 2030: Super krasse Möbel möblieren das ohnehin fantastische Mobiliar
+        <div class="x5_searchbar">
+            <input type="text" placeholder="Suche in X5" name="x5-search">
+            <?=new Icon('search')?>
         </div>
 
-        <div class="x5-item-action">
-            <h3><?= new Icon('action') ?></h3>
+        <div class="x5_button_line">
+            <div class="x5_button_container">
+                <?=\Studip\Button::create('Filter', 'filterButton', array('data-dialog-button' => '1', 'data-hallo' => 'welt'));?>
+            </div>
+
+            <div class="x5_button_container">
+                <?=\Studip\Button::create('Sortierung', 'sortButton', array('data-dialog-button' => '1', 'data-hallo' => 'welt'));?>
+            </div>
         </div>
     </div>
 
-    <div class="x5-default-list-item">
-        <div class="x5-item-thumbnail">
+    <div class="d x5_list_managing_area">
+        <div class="x5_headline">
+            Meine Listen
         </div>
 
-        <div class="x5-item-inner">
-            Lange Titel: Studien zeigen, dass ein äußerst langer Titel weder besonders einprägsam, noch in irgendeiner Weise Praktisch ist
+        <div class="x5_button_line">
+            <div class="x5_button_container">
+                <?=\Studip\Button::create('Liste auswählen', 'filterButton', array('data-dialog-button' => '1', 'data-hallo' => 'welt'));?>
+            </div>
+
+            <div class="x5_button_container">
+                <?=\Studip\Button::create('Neue Liste', 'sortButton', array('data-dialog-button' => '1', 'data-hallo' => 'welt'));?>
+            </div>
         </div>
 
-        <div class="x5-item-action">
-            <h3><?= new Icon('action') ?></h3>
+        <div class="x5_current_list">
+            Liste
+            <?=new Icon('action')?>
         </div>
     </div>
 
-    <div class="x5-default-list-item">
-        <div class="x5-item-thumbnail">
-        </div>
-
-        <div class="x5-item-inner">
-        Es geht auch kurz
-        </div>
-
-        <div class="x5-item-action">
-            <h3><?= new Icon('action') ?></h3>
-        </div>
+    <div class="x5_material_list">
     </div>
 
-    <div class="x5-default-list-item">
-        <div class="x5-item-thumbnail">
-        </div>
-
-        <div class="x5-item-inner">
-            Möbelindustrue 2030: Super krasse Möbel möblieren das ohnehin fantastische Mobiliar
-        </div>
-
-        <div class="x5-item-action">
-            <h3><?= new Icon('action') ?></h3>
-        </div>
-    </div>
-
-    <div class="x5-default-list-item">
-        <div class="x5-item-thumbnail">
-        </div>
-
-        <div class="x5-item-inner">
-            Möbelindustrue 2030: Super krasse Möbel möblieren das ohnehin fantastische Mobiliar
-        </div>
-
-        <div class="x5-item-action">
-            <h3><?= new Icon('action') ?></h3>
-        </div>
-    </div>
-
-    <div class="x5-default-list-item">
-        <div class="x5-item-thumbnail">
-        </div>
-
-        <div class="x5-item-inner">
-            Möbelindustrue 2030: Super krasse Möbel möblieren das ohnehin fantastische Mobiliar
-        </div>
-
-        <div class="x5-item-action">
-            <h3><?= new Icon('action') ?></h3>
-        </div>
+    <div class="x5_custom_list">
     </div>
 </div>
 
-
-<div class="x5-custom-list">
-    <h3>Titelsammlungen</h3>
-
-    <div class="x5-list-item">
-        <div class="x5-item-thumbnail">
-        </div>
-
-        <div class="x5-item-inner">
-            Möbelindustrue 2030: Super krasse Möbel möblieren das ohnehin fantastische Mobiliar
-        </div>
-
-        <div class="x5-item-action">
-            <h3><?= new Icon('action') ?></h3>
-        </div>
-    </div>
-
-    <div class="x5-list-item">
-        <div class="x5-item-thumbnail">
-        </div>
-
-        <div class="x5-item-inner">
-            Lange Titel: Studien zeigen, dass ein äußerst langer Titel weder besonders einprägsam, noch in irgendeiner Weise Praktisch ist
-        </div>
-
-        <div class="x5-item-action">
-            <h3><?= new Icon('action') ?></h3>
-        </div>
-    </div>
-
-    <div class="x5-list-item">
-        <div class="x5-item-thumbnail">
-        </div>
-
-        <div class="x5-item-inner">
-            Es geht auch kurz
-        </div>
-
-        <div class="x5-item-action">
-            <h3><?= new Icon('action') ?></h3>
-        </div>
-    </div>
-</div>
-
-<div class="x5-custom-list">
-    <h3>Kleine Sammlung</h3>
-
-    <div class="x5-list-item">
-        <div class="x5-item-thumbnail">
-        </div>
-
-        <div class="x5-item-inner">
-            Möbelindustrue 2030: Super krasse Möbel möblieren das ohnehin fantastische Mobiliar
-        </div>
-
-        <div class="x5-item-action">
-            <h3><?= new Icon('action') ?></h3>
-        </div>
-    </div>
-</div>
-
-<div class="x5-custom-list">
-    <h3>Andere Reihenfolge</h3>
-
-    <div class="x5-list-item">
-        <div class="x5-item-thumbnail">
-        </div>
-
-        <div class="x5-item-inner">
-            Es geht auch kurz
-        </div>
-
-        <div class="x5-item-action">
-            <h3><?= new Icon('action') ?></h3>
-        </div>
-    </div>
-
-    <div class="x5-list-item">
-        <div class="x5-item-thumbnail">
-        </div>
-
-        <div class="x5-item-inner">
-            Möbelindustrue 2030: Super krasse Möbel möblieren das ohnehin fantastische Mobiliar
-        </div>
-
-        <div class="x5-item-action">
-            <h3><?= new Icon('action') ?></h3>
-        </div>
-    </div>
-
-    <div class="x5-list-item">
-        <div class="x5-item-thumbnail">
-        </div>
-
-        <div class="x5-item-inner">
-            Lange Titel: Studien zeigen, dass ein äußerst langer Titel weder besonders einprägsam, noch in irgendeiner Weise Praktisch ist
-        </div>
-
-        <div class="x5-item-action">
-            <h3><?= new Icon('action') ?></h3>
-        </div>
-    </div>
-</div>
-
-<div class="x5-custom-list">
-    <h3>Nur lange Titel</h3>
-
-    <div class="x5-list-item">
-        <div class="x5-item-thumbnail">
-        </div>
-
-        <div class="x5-item-inner">
-            Lange Titel: Studien zeigen, dass ein äußerst langer Titel weder besonders einprägsam, noch in irgendeiner Weise Praktisch ist
-        </div>
-
-        <div class="x5-item-action">
-            <h3><?= new Icon('action') ?></h3>
-        </div>
-    </div>
-
-    <div class="x5-list-item">
-        <div class="x5-item-thumbnail">
-        </div>
-
-        <div class="x5-item-inner">
-            Möbelindustrue 2030: Super krasse Möbel möblieren das ohnehin fantastische Mobiliar
-        </div>
-
-        <div class="x5-item-action">
-            <h3><?= new Icon('action') ?></h3>
-        </div>
-    </div>
-</div>
 
 <!-- <hr> -->
 
-<!-- <?= \Studip\LinkButton::create(
+<!-- <?=\Studip\LinkButton::create(
     dgettext('x5', 'Foo starten'),
     $controller->url_for('oer/foo', 17)
-) ?> -->
+)?> -->
 
 <!-- <hr>
 
-<form class="default" method="post" action="<?= $controller->url_for('oer/bar') ?>">
+<form class="default" method="post" action="<?=$controller->url_for('oer/bar')?>">
     <fieldset>
         <legend>Somewhat</legend>
 
@@ -260,10 +86,10 @@ if (isset($flash['message'])) {
     </fieldset>
 
     <footer>
-        <?= \Studip\Button::createAccept(dgettext('x5', 'Formular abschicken'))?>
-        <?= \Studip\LinkButton::createCancel(
-            dgettext('x5', 'Abbrechen'),
-            $controller->url_for('oer/index')
-        )?>
+        <?=\Studip\Button::createAccept(dgettext('x5', 'Formular abschicken'))?>
+        <?=\Studip\LinkButton::createCancel(
+    dgettext('x5', 'Abbrechen'),
+    $controller->url_for('oer/index')
+)?>
     </footer>
 </form> -->

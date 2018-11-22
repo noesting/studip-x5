@@ -1,8 +1,170 @@
-<div style="width:35em;margin-left:auto;margin-right:auto;">
-    <p>Gegrüßt seid ihr, meine getreuen Untertanten,</p>
+<div class="x5-list x5-recommandations-list">
+    <div class="x5-list-title-bar">
+        Material
+    </div>
 
-    <p>Ich vermochte ein Gespräch über den Titel des "Großmeisters" wahrzunehmen, und die Streitigkeit den Titel einzunehmen. So sage ich, dies ist eine Schlacht der Belanglosigkeit, und soll uns nur vor dem Wahren Problem blinden. Viel zu lange haben wir im sub-100k Bereich uns von dem bösen lenken lassen.</p>
-    <p>Für euch nehme ich mich diesem Problem an, so möchte ich meine Ambition verkünden, und euch dazu fordern dies mit Schweiß, Kraft und Herzblut zu unterstützten, und mich den Thron des Guru's besteigen zu lassen. Beugt euch vor mir und lebt im Frieden, Freude und F-ermögen (#Alleteration-gerettet). Lasst uns zusammen dieses Blubber verändern, zu einem starken Blubber, einem gemeintschaftlichem Blubber, unserem Blubber, in dem jeder Spam verurteilt wird, und wir uns nicht von Professoren oder IT-Beauftragten herum schubsen lassen müssen. So erhebt euch ihr Massen der Unterdrückten, der Armen, der Ungehörten, erhebet euch und versammelt euch unter meinem Banner, dass das Böse hier und heute sein Ende finden wird.</p>
+    <div class="x5-searchbar">
+        <input type="text" placeholder="Suche in X5" name="x5-search">
+        <?= new Icon('search') ?>
+    </div>
 
-    <p style="text-align:right">#vote-me-for-Guru</p>
+    <div class="x5-list-item x5-recommandations-list-item">
+        <div class="x5-item-thumbnail">
+        </div>
+
+        <div class="x5-item-inner">
+            Möbelindustrie 2030: Super krasse Möbel möblieren das ohnehin fantastische Mobiliar
+        </div>
+
+        <div class="x5-item-action">
+            <h3><?= new Icon('action') ?></h3>
+        </div>
+    </div>
+
+    <div class="x5-list-item x5-recommandations-list-item">
+        <div class="x5-item-thumbnail">
+        </div>
+
+        <div class="x5-item-inner">
+            Lange Titel: Studien zeigen, dass ein äußerst langer Titel weder besonders einprägsam, noch in irgendeiner Weise Praktisch ist
+        </div>
+
+        <div class="x5-item-action">
+            <h3><?= new Icon('action') ?></h3>
+        </div>
+    </div>
+
+    <div class="x5-list-item x5-recommandations-list-item">
+        <div class="x5-item-thumbnail">
+        </div>
+
+        <div class="x5-item-inner">
+        Es geht auch kurz
+        </div>
+
+        <div class="x5-item-action">
+            <h3><?= new Icon('action') ?></h3>
+        </div>
+    </div>
+
+    <div class="x5-list-item x5-recommandations-list-item">
+        <div class="x5-item-thumbnail">
+        </div>
+
+        <div class="x5-item-inner">
+            Möbelindustrie 2030: Super krasse Möbel möblieren das ohnehin fantastische Mobiliar
+        </div>
+
+        <div class="x5-item-action">
+            <h3><?= new Icon('action') ?></h3>
+        </div>
+    </div>
+
+    <div class="x5-list-item x5-recommandations-list-item">
+        <div class="x5-item-thumbnail">
+        </div>
+
+        <div class="x5-item-inner">
+            Möbelindustrie 2030: Super krasse Möbel möblieren das ohnehin fantastische Mobiliar
+        </div>
+
+        <div class="x5-item-action">
+            <h3><?= new Icon('action') ?></h3>
+        </div>
+    </div>
+
+    <div class="x5-list-item x5-recommandations-list-item">
+        <div class="x5-item-thumbnail">
+        </div>
+
+        <div class="x5-item-inner">
+            Möbelindustrie 2030: Super krasse Möbel möblieren das ohnehin fantastische Mobiliar
+        </div>
+
+        <div class="x5-item-action">
+            <h3><?= new Icon('action') ?></h3>
+        </div>
+    </div>
+</div>
+
+
+<div class="x5-list x5-custom-list">
+    <div class="x5-list-title-bar">
+        Liste 1
+    </div>
+
+    <div class="x5-list-item x5-custom-list-item">
+        <div class="x5-item-thumbnail">
+        </div>
+
+        <div class="x5-item-inner">
+            Möbelindustrie 2030: Super krasse Möbel möblieren das ohnehin fantastische Mobiliar
+        </div>
+
+        <div class="x5-item-action">
+            <h3><?= new Icon('action') ?></h3>
+        </div>
+    </div>
+
+    <div class="x5-list-item x5-custom-list-item">
+        <div class="x5-item-thumbnail">
+        </div>
+
+        <div class="x5-item-inner">
+            Lange Titel: Studien zeigen, dass ein äußerst langer Titel weder besonders einprägsam, noch in irgendeiner Weise Praktisch ist
+        </div>
+
+        <div class="x5-item-action">
+            <h3><?= new Icon('action') ?></h3>
+        </div>
+    </div>
+
+    <div class="x5-list-item x5-custom-list-item">
+        <div class="x5-item-thumbnail">
+        </div>
+
+        <div class="x5-item-inner">
+            Es geht auch kurz
+        </div>
+
+        <div class="x5-item-action">
+            <h3><?= new Icon('action') ?></h3>
+        </div>
+    </div>
+</div>
+
+<div class="x5-list x5-lists-list">
+    <div class="x5-list-title-bar">
+        Meine Listen
+    </div>
+
+    <div class="x5-list-item x5-custom-list-item">
+        <div class="x5-item-inner">
+            Liste 1
+        </div>
+
+        <div class="x5-item-action">
+            <h3><?= new Icon('action') ?></h3>
+        </div>
+    </div>
+
+    <div class="x5-list-item x5-custom-list-item">
+        <div class="x5-item-inner">
+            Liste 2
+        </div>
+
+        <div class="x5-item-action">
+            <h3><?= new Icon('action') ?></h3>
+        </div>
+    </div>
+
+    <div class="x5-list-item x5-custom-list-item">
+        <div class="x5-item-inner">
+            Liste 3
+        </div>
+
+        <div class="x5-item-action">
+            <h3><?= new Icon('action') ?></h3>
+        </div>
+    </div>
 </div>
