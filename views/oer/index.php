@@ -23,11 +23,11 @@ if (isset($flash['message'])) {
 
         <div class="x5_button_line x5_list_header_section">
             <div class="x5_button_container">
-                <?=\Studip\Button::create('Filter', 'filterButton', array('data-dialog-button' => '1', 'data-hallo' => 'welt'));?>
+                <?=\Studip\Button::create('Filter', 'filterButton', array('onclick' => 'chooseFilterClick()'));?>
             </div>
 
             <div class="x5_button_container">
-                <?=\Studip\Button::create('Sortierung', 'sortButton', array('data-dialog-button' => '1', 'data-hallo' => 'welt'));?>
+                <?=\Studip\Button::create('Sortierung', 'sortButton', array('onclick' => 'chooseSortClick()'));?>
             </div>
         </div>
     </div>
@@ -39,76 +39,28 @@ if (isset($flash['message'])) {
 
         <div class="x5_button_line x5_list_header_section">
             <div class="x5_button_container">
-                <?=\Studip\Button::create('Liste auswählen', 'filterButton', array('data-dialog-button' => '1', 'data-hallo' => 'welt'));?>
+                <?=\Studip\Button::create('Liste auswählen', 'filterButton', array('onclick' => 'chooseListClick()'));?>
             </div>
 
             <div class="x5_button_container x5_list_header_section">
-                <?=\Studip\Button::create('Neue Liste', 'sortButton', array('data-dialog-button' => '1', 'data-hallo' => 'welt'));?>
+                <?=\Studip\Button::create('Neue Liste', 'sortButton', array('onclick' => 'addListClick()'));?>
             </div>
         </div>
 
         <div class="x5_current_list">
-            *Atomphysik*
-            <div class="x5_item_action">
+            <div class="x5_current_list_text">
+                *Atomphysik*
+            </div>
+            <div class="x5_item_action" onclick="showListOptionsClick()">
                 <?=new Icon('action')?>
             </div>
         </div>
     </div>
 
-    <div class="x5_material_list">
-        <div class="x5_list_item">
-            <div class="x5_list_item_thumbnail">
-            </div>
-
-            <div class="x5_list_item_title">
-                Möbelindustrie 2030: Super krasse Möbel möblieren das ohnehin fantastische Mobiliar
-            </div>
-
-            <div class="x5_list_item_subtitle">
-                2016: Feyen F.
-            </div>
-
-            <div class="x5_list_item_action">
-                <h3><?=new Icon('arr_1right')?></h3>
-            </div>
-        </div>
-
-        <div class="x5_list_item">
-            <div class="x5_list_item_thumbnail">
-            </div>
-
-            <div class="x5_list_item_title">
-                Anwendungsmöglichkeiten von WLAN Fingerprinting basierter indoor-Lokalisierung in Lernmanagementsystemen am Beispiel von Stud.IP
-            </div>
-
-            <div class="x5_list_item_subtitle">
-                2016: Oesting, N.
-            </div>
-
-            <div class="x5_list_item_action">
-                <h3><?=new Icon('arr_1right')?></h3>
-            </div>
-        </div>
-
-        <div class="x5_list_item">
-            <div class="x5_list_item_thumbnail">
-            </div>
-
-            <div class="x5_list_item_title">
-                Seismische Vibrationsmessung für Rasterkraftelektronenmikroskopie
-            </div>
-
-            <div class="x5_list_item_subtitle">
-                2018: Leißner, J.-F.
-            </div>
-
-            <div class="x5_list_item_action">
-                <h3><?=new Icon('arr_1right')?></h3>
-            </div>
-        </div>
+    <div class="x5_material_list" id="x5_material_list">
     </div>
 
-    <div class="x5_custom_list">
+    <div class="x5_custom_list" id="x5_custom_list">
     </div>
 </div>
 
