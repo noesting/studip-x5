@@ -23,7 +23,7 @@ if (isset($flash['message'])) {
 
         <div class="x5_button_line x5_list_header_section">
             <div class="x5_button_container">
-                <?=\Studip\Button::create('Filter', 'filterButton', array('onclick' => 'chooseFilterClick()'));?>
+                <?=\Studip\Button::create('Filter', 'filterButton');?>
             </div>
 
             <div class="x5_button_container">
