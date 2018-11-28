@@ -27,7 +27,7 @@ if (isset($flash['message'])) {
             </div>
 
             <div class="x5_button_container">
-                <?=\Studip\Button::create('Sortierung', 'sortButton', array('onclick' => 'chooseSortClick()'));?>
+                <?=\Studip\Button::create('Sortierung', 'sortButton');?>
             </div>
         </div>
     </div>
@@ -39,17 +39,14 @@ if (isset($flash['message'])) {
 
         <div class="x5_button_line x5_list_header_section">
             <div class="x5_button_container">
-                <!-- <?=\Studip\Button::create('Liste auswählen', 'filterButton', array('onclick' => 'chooseListClick()'));?> -->
-                <select id="choose_custom_list_select" onchange="chooseListClick()">
+                <!-- <?=\Studip\Button::create('Liste auswählen', 'chooseListButton');?> -->
+                <select id="choose_custom_list_select" name="choose_custom_list_select">
                     <option value="" disabled selected>Liste auswählen</option>
-                    <!-- <option value="Atomphysik">Atomphysik</option>
-                    <option value="Biochemie">Biochemie</option>
-                    <option value="Superleiter">Superleiter</option> -->
                 </select>
             </div>
 
             <div class="x5_button_container x5_list_header_section">
-                <?=\Studip\Button::create('Neue Liste', 'sortButton', array('onclick' => 'addListClick()'));?>
+                <?=\Studip\Button::create('Neue Liste', 'addListButton');?>
             </div>
         </div>
 
