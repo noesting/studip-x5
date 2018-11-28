@@ -22,15 +22,9 @@ export class X5RecommendationsListController extends X5ListController {
             return;
         }
 
-        console.log('1');
-
         const domList = document.getElementById('x5_custom_list');
-        console.log('2');
         const item = this.recommendations.list.filter(item => item.id === id)[0];
-        console.log(customListsController.currentCustomListIndex);
-        console.log(customListsController.customLists);
         customListsController.customLists[customListsController.currentCustomListIndex].list.push(item);
-        console.log('4');
         this.addListItemToDom(domList, item, LISTTYPES.CUSTOM);
     }
 
