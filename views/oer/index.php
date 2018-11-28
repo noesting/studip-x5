@@ -39,7 +39,13 @@ if (isset($flash['message'])) {
 
         <div class="x5_button_line x5_list_header_section">
             <div class="x5_button_container">
-                <?=\Studip\Button::create('Liste auswählen', 'filterButton', array('onclick' => 'chooseListClick()'));?>
+                <!-- <?=\Studip\Button::create('Liste auswählen', 'filterButton', array('onclick' => 'chooseListClick()'));?> -->
+                <select id="choose_custom_list_select" onchange="chooseListClick()">
+                    <option value="" disabled selected>Liste auswählen</option>
+                    <!-- <option value="Atomphysik">Atomphysik</option>
+                    <option value="Biochemie">Biochemie</option>
+                    <option value="Superleiter">Superleiter</option> -->
+                </select>
             </div>
 
             <div class="x5_button_container x5_list_header_section">
@@ -48,8 +54,8 @@ if (isset($flash['message'])) {
         </div>
 
         <div class="x5_current_list">
-            <div class="x5_current_list_text">
-                *Atomphysik*
+            <div class="x5_current_list_text" id="x5_current_list_text">
+                Keine Liste ausgewählt
             </div>
             <div class="x5_item_action" onclick="showListOptionsClick()">
                 <?=new Icon('action')?>

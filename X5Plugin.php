@@ -17,8 +17,7 @@ StandardPlugin
 
         $this->setupNavigation();
 
-        PageLayout::addStylesheet($this->getpluginUrl() . '/stylesheets/X5Plugin.css');
-        PageLayout::addScript($this->getPluginUrl() . '/javascripts/dozent_view_func.js');
+        PageLayout::addScript($this->getPluginUrl() . '/dist/main.js');
     }
 
     /**

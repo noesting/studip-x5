@@ -1,3 +1,4 @@
+import "./x5_plugin.scss";
 // import {
 //   X5OERRecommendationsList,
 //   X5OERCustomList,
@@ -43,6 +44,20 @@ const data = {
       thumbsUps: 1,
       thumbnail: "ein thumbnail"
     }
+  ],
+  customLists: [
+    {
+      title: "Atomphysik",
+      list: []
+    },
+    {
+      title: "Biochemie",
+      list: []
+    },
+    {
+      title: "Marcus Kurs für Kuriositäten",
+      list: []
+    }
   ]
 };
 
@@ -70,7 +85,8 @@ class X5OERRecommendationsList {
 }
 
 class X5OERCustomList {
-  constructor(list = []) {
+  constructor(title, list = []) {
+    this.title = title;
     this.list = list;
   }
 
@@ -86,15 +102,31 @@ class X5OERCustomList {
 // ------------------------------------------------------------------------------------------------ Controller
 
 let recommendationsList;
+let customLists;
 let customList;
+let currentCustomListIndex = -1;
 
 const bootstrap = () => {
   console.log("Hello Dozent View!");
   recommendationsList = new X5OERRecommendationsList();
+  customLists = [];
   setRecommendationsToList(data, recommendationsList);
-  customList = new X5OERCustomList();
+  setCustomListsFromData(data, customLists);
+  addCustomListsToDom();
 
   renderLists();
+};
+
+const addCustomListsToDom = () => {
+  const domSelect = document.getElementById("choose_custom_list_select");
+
+  customLists.forEach(list => {
+    const domOption = document.createElement("option");
+    domOption.setAttribute("value", list.title);
+    domOption.text = list.title;
+
+    domSelect.appendChild(domOption);
+  });
 };
 
 const chooseFilterClick = () => {
@@ -106,6 +138,16 @@ const chooseSortClick = () => {
 };
 
 const chooseListClick = () => {
+  const domSelect = document.getElementById("choose_custom_list_select");
+  const selectValue = domSelect.value;
+  let index = 0;
+  for (
+    index = 0;
+    index < customLists.length || customLists[i].title === selectValue;
+    index++
+  ) {}
+  document.getElementById("x5_current_list_text").innerText(domSelect.get);
+  currentCustomListIndex = 0;
   console.log("click", "chooseListClick");
 };
 
@@ -114,13 +156,23 @@ const addListClick = () => {
 };
 
 const copyItemToListClick = id => {
+  if (currentCustomListIndex < 0) {
+    console.log("Please choose a list");
+    return;
+  }
+
   const domList = document.getElementById("x5_custom_list");
   const item = recommendationsList.list.filter(item => item.id === id)[0];
-  addToDom(domList, item, "custom");
+  customLists[currentCustomListIndex].list.push(item);
+  console.log("currentCustomList", customLists[currentCustomListIndex]);
+  addListItemToDom(domList, item, "custom");
 };
 
 const removeItemFromListClick = id => {
   console.log("removing", id);
+  customLists[currentCustomListIndex].removeFromList(id);
+  console.log("currentCustomList", customLists[currentCustomListIndex]);
+
   const domList = document.getElementById("x5_custom_list");
   const item = document.getElementById("custom_" + id);
 
@@ -134,11 +186,19 @@ const showListOptionsClick = () => {
 const renderLists = () => {
   recommendationsList.list.forEach(item => {
     const domList = document.getElementById("x5_material_list");
-    addToDom(domList, item, "recommendations");
+    addListItemToDom(domList, item, "recommendations");
   });
 };
 
-const addToDom = (parentNode, item, list) => {
+const renderCurrentCustomList = () => {
+  const domList = document.getElementById("x5_custom_list");
+  domList.children.forEach(child => child.remove());
+  customLists[currentCustomListIndex].list.forEach(item =>
+    addListItemToDom(domList, item, "custom")
+  );
+};
+
+const addListItemToDom = (parentNode, item, list) => {
   const domListItem = getEmptyDomListElement();
   domListItem.setAttribute("id", list + "_" + item.id);
 
@@ -219,6 +279,12 @@ const getMethodForAction = (listType, item) => {
 const setRecommendationsToList = (data, list) => {
   data.recommendations.forEach(item => {
     list.addItemToList(new X5OERResource(item));
+  });
+};
+
+const setCustomListsFromData = (data, lists) => {
+  data.customLists.forEach(item => {
+    lists.push(new X5OERCustomList(item.title, item.list));
   });
 };
 

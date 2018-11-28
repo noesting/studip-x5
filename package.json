@@ -1,0 +1,33 @@
+{
+  "name": "studip-x5",
+  "version": "1.0.0",
+  "description": "This Plug-In for Stud.IP will provide teachers and students with OER recommended by the x5gon platform.",
+  "private": true,
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "watch": "webpack --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/noesting/studip-x5.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/noesting/studip-x5/issues"
+  },
+  "homepage": "https://github.com/noesting/studip-x5#readme",
+  "devDependencies": {
+    "css-loader": "^1.0.1",
+    "node-sass": "^4.10.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.26.1",
+    "webpack-cli": "^3.1.2"
+  }
+}
