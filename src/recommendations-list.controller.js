@@ -22,10 +22,8 @@ export class X5RecommendationsListController extends X5ListController {
             return;
         }
 
-        const domList = document.getElementById('x5_custom_list');
         const item = this.recommendations.list.filter(item => item.id === id)[0];
-        customListsController.customLists[customListsController.currentCustomListIndex].list.push(item);
-        this.addListItemToDom(domList, item, LISTTYPES.CUSTOM);
+        customListsController.addItemToCurrentList(item);
     }
 
     renderLists() {
@@ -36,7 +34,12 @@ export class X5RecommendationsListController extends X5ListController {
     }
 
     performRecommendationsListItemAction(event) {
-        const itemId = event.target.attributes.item_id.value;
+        let itemId;
+        if (event.target.firstChild) {
+            itemId = event.target.firstChild.attributes.item_id.value;
+        } else {
+            itemId = event.target.attributes.item_id.value;
+        }
         this.copyItemToCustomList(itemId);
     }
 

@@ -11,7 +11,6 @@ export class X5CustomListController extends X5ListController {
         this.currentCustomListIndex = -1;
         this.setCustomListsFromData(data);
         this.addCustomListsToDom();
-        console.log('this.customLists', this.customLists);
     }
 
     addCustomListsToDom() {
@@ -26,19 +25,46 @@ export class X5CustomListController extends X5ListController {
         });
     }
 
+    addItemToCurrentList(item) {
+        this.addItemToCurrentListArray(item);
+        this.addItemToCurrentListDom(item);
+    }
+
+    addItemToCurrentListArray(item) {
+        if (this.currentCustomListIndex > -1) {
+            this.customLists[this.currentCustomListIndex].list.push(item);
+        }
+    }
+
+    addItemToCurrentListDom(item) {
+        const domList = document.getElementById('x5_custom_list');
+        this.addListItemToDom(domList, item, LISTTYPES.CUSTOM);
+    }
+
     chooseListClick() {
-        console.log('click', 'chooseListClick');
+        const currentListIndex = this.getCurrentListFromValue();
+        this.currentCustomListIndex = currentListIndex;
+        this.setCurrentListTextToDom();
+        this.renderCurrentCustomList();
+    }
+
+    getCurrentListFromValue() {
         const domSelect = document.getElementById('choose_custom_list_select');
         const selectValue = domSelect.value;
+
         let index = 0;
-        console.log('this', this);
         while (index < this.customLists.length && this.customLists[index].title !== selectValue) {
             index++;
         }
-        const currentListText = document.getElementById('x5_current_list_text');
-        currentListText.innerText = selectValue;
-        this.currentCustomListIndex = index;
-        this.renderCurrentCustomList();
+
+        return index;
+    }
+
+    setCurrentListTextToDom() {
+        const domSelect = document.getElementById('choose_custom_list_select');
+        const selectValue = domSelect.value;
+        const currentListTextDom = document.getElementById('x5_current_list_text');
+        currentListTextDom.innerText = selectValue;
     }
 
     removeItemFromCustomList(id) {
@@ -51,12 +77,20 @@ export class X5CustomListController extends X5ListController {
     }
 
     renderCurrentCustomList() {
-        const domList = document.getElementById('x5_custom_list');
-        for (let child of domList.children) {
-            child.remove();
-        }
+        this.removeListItemsFromDom();
+        this.addAllItemsFromCurrentListToDom();
+    }
 
+    removeListItemsFromDom() {
+        const domList = document.getElementById('x5_custom_list');
+        while (domList.firstChild) {
+            domList.removeChild(domList.firstChild);
+        }
+    }
+
+    addAllItemsFromCurrentListToDom() {
         if (this.currentCustomListIndex > -1) {
+            const domList = document.getElementById('x5_custom_list');
             this.customLists[this.currentCustomListIndex].list.forEach(item =>
                 this.addListItemToDom(domList, item, LISTTYPES.CUSTOM)
             );
@@ -64,7 +98,13 @@ export class X5CustomListController extends X5ListController {
     }
 
     performCustomListItemAction(event) {
-        const itemId = event.target.attributes.item_id.value;
+        let itemId;
+        if (event.target.firstChild) {
+            itemId = event.target.firstChild.attributes.item_id.value;
+        } else {
+            itemId = event.target.attributes.item_id.value;
+        }
+
         this.removeItemFromCustomList(itemId);
     }
 
