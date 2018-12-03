@@ -41,6 +41,9 @@ const addListeners = () => {
     $(document).on('click', 'h3[name="' + LISTTYPES.RECOMMENDATIONS + '_actionButton"]', event =>
         recommendtionsListController.performRecommendationsListItemAction(event)
     );
+    $(document).on('click', 'div[name="x5_item_action"]', event => {
+        showListOptionsClick(event);
+    });
 };
 
 const chooseFilterClick = event => {

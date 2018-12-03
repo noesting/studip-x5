@@ -53,7 +53,7 @@ if (isset($flash['message'])) {
             <div class="x5_current_list_text" id="x5_current_list_text">
                 Keine Liste ausgewählt
             </div>
-            <div class="x5_item_action" onclick="showListOptionsClick()">
+            <div class="x5_item_action" name="x5_item_action">
                 <?=new Icon('action')?>
             </div>
         </div>
