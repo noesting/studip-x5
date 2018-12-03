@@ -39,8 +39,7 @@ if (isset($flash['message'])) {
 
         <div class="x5_button_line x5_list_header_section">
             <div class="x5_button_container">
-                <!-- <?=\Studip\Button::create('Liste auswählen', 'chooseListButton');?> -->
-                <select id="choose_custom_list_select" name="choose_custom_list_select">
+                <select id="choose_custom_list_select" name="choose_custom_list_select" class="x5_list_select">
                     <option value="" disabled selected>Liste auswählen</option>
                 </select>
             </div>
