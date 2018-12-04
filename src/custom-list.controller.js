@@ -15,13 +15,13 @@ export class X5CustomListController extends X5ListController {
 
     addCustomListsToDom() {
         const domSelect = document.getElementById('choose_custom_list_select');
-
         this.customLists.forEach(list => {
-            const domOption = document.createElement('option');
-            domOption.setAttribute('value', list.title);
-            domOption.text = list.title;
-
-            domSelect.appendChild(domOption);
+            const domCustomListEntry = document.createElement('div');
+            domCustomListEntry.setAttribute('id', 'listEntry_' + list.title);
+            domCustomListEntry.setAttribute('name', 'customListEntry');
+            domCustomListEntry.setAttribute('class', 'customListEntry');
+            domCustomListEntry.innerText = list.title;
+            domSelect.appendChild(domCustomListEntry);
         });
     }
 
@@ -41,30 +41,26 @@ export class X5CustomListController extends X5ListController {
         this.addListItemToDom(domList, item, LISTTYPES.CUSTOM);
     }
 
-    chooseListClick() {
-        const currentListIndex = this.getCurrentListFromValue();
+    chooseListClick(event) {
+        const value = event.target.id.split('_')[1];
+        const currentListIndex = this.getCurrentListIndexFromValue(value);
         this.currentCustomListIndex = currentListIndex;
-        this.setCurrentListTextToDom();
+        this.setCurrentListTextToDom(value);
         this.renderCurrentCustomList();
     }
 
-    getCurrentListFromValue() {
-        const domSelect = document.getElementById('choose_custom_list_select');
-        const selectValue = domSelect.value;
-
+    getCurrentListIndexFromValue(value) {
         let index = 0;
-        while (index < this.customLists.length && this.customLists[index].title !== selectValue) {
+        while (index < this.customLists.length && this.customLists[index].title !== value) {
             index++;
         }
 
         return index;
     }
 
-    setCurrentListTextToDom() {
-        const domSelect = document.getElementById('choose_custom_list_select');
-        const selectValue = domSelect.value;
+    setCurrentListTextToDom(value) {
         const currentListTextDom = document.getElementById('x5_current_list_text');
-        currentListTextDom.innerText = selectValue;
+        currentListTextDom.innerText = value;
     }
 
     removeItemFromCustomList(id) {
@@ -112,5 +108,9 @@ export class X5CustomListController extends X5ListController {
         data.customLists.forEach(item => {
             this.customLists.push(new X5OERCustomList(item.title, item.list));
         });
+    }
+
+    showListOptionsClick(event) {
+        console.log('click', 'showListOptionsClick');
     }
 }

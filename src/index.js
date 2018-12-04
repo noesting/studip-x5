@@ -31,9 +31,10 @@ const addListeners = () => {
     $(document).on('click', "button[name='sortButton']", chooseSortClick);
     $(document).on('click', "button[name='addListButton']", addListClick);
 
-    $(document).on('change', 'select[name="choose_custom_list_select"]', event =>
-        customListsController.chooseListClick(event)
-    );
+    // $(document).on('change', 'select[name="choose_custom_list_select"]', event =>
+    //     customListsController.chooseListClick(event)
+    // );
+    $(document).on('click', 'div[name="customListEntry"]', event => customListsController.chooseListClick(event));
 
     $(document).on('click', 'h3[name="' + LISTTYPES.CUSTOM + '_actionButton"]', event =>
         customListsController.performCustomListItemAction(event)
@@ -42,7 +43,7 @@ const addListeners = () => {
         recommendtionsListController.performRecommendationsListItemAction(event)
     );
     $(document).on('click', 'div[name="x5_item_action"]', event => {
-        showListOptionsClick(event);
+        customListsController.showListOptionsClick(event);
     });
 };
 
