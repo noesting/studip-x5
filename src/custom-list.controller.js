@@ -156,7 +156,11 @@ export class X5CustomListController extends X5ListController {
     }
 
     deleteListClick() {
-        console.log('deleting current List');
+        this.customLists.splice(this.currentCustomListIndex, 1);
+        this.addCustomListsToDom();
+        this.currentCustomListIndex = -1;
+        this.removeListItemsFromDom();
+        this.setCurrentListTextToDom('Keine Liste ausgewählt');
     }
 
     editListFocusOut(event) {
