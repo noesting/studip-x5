@@ -185,9 +185,18 @@
     display: none;
     position: absolute;
     background-color: #f9f9f9;
-    min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
+}
+
+.choose_list {
+    text-align: left;
+    width: 100%;
+}
+
+.options_menu {
+    min-width: 160px;
+    right: 0;
 }
 
 .dropdown:hover .dropdown_content {
@@ -198,10 +207,22 @@
     cursor: pointer;
     line-height: 130%;
     color: #28497c;
-    padding: 0.8em 0.6em 0.8em 0;
+    padding: 0.8em 0.6em 0.8em 0.6em;
 }
 
 .customListEntry:hover {
+    background-color: #28497c;
+    color: #ffffff;
+}
+
+.editListButton {
+    font-size: 0.66em;
+    line-height: 130%;
+    cursor: pointer;
+    padding: 0.8em 0.6em 0.8em 0.6em;
+}
+
+.editListButton:hover {
     background-color: #28497c;
     color: #ffffff;
 }

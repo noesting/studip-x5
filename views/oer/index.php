@@ -41,7 +41,7 @@ if (isset($flash['message'])) {
             <div class="x5_button_container">
                 <div class="dropdown">
                     <?=\Studip\Button::create('Liste auswählen');?>
-                    <div class="dropdown_content" id="choose_custom_list_select">
+                    <div class="dropdown_content choose_list" id="choose_custom_list_select">
                     </div>
                 </div>
             </div>
@@ -55,8 +55,15 @@ if (isset($flash['message'])) {
             <div class="x5_current_list_text" id="x5_current_list_text">
                 Keine Liste ausgewählt
             </div>
-            <div class="x5_item_action" name="x5_item_action">
-                <?=new Icon('action')?>
+            <div class="dropdown">
+                <div class="x5_item_action" name="x5_item_action">
+                    <?=new Icon('action')?>
+                </div>
+                <div class="dropdown_content options_menu">
+                    <div class="editListButton">Freigeben</div>
+                    <div class="editListButton">Umbenennen</div>
+                    <div class="editListButton">Löschen</div>
+                </div>
             </div>
         </div>
     </div>
