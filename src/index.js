@@ -29,7 +29,9 @@ const startRender = () => {
 const addListeners = () => {
     $(document).on('click', "button[name='filterButton']", chooseFilterClick);
     $(document).on('click', "button[name='sortButton']", chooseSortClick);
-    $(document).on('click', "button[name='addListButton']", addListClick);
+    $(document).on('click', "button[name='addListButton']", event => {
+        customListsController.addListClick(event);
+    });
 
     // $(document).on('change', 'select[name="choose_custom_list_select"]', event =>
     //     customListsController.chooseListClick(event)
@@ -63,10 +65,6 @@ const chooseSortClick = () => {
 
 const addListClick = () => {
     console.log('click', 'addListClick');
-};
-
-const showListOptionsClick = () => {
-    console.log('click', 'showListOptionsClick');
 };
 
 // ------------------------------------------------------------------------------------------------ START JS

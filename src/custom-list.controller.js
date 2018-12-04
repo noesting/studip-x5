@@ -27,8 +27,22 @@ export class X5CustomListController extends X5ListController {
     }
 
     addItemToCurrentList(item) {
+        if (this.itemExistsInCurrentList(item)) {
+            return;
+        }
+
         this.addItemToCurrentListArray(item);
         this.addItemToCurrentListDom(item);
+    }
+
+    itemExistsInCurrentList(item) {
+        for (let i = 0; i < this.customLists[this.currentCustomListIndex].list.length; i++) {
+            if (this.customLists[this.currentCustomListIndex].list[i].id === item.id) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     addItemToCurrentListArray(item) {
@@ -115,9 +129,11 @@ export class X5CustomListController extends X5ListController {
     }
 
     setCustomListsFromData(data) {
-        data.customLists.forEach(item => {
-            this.customLists.push(new X5OERCustomList(item.title, item.list));
-        });
+        if (data.customLists) {
+            data.customLists.forEach(item => {
+                this.customLists.push(new X5OERCustomList(item.title, item.list));
+            });
+        }
     }
 
     showListOptionsClick(event) {
@@ -164,9 +180,15 @@ export class X5CustomListController extends X5ListController {
     }
 
     editListFocusOut(event) {
-        console.log('event.target', event.target.value);
         event.target.setAttribute('disabled', 'disabled');
         this.customLists[this.currentCustomListIndex].title = event.target.value;
         this.addCustomListsToDom();
+    }
+
+    addListClick(event) {
+        this.setCurrentListTextToDom('Neue Liste');
+        this.currentCustomListIndex = this.customLists.length;
+        this.customLists.push({ title: 'Neue Liste', list: [] });
+        this.renameListAction();
     }
 }
