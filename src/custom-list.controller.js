@@ -15,6 +15,7 @@ export class X5CustomListController extends X5ListController {
 
     addCustomListsToDom() {
         const domSelect = document.getElementById('choose_custom_list_select');
+        this.removeAllChildrenFromDomElement(domSelect);
         this.customLists.forEach(list => {
             const domCustomListEntry = document.createElement('div');
             domCustomListEntry.setAttribute('id', 'listEntry_' + list.title);
@@ -60,7 +61,7 @@ export class X5CustomListController extends X5ListController {
 
     setCurrentListTextToDom(value) {
         const currentListTextDom = document.getElementById('x5_current_list_text');
-        currentListTextDom.innerText = value;
+        currentListTextDom.value = value;
     }
 
     removeItemFromCustomList(id) {
@@ -77,10 +78,19 @@ export class X5CustomListController extends X5ListController {
         this.addAllItemsFromCurrentListToDom();
     }
 
+    removeListsFromDom() {
+        const domSelect = document.getElementById('choose_custom_list_select');
+        this.removeAllChildrenFromDomElement(domSelect);
+    }
+
     removeListItemsFromDom() {
         const domList = document.getElementById('x5_custom_list');
-        while (domList.firstChild) {
-            domList.removeChild(domList.firstChild);
+        this.removeAllChildrenFromDomElement(domList);
+    }
+
+    removeAllChildrenFromDomElement(domElement) {
+        while (domElement.firstChild) {
+            domElement.removeChild(domElement.firstChild);
         }
     }
 
@@ -112,5 +122,47 @@ export class X5CustomListController extends X5ListController {
 
     showListOptionsClick(event) {
         console.log('click', 'showListOptionsClick');
+    }
+
+    editListClick(event) {
+        if (this.currentCustomListIndex > -1) {
+            switch (event.target.id) {
+                case 'shareListClick':
+                    this.shareListClick();
+                    break;
+                case 'renameListClick':
+                    this.renameListAction();
+                    break;
+                case 'deleteListClick':
+                    this.deleteListClick();
+                    break;
+                default:
+                    console.log('no method for action');
+            }
+        } else {
+            console.log('No List selected');
+        }
+    }
+
+    shareListClick() {
+        console.log('sharing current List');
+    }
+
+    renameListAction() {
+        const currentListTextDom = document.getElementById('x5_current_list_text');
+        currentListTextDom.removeAttribute('disabled');
+        currentListTextDom.focus();
+        console.log('renaming current List');
+    }
+
+    deleteListClick() {
+        console.log('deleting current List');
+    }
+
+    editListFocusOut(event) {
+        console.log('event.target', event.target.value);
+        event.target.setAttribute('disabled', 'disabled');
+        this.customLists[this.currentCustomListIndex].title = event.target.value;
+        this.addCustomListsToDom();
     }
 }

@@ -84,6 +84,14 @@
 
 .x5_current_list_text {
     padding: 0.4em;
+    border: none;
+}
+
+.x5_current_list_text:disabled {
+    background-color: #e7ebf1;
+    color: #28497c;
+    border: none;
+    padding: 0.4em;
 }
 
 .x5_current_list img {

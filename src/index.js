@@ -45,6 +45,11 @@ const addListeners = () => {
     $(document).on('click', 'div[name="x5_item_action"]', event => {
         customListsController.showListOptionsClick(event);
     });
+
+    $(document).on('click', 'div[name="editListButton"]', event => customListsController.editListClick(event));
+    $(document).on('focusout', 'input[name="x5_current_list_text"]', event =>
+        customListsController.editListFocusOut(event)
+    );
 };
 
 const chooseFilterClick = event => {
