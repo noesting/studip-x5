@@ -9,8 +9,6 @@ if (isset($flash['message'])) {
 ?>
 
 <div class="x5_dozent_view_container">
-    <!-- <div class="box a">A</div>
-    <div class="box b">B</div> -->
     <div class="c x5_list_header">
         <div class="x5_headline x5_list_header_section">
             Vorschläge
@@ -72,37 +70,3 @@ if (isset($flash['message'])) {
     <div class="x5_custom_list" id="x5_custom_list">
     </div>
 </div>
-
-
-<!-- <hr> -->
-
-<!-- <?=\Studip\LinkButton::create(
-    dgettext('x5', 'Foo starten'),
-    $controller->url_for('oer/foo', 17)
-)?> -->
-
-<!-- <hr>
-
-<form class="default" method="post" action="<?=$controller->url_for('oer/bar')?>">
-    <fieldset>
-        <legend>Somewhat</legend>
-
-        <label>
-            Label A
-            <input type="text" name="bar1">
-        </label>
-
-        <label>
-            Label B
-            <input type="text" name="bar2">
-        </label>
-    </fieldset>
-
-    <footer>
-        <?=\Studip\Button::createAccept(dgettext('x5', 'Formular abschicken'))?>
-        <?=\Studip\LinkButton::createCancel(
-    dgettext('x5', 'Abbrechen'),
-    $controller->url_for('oer/index')
-)?>
-    </footer>
-</form> -->
