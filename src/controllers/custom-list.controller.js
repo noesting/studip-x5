@@ -16,6 +16,7 @@ export class X5CustomListController extends X5ListController {
         this.setCustomListsFromData(data);
         this.addCustomListsToDom();
         this.addListeners();
+        this.preselectList();
     }
 
     addListeners() {
@@ -44,6 +45,20 @@ export class X5CustomListController extends X5ListController {
             domCustomListEntry.innerText = list.title;
             domSelect.appendChild(domCustomListEntry);
         });
+    }
+
+    preselectList() {
+        if (!this.customLists || this.customLists.length === 0) {
+            return;
+        }
+
+        this.selectList(0);
+    }
+
+    selectList(index) {
+        this.currentCustomListIndex = index;
+        this.setCurrentListTextToDom(this.customLists[index].title);
+        this.renderCurrentCustomList();
     }
 
     addItemToCurrentList(item) {
