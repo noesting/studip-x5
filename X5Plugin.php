@@ -17,6 +17,7 @@ StandardPlugin
 
         $this->setupNavigation();
 
+        PageLayout::addScript('https://cdn.jsdelivr.net/npm/vue/dist/vue.js');
         PageLayout::addScript($this->getPluginUrl() . '/dist/main.js');
     }
 
