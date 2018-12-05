@@ -33,9 +33,6 @@ const addListeners = () => {
         customListsController.addListClick(event);
     });
 
-    // $(document).on('change', 'select[name="choose_custom_list_select"]', event =>
-    //     customListsController.chooseListClick(event)
-    // );
     $(document).on('click', 'div[name="customListEntry"]', event => customListsController.chooseListClick(event));
 
     $(document).on('click', 'h3[name="' + LISTTYPES.CUSTOM + '_actionButton"]', event =>
