@@ -19,7 +19,7 @@ export class X5RecommendationsListController extends X5ListController {
 
     addListeners() {
         $(document).on('click', 'h3[name="' + LISTTYPES.RECOMMENDATIONS + '_actionButton"]', event =>
-            recommendtionsListController.performRecommendationsListItemAction(event)
+            this.performRecommendationsListItemAction(event)
         );
     }
 
