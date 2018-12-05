@@ -1,8 +1,8 @@
-import { LISTTYPES } from './globals';
+import { LISTTYPES } from '../globals';
 import { X5ListController } from './list.controller';
-import { X5OERCustomList } from './models';
+import { X5OERCustomList } from '../models/models';
 
-import { data } from './data';
+import { data } from '../data';
 
 export class X5CustomListController extends X5ListController {
     constructor() {

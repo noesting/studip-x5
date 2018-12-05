@@ -1,9 +1,9 @@
-import { LISTTYPES } from './globals';
-import { customListsController } from './index';
+import { LISTTYPES } from '../globals';
+import { customListsController } from '../index';
 import { X5ListController } from './list.controller';
-import { X5OERRecommendationsList, X5OERResource } from './models';
+import { X5OERRecommendationsList, X5OERResource } from '../models/models';
 
-import { data } from './data';
+import { data } from '../data';
 
 export class X5RecommendationsListController extends X5ListController {
     constructor() {

@@ -1,8 +1,8 @@
 import './x5_plugin.scss';
 
-import { X5ListController } from './list.controller';
-import { X5RecommendationsListController } from './recommendations-list.controller';
-import { X5CustomListController } from './custom-list.controller';
+import { X5ListController } from './controllers/list.controller';
+import { X5RecommendationsListController } from './controllers/recommendations-list.controller';
+import { X5CustomListController } from './controllers/custom-list.controller';
 
 import { LISTTYPES } from './globals';
 
@@ -28,7 +28,9 @@ const startRender = () => {
 
 const addListeners = () => {
     $(document).on('click', "button[name='filterButton']", chooseFilterClick);
+
     $(document).on('click', "button[name='sortButton']", chooseSortClick);
+
     $(document).on('click', "button[name='addListButton']", event => {
         customListsController.addListClick(event);
     });

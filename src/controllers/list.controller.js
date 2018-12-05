@@ -1,4 +1,4 @@
-import { LISTTYPES } from './globals';
+import { LISTTYPES } from '../globals';
 
 export class X5ListController {
     constructor() {}
