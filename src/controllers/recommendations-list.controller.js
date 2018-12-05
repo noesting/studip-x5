@@ -14,6 +14,13 @@ export class X5RecommendationsListController extends X5ListController {
     init() {
         this.recommendations = new X5OERRecommendationsList();
         this.setRecommendationsToList(data);
+        this.addListeners();
+    }
+
+    addListeners() {
+        $(document).on('click', 'h3[name="' + LISTTYPES.RECOMMENDATIONS + '_actionButton"]', event =>
+            recommendtionsListController.performRecommendationsListItemAction(event)
+        );
     }
 
     copyItemToCustomList(id) {
