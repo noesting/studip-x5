@@ -8,6 +8,9 @@ if (isset($flash['message'])) {
 }
 ?>
 
+<div id="vue_app">
+</div>
+
 <div class="x5_dozent_view_container">
     <div class="c x5_list_header">
         <div class="x5_headline x5_list_header_section">

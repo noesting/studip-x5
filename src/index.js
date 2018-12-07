@@ -6,6 +6,8 @@ import { X5CustomListController } from './controllers/custom-list.controller';
 
 import { LISTTYPES } from './globals';
 
+import App from './app/App.vue';
+
 export let recommendtionsListController;
 export let customListsController;
 
@@ -14,6 +16,15 @@ const bootstrap = () => {
         initControllers();
         addListeners();
         startRender();
+        startVue();
+    });
+};
+
+const startVue = () => {
+    new Vue({
+        el: '#vue_app',
+        template: '<App></App>',
+        components: { App }
     });
 };
 
