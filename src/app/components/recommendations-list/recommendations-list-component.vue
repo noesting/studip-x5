@@ -20,7 +20,6 @@
         props: ['recommendations'],
         methods: {
             recListClickAction(itemId) {
-                console.log('event', itemId);
                 this.$emit('recommendationsListClick', itemId);
             }
         }

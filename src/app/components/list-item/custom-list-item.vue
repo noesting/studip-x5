@@ -1,13 +1,9 @@
 <template>
     <div class="x5_list_item_container">
         <ListItem v-bind:item="item" v-bind:key="item.id"></ListItem>
-        <div
-            class="x5_list_item_action"
-            name="recommendations_actionButton"
-            @click="action(item.id)"
-        >
+        <div class="x5_list_item_action" @click="action(item.id)">
             <h3>
-                <StudipIcon v-bind:icon_name="'arr_1right'" v-bind:color="'blue'"></StudipIcon>
+                <StudipIcon v-bind:icon_name="'decline'" v-bind:color="'blue'"></StudipIcon>
             </h3>
         </div>
     </div>
@@ -25,7 +21,7 @@
         },
         methods: {
             action(id) {
-                this.$emit('recListClickAction', id);
+                this.$emit('customListClickAction', id);
             }
         }
     };

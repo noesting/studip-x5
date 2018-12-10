@@ -8,6 +8,11 @@
             class="x5_material_list"
             @recommendationsListClick="recommendationsListClick"
         ></RecommendationsList>
+        <CustomList
+            :customListItems="customListItems"
+            class="x5_custom_list"
+            @customListItemClick="customListItemClick"
+        ></CustomList>
     </div>
 </template>
 
@@ -17,21 +22,34 @@
     import RecommendationsListHeader from '../recommendations-list-header/recommendations-list-header-component.vue';
     import CustomListHeader from '../custom-list-header/custom-list-header-component.vue';
     import RecommendationsList from '../recommendations-list/recommendations-list-component.vue';
+    import CustomList from '../custom-list/custom-list.component.vue';
 
     export default {
         components: {
             RecommendationsListHeader,
             CustomListHeader,
-            RecommendationsList
+            RecommendationsList,
+            CustomList
         },
         data() {
             return {
-                recommendations: data.recommendations
+                recommendations: data.recommendations,
+                customListItems: []
             };
         },
         methods: {
             recommendationsListClick(itemId) {
-                console.log('moving item', itemId, 'to customList');
+                this.customListItems.push(this.recommendations[itemId]);
+            },
+
+            customListItemClick(itemId) {
+                let itemIndex;
+                for (let i = 0; i < this.customListItems.length; i++) {
+                    if (this.customListItems[i].id === itemId) {
+                        itemIndex = i;
+                    }
+                }
+                this.customListItems.splice(itemIndex, 1);
             }
         }
     };
@@ -63,6 +81,14 @@
         border-right: solid 1px #1f3f70;
 
         grid-column: 1;
+    }
+
+    .x5_custom_list {
+        width: 100%;
+
+        border-bottom: solid 1px #1f3f70;
+        border-left: solid 1px #1f3f70;
+        border-right: solid 1px #1f3f70;
     }
 
     .c {
