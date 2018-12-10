@@ -6,7 +6,14 @@
             <div class="x5_button_container">
                 <div class="dropdown">
                     <StudipButton :text="'Liste auswählen'"></StudipButton>
-                    <div class="dropdown_content choose_list" id="choose_custom_list_select"></div>
+                    <div class="dropdown_content choose_list" id="choose_custom_list_select">
+                        <div
+                            v-for="list in customLists"
+                            v-bind:key="list.title"
+                            class="customListEntry"
+                            @click="chooseList(list)"
+                        >{{ list.title }}</div>
+                    </div>
                 </div>
             </div>
 
@@ -17,12 +24,14 @@
 
         <div class="x5_current_list">
             <input
+                ref="listTitleRef"
                 type="text"
-                value="Keine Liste ausgewählt"
+                v-model="customLists[currentCustomListIndex].title"
                 class="x5_current_list_text"
                 id="x5_current_list_text"
                 name="x5_current_list_text"
-                disabled
+                :disabled="inputDisabled"
+                @focusout="listTitleFocusOut"
             >
             <div class="dropdown">
                 <div class="x5_item_action" name="x5_item_action">
@@ -34,6 +43,7 @@
                         class="editListButton"
                         name="editListButton"
                         id="renameListClick"
+                        @click="renameListClick"
                     >Umbenennen</div>
                     <div class="editListButton" name="editListButton" id="deleteListClick">Löschen</div>
                 </div>
@@ -46,10 +56,46 @@
     import StudipButton from '../studip-components/studip-button-component.vue';
     import StudipIcon from '../studip-components/studip-icon-button-component.vue';
 
+    import { data } from '../../../data';
+
     export default {
         components: {
             StudipButton,
             StudipIcon
+        },
+        props: ['customLists', 'currentCustomListIndex'],
+        data() {
+            return {
+                listTitleDisabled: true
+            };
+        },
+        computed: {
+            inputDisabled() {
+                return this.listTitleDisabled;
+            }
+        },
+        methods: {
+            chooseList(list) {
+                console.log('choosing list', list.title);
+                for (let i = 0; i < this.customLists.length; i++) {
+                    if (list.title === this.customLists[i].title) {
+                        // this.currentCustomListIndex = i;
+                        this.$emit('setCurrentCustomListIndex', i);
+                    }
+                }
+                console.log('currentCustomListIndex', this.currentCustomListIndex);
+            },
+
+            renameListClick() {
+                this.listTitleDisabled = false;
+                this.$nextTick(() => {
+                    this.$refs.listTitleRef.focus();
+                });
+            },
+
+            listTitleFocusOut() {
+                this.listTitleDisabled = true;
+            }
         }
     };
 </script>

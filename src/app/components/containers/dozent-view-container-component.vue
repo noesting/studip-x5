@@ -2,14 +2,18 @@
     <div class="x5_dozent_view_container">
         <!-- <RecommendationsListHeader class="c x5_list_header"></RecommendationsListHeader> -->
         <RecommendationsListHeader class="c x5_list_header"></RecommendationsListHeader>
-        <CustomListHeader></CustomListHeader>
+        <CustomListHeader
+            :customLists="customLists"
+            :currentCustomListIndex="currentCustomListIndex"
+            @setCurrentCustomListIndex="setCurrentCustomListIndex"
+        ></CustomListHeader>
         <RecommendationsList
             :recommendations="recommendations"
             class="x5_material_list"
             @recommendationsListClick="recommendationsListClick"
         ></RecommendationsList>
         <CustomList
-            :customListItems="customListItems"
+            :customListItems="customLists[currentCustomListIndex].list"
             class="x5_custom_list"
             @customListItemClick="customListItemClick"
         ></CustomList>
@@ -34,22 +38,36 @@
         data() {
             return {
                 recommendations: data.recommendations,
-                customListItems: []
+                customLists: data.customLists,
+                currentCustomListIndex: 0
             };
         },
         methods: {
             recommendationsListClick(itemId) {
-                this.customListItems.push(this.recommendations[itemId]);
+                let exists = false;
+                for (let i = 0; i < this.customLists[this.currentCustomListIndex].list.length; i++) {
+                    if (this.customLists[this.currentCustomListIndex].list[i].id === itemId) {
+                        exists = true;
+                    }
+                }
+
+                if (!exists) {
+                    this.customLists[this.currentCustomListIndex].list.push(this.recommendations[itemId]);
+                }
             },
 
             customListItemClick(itemId) {
                 let itemIndex;
-                for (let i = 0; i < this.customListItems.length; i++) {
-                    if (this.customListItems[i].id === itemId) {
+                for (let i = 0; i < this.customLists[this.currentCustomListIndex].list.length; i++) {
+                    if (this.customLists[this.currentCustomListIndex].list[i].id === itemId) {
                         itemIndex = i;
                     }
                 }
-                this.customListItems.splice(itemIndex, 1);
+                this.customLists[this.currentCustomListIndex].list.splice(itemIndex, 1);
+            },
+
+            setCurrentCustomListIndex(newIndex) {
+                this.currentCustomListIndex = newIndex;
             }
         }
     };
