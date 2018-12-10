@@ -4,18 +4,15 @@
 
         <div class="x5_searchbar x5_list_header_section">
             <input type="text" placeholder="Suche in X5" name="x5-search">
-            <!-- <?=new Icon('search')?> -->
             <StudipIcon :icon_name="'search'" :color="'blue'"></StudipIcon>
         </div>
 
         <div class="x5_button_line x5_list_header_section">
             <div class="x5_button_container">
-                <!-- <?=\Studip\Button::create('Filter', 'filterButton');?> -->
                 <StudipButton v-bind:text="'Filter'"></StudipButton>
             </div>
             <div class="x5_button_container">
                 <StudipButton v-bind:text="'Sortierung'"></StudipButton>
-                <!-- <?=\Studip\Button::create('Sortierung', 'sortButton');?> -->
             </div>
         </div>
     </div>
