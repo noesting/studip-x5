@@ -4,6 +4,7 @@
             v-for="item in recommendations"
             v-bind:item="item"
             v-bind:key="item.id"
+            @recListClickAction="recListClickAction"
         ></RecommendationsListItem>
     </div>
 </template>
@@ -16,6 +17,12 @@
         components: {
             RecommendationsListItem
         },
-        props: ['recommendations']
+        props: ['recommendations'],
+        methods: {
+            recListClickAction(itemId) {
+                console.log('event', itemId);
+                this.$emit('recommendationsListClick', itemId);
+            }
+        }
     };
 </script>

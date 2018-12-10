@@ -3,7 +3,11 @@
         <!-- <RecommendationsListHeader class="c x5_list_header"></RecommendationsListHeader> -->
         <RecommendationsListHeader class="c x5_list_header"></RecommendationsListHeader>
         <CustomListHeader></CustomListHeader>
-        <RecommendationsList :recommendations="recommendations" class="x5_material_list"></RecommendationsList>
+        <RecommendationsList
+            :recommendations="recommendations"
+            class="x5_material_list"
+            @recommendationsListClick="recommendationsListClick"
+        ></RecommendationsList>
     </div>
 </template>
 
@@ -24,6 +28,11 @@
             return {
                 recommendations: data.recommendations
             };
+        },
+        methods: {
+            recommendationsListClick(itemId) {
+                console.log('moving item', itemId, 'to customList');
+            }
         }
     };
 </script>

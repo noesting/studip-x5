@@ -6,12 +6,6 @@
             name="recommendations_actionButton"
             @click="action(item.id)"
         >
-            <!-- <h3>
-                <img
-                    class="icon-role-clickable icon-shape-arr_1right"
-                    src="http://localhost/studip-42/assets/images/icons/blue/arr_1right.svg"
-                >
-            </h3>-->
             <h3>
                 <StudipIcon v-bind:icon_name="'arr_1right'" v-bind:color="'blue'"></StudipIcon>
             </h3>
@@ -32,6 +26,7 @@
         methods: {
             action(id) {
                 console.log('item id', id, 'clicked');
+                this.$emit('recListClickAction', id);
             }
         }
     };
