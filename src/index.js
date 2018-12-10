@@ -38,9 +38,8 @@ const startRender = () => {
 };
 
 const addListeners = () => {
-    $(document).on('click', "button[name='filterButton']", chooseFilterClick);
-
-    $(document).on('click', "button[name='sortButton']", chooseSortClick);
+    // $(document).on('click', "button[name='filterButton']", chooseFilterClick);
+    // $(document).on('click', "button[name='sortButton']", chooseSortClick);
 };
 
 const chooseFilterClick = event => {

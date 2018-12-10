@@ -20,18 +20,18 @@ export class X5CustomListController extends X5ListController {
     }
 
     addListeners() {
-        $(document).on('click', "button[name='addListButton']", event => {
-            this.addListClick(event);
-        });
-        $(document).on('click', 'h3[name="' + LISTTYPES.CUSTOM + '_actionButton"]', event =>
-            this.performCustomListItemAction(event)
-        );
-        $(document).on('click', 'div[name="x5_item_action"]', event => {
-            this.showListOptionsClick(event);
-        });
-        $(document).on('click', 'div[name="customListEntry"]', event => this.chooseListClick(event));
-        $(document).on('click', 'div[name="editListButton"]', event => this.editListClick(event));
-        $(document).on('focusout', 'input[name="x5_current_list_text"]', event => this.editListFocusOut(event));
+        // $(document).on('click', "button[name='addListButton']", event => {
+        //     this.addListClick(event);
+        // });
+        // $(document).on('click', 'h3[name="' + LISTTYPES.CUSTOM + '_actionButton"]', event =>
+        //     this.performCustomListItemAction(event)
+        // );
+        // $(document).on('click', 'div[name="x5_item_action"]', event => {
+        //     this.showListOptionsClick(event);
+        // });
+        // $(document).on('click', 'div[name="customListEntry"]', event => this.chooseListClick(event));
+        // $(document).on('click', 'div[name="editListButton"]', event => this.editListClick(event));
+        // $(document).on('focusout', 'input[name="x5_current_list_text"]', event => this.editListFocusOut(event));
     }
 
     addCustomListsToDom() {
