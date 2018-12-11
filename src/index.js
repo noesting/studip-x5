@@ -1,3 +1,5 @@
+import VModal from 'vue-js-modal';
+
 import App from './app/App.vue';
 
 const bootstrap = () => {
@@ -7,6 +9,8 @@ const bootstrap = () => {
 };
 
 const startVue = () => {
+    Vue.use(VModal, { dialog: true });
+
     new Vue({
         el: '#vue_app',
         template: '<App></App>',
