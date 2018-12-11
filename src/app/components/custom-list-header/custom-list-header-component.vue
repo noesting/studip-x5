@@ -18,7 +18,7 @@
             </div>
 
             <div class="x5_button_container">
-                <StudipButton :text="'Neue Liste'"></StudipButton>
+                <StudipButton @studipbuttonClick="addList()" :text="'Neue Liste'"></StudipButton>
             </div>
         </div>
 
@@ -45,7 +45,12 @@
                         id="renameListClick"
                         @click="renameListClick"
                     >Umbenennen</div>
-                    <div class="editListButton" name="editListButton" id="deleteListClick">Löschen</div>
+                    <div
+                        class="editListButton"
+                        name="editListButton"
+                        id="deleteListClick"
+                        @click="removeListClick"
+                    >Löschen</div>
                 </div>
             </div>
         </div>
@@ -76,14 +81,11 @@
         },
         methods: {
             chooseList(list) {
-                console.log('choosing list', list.title);
                 for (let i = 0; i < this.customLists.length; i++) {
                     if (list.title === this.customLists[i].title) {
-                        // this.currentCustomListIndex = i;
                         this.$emit('setCurrentCustomListIndex', i);
                     }
                 }
-                console.log('currentCustomListIndex', this.currentCustomListIndex);
             },
 
             renameListClick() {
@@ -93,8 +95,16 @@
                 });
             },
 
+            removeListClick() {
+                this.$emit('removeCurrentListItem');
+            },
+
             listTitleFocusOut() {
                 this.listTitleDisabled = true;
+            },
+
+            addList() {
+                this.$emit('addNewList');
             }
         }
     };

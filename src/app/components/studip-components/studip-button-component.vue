@@ -8,6 +8,7 @@
         methods: {
             performClick() {
                 console.log('clicked button');
+                this.$emit('studipbuttonClick');
             }
         }
     };

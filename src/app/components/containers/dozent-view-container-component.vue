@@ -3,9 +3,12 @@
         <!-- <RecommendationsListHeader class="c x5_list_header"></RecommendationsListHeader> -->
         <RecommendationsListHeader class="c x5_list_header"></RecommendationsListHeader>
         <CustomListHeader
+            ref="customListHeader"
             :customLists="customLists"
             :currentCustomListIndex="currentCustomListIndex"
             @setCurrentCustomListIndex="setCurrentCustomListIndex"
+            @addNewList="addNewCustomList"
+            @removeCurrentListItem="removeCurrentListItem"
         ></CustomListHeader>
         <RecommendationsList
             :recommendations="recommendations"
@@ -13,7 +16,7 @@
             @recommendationsListClick="recommendationsListClick"
         ></RecommendationsList>
         <CustomList
-            :customListItems="customLists[currentCustomListIndex].list"
+            :customListItems="customListItemlist"
             class="x5_custom_list"
             @customListItemClick="customListItemClick"
         ></CustomList>
@@ -42,6 +45,15 @@
                 currentCustomListIndex: 0
             };
         },
+        computed: {
+            customListItemlist() {
+                if (this.customLists && this.customLists.length > 0) {
+                    return this.customLists[this.currentCustomListIndex].list;
+                }
+
+                return null;
+            }
+        },
         methods: {
             recommendationsListClick(itemId) {
                 let exists = false;
@@ -67,7 +79,28 @@
             },
 
             setCurrentCustomListIndex(newIndex) {
+                if (newIndex < 0) {
+                    newIndex = 0;
+                }
+
                 this.currentCustomListIndex = newIndex;
+            },
+
+            addNewCustomList() {
+                this.customLists.push({ title: 'Neue Liste', list: [] });
+                this.setCurrentCustomListIndex(this.customLists.length - 1);
+                this.$refs.customListHeader.renameListClick();
+            },
+
+            removeCurrentListItem() {
+                const deleteListIndex = this.currentCustomListIndex;
+                this.setCurrentCustomListIndex(--this.currentCustomListIndex);
+
+                if (this.customLists.length === 1) {
+                    this.customLists.push({ title: 'Neue Liste', list: [] });
+                }
+
+                this.customLists.splice(deleteListIndex, 1);
             }
         }
     };
