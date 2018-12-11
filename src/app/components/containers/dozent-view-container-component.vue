@@ -87,23 +87,7 @@
             },
 
             addNewCustomList() {
-                let newListItem = { title: 'Neue Liste', list: [] };
-
-                if (itemExistsInListByTitle(newListItem, this.customLists)) {
-                    let i = 1;
-                    let inserted = false;
-                    while (!inserted || i > 100) {
-                        newListItem.title = 'Neue Liste ' + i;
-                        if (!itemExistsInListByTitle(newListItem, this.customLists)) {
-                            this.customLists.push(newListItem);
-                            inserted = true;
-                        }
-                        i++;
-                    }
-                } else {
-                    this.customLists.push(newListItem);
-                }
-
+                addNewListToCustomLists(this.customLists);
                 this.setCurrentCustomListIndex(this.customLists.length - 1);
                 this.$refs.customListHeader.renameListClick();
             },
@@ -118,6 +102,28 @@
 
                 this.customLists.splice(deleteListIndex, 1);
             }
+        }
+    };
+
+    const addNewListToCustomLists = customLists => {
+        let newListItem = { title: 'Neue Liste', list: [] };
+        if (!itemExistsInListByTitle(newListItem, customLists)) {
+            customLists.push(newListItem);
+        } else {
+            addIncrementedNewListTocustomLists(newListItem, customLists);
+        }
+    };
+
+    const addIncrementedNewListTocustomLists = (newListItem, customLists) => {
+        let i = 1;
+        let inserted = false;
+        while (!inserted || i > 100) {
+            newListItem.title = 'Neue Liste ' + i;
+            if (!itemExistsInListByTitle(newListItem, customLists)) {
+                customLists.push(newListItem);
+                inserted = true;
+            }
+            i++;
         }
     };
 
