@@ -88,7 +88,6 @@
 
             addNewCustomList() {
                 let newListItem = { title: 'Neue Liste', list: [] };
-                // this.customLists.push({  });
 
                 if (itemExistsInListByTitle(newListItem, this.customLists)) {
                     let i = 1;
