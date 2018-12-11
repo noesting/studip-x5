@@ -1,6 +1,5 @@
 <template>
     <div class="x5_dozent_view_container">
-        <!-- <RecommendationsListHeader class="c x5_list_header"></RecommendationsListHeader> -->
         <RecommendationsListHeader class="c x5_list_header"></RecommendationsListHeader>
         <CustomListHeader
             ref="customListHeader"
