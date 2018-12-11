@@ -1,5 +1,7 @@
 <template>
     <div class="d x5_list_header">
+        <v-dialog/>
+        <modal name="hello-world">Hello, world!</modal>
         <div class="x5_headline">Meine Listen</div>
 
         <div class="x5_button_line">
@@ -96,7 +98,24 @@
             },
 
             removeListClick() {
-                this.$emit('removeCurrentListItem');
+                this.$modal.show('dialog', {
+                    title: 'Löschen',
+                    text: 'Liste unwiderruflich löschen?',
+                    buttons: [
+                        {
+                            title: 'Löschen',
+                            handler: () => {
+                                this.$emit('removeCurrentListItem');
+                                this.$modal.hide('dialog');
+                            }
+                        },
+                        {
+                            title: 'Abbrechen',
+                            handler: () => this.$modal.hide('dialog'),
+                            default: true
+                        }
+                    ]
+                });
             },
 
             listTitleFocusOut() {
