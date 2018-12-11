@@ -87,7 +87,24 @@
             },
 
             addNewCustomList() {
-                this.customLists.push({ title: 'Neue Liste', list: [] });
+                let newListItem = { title: 'Neue Liste', list: [] };
+                // this.customLists.push({  });
+
+                if (itemExistsInListByTitle(newListItem, this.customLists)) {
+                    let i = 1;
+                    let inserted = false;
+                    while (!inserted || i > 100) {
+                        newListItem.title = 'Neue Liste ' + i;
+                        if (!itemExistsInListByTitle(newListItem, this.customLists)) {
+                            this.customLists.push(newListItem);
+                            inserted = true;
+                        }
+                        i++;
+                    }
+                } else {
+                    this.customLists.push(newListItem);
+                }
+
                 this.setCurrentCustomListIndex(this.customLists.length - 1);
                 this.$refs.customListHeader.renameListClick();
             },
@@ -103,6 +120,16 @@
                 this.customLists.splice(deleteListIndex, 1);
             }
         }
+    };
+
+    const itemExistsInListByTitle = (item, list) => {
+        for (let i = 0; i < list.length; i++) {
+            if (list[i].title === item.title) {
+                return true;
+            }
+        }
+
+        return false;
     };
 </script>
 
