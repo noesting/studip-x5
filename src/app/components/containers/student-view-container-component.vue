@@ -45,6 +45,10 @@
             }
         }
     };
+
+    const getCustomListsFromData = () => {
+        return this.customLists.filter(listObject => listObject.shared);
+    };
 </script>
 
 <style lang="scss" scoped>
