@@ -8,5 +8,5 @@ if (isset($flash['message'])) {
 }
 ?>
 
-<div id="dozent_vue">
+<div id="student_vue">
 </div>
