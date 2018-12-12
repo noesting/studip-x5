@@ -40,7 +40,7 @@
         data() {
             return {
                 recommendations: data.recommendations,
-                customLists: data.customLists,
+                customLists: getCustomListData(),
                 currentCustomListIndex: 0
             };
         },
@@ -101,6 +101,14 @@
 
                 this.customLists.splice(deleteListIndex, 1);
             }
+        }
+    };
+
+    const getCustomListData = () => {
+        if (data.customLists && data.customLists.length > 0) {
+            return data.customLists;
+        } else {
+            return [{ title: 'Neue Liste', list: [] }];
         }
     };
 
