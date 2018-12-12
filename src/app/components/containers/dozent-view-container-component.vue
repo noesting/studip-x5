@@ -8,6 +8,7 @@
             @setCurrentCustomListIndex="setCurrentCustomListIndex"
             @addNewList="addNewCustomList"
             @removeCurrentListItem="removeCurrentListItem"
+            @shareListToggle="shareShareCurrentCustomList"
         ></CustomListHeader>
         <RecommendationsList
             :recommendations="recommendations"
@@ -100,6 +101,11 @@
                 }
 
                 this.customLists.splice(deleteListIndex, 1);
+            },
+
+            shareShareCurrentCustomList() {
+                this.customLists[this.currentCustomListIndex].shared = !this.customLists[this.currentCustomListIndex]
+                    .shared;
             }
         }
     };

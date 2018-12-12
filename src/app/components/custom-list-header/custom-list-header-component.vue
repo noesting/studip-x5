@@ -40,7 +40,20 @@
                     <StudipIcon :icon_name="'action'" :color="'blue'"></StudipIcon>
                 </div>
                 <div class="dropdown_content options_menu">
-                    <div class="editListButton" name="editListButton" id="shareListClick">Freigeben</div>
+                    <div
+                        v-if="!customLists[currentCustomListIndex].shared"
+                        class="editListButton"
+                        name="editListButton"
+                        id="shareListClick"
+                        @click="toggleShareListClick"
+                    >Für Studentinnen/-en freigeben</div>
+                    <div
+                        v-if="customLists[currentCustomListIndex].shared"
+                        class="editListButton"
+                        name="editListButton"
+                        id="unshareListClick"
+                        @click="toggleShareListClick"
+                    >Freigabe für Studentinnen/-en entziehen</div>
                     <div
                         class="editListButton"
                         name="editListButton"
@@ -124,6 +137,10 @@
 
             addList() {
                 this.$emit('addNewList');
+            },
+
+            toggleShareListClick() {
+                this.$emit('shareListToggle');
             }
         }
     };

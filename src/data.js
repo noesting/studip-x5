@@ -77,15 +77,18 @@ export const data = {
     customLists: [
         {
             title: 'Atomphysik',
-            list: []
+            list: [],
+            shared: false
         },
         {
             title: 'Biochemie',
-            list: []
+            list: [],
+            shared: true
         },
         {
             title: 'Marcus Kurs für Kuriositäten',
-            list: []
+            list: [],
+            shared: false
         }
     ]
 };
