@@ -77,12 +77,46 @@ export const data = {
     customLists: [
         {
             title: 'Atomphysik',
-            list: [],
+            list: [
+                {
+                    id: '7',
+                    title: 'Wie man Projekte an Land zieht',
+                    author: 'Thelen, T.',
+                    publishingYear: '2011',
+                    thumbsUps: 1,
+                    thumbnail: 'ein thumbnail'
+                },
+                {
+                    id: '8',
+                    title: 'Der lockere Führungsstil',
+                    author: 'Knaden, A.',
+                    publishingYear: '2016',
+                    thumbsUps: 1,
+                    thumbnail: 'ein thumbnail'
+                }
+            ],
             shared: false
         },
         {
             title: 'Biochemie',
-            list: [],
+            list: [
+                {
+                    id: '4',
+                    title: 'Die vegane Küche',
+                    author: 'Eibrink, K.',
+                    publishingYear: '1999',
+                    thumbsUps: 1,
+                    thumbnail: 'ein thumbnail'
+                },
+                {
+                    id: '5',
+                    title: 'Javascript: Eine unterschätzte Sprache',
+                    author: 'Lunzenauer, M.',
+                    publishingYear: '2005',
+                    thumbsUps: 1,
+                    thumbnail: 'ein thumbnail'
+                }
+            ],
             shared: true
         },
         {
