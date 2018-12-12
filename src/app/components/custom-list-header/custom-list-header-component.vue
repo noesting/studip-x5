@@ -268,5 +268,9 @@
 
         cursor: pointer;
     }
+
+    .v--modal-overlay {
+        background: rgba(40, 73, 124, 0.4);
+    }
 </style>
 
