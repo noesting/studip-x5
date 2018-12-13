@@ -1,53 +1,33 @@
 <template>
     <div class="x5_student_view_container">
-        <CustomList
-            :customListItems="customListItemlist"
+        <StudentList
+            v-for="list in studentLists"
+            :list="list"
+            v-bind:key="list.title"
             class="x5_custom_list"
-            @customListItemClick="customListItemClick"
-        ></CustomList>
+        ></StudentList>
     </div>
 </template>
 
 <script>
     import { data } from '../../../data';
 
-    import CustomList from '../custom-list/custom-list.component.vue';
+    import StudentList from '../student-list/student-list-component.vue';
 
     export default {
         components: {
-            CustomList
+            StudentList
         },
         data() {
             return {
-                recommendations: data.recommendations,
-                customLists: data.customLists,
-                currentCustomListIndex: 0
+                studentLists: getStudentListsFromData()
             };
         },
-        computed: {
-            customListItemlist() {
-                if (this.customLists && this.customLists.length > 0) {
-                    return this.customLists[this.currentCustomListIndex].list;
-                }
-
-                return null;
-            }
-        },
-        methods: {
-            customListItemClick(itemId) {
-                let itemIndex;
-                for (let i = 0; i < this.customLists[this.currentCustomListIndex].list.length; i++) {
-                    if (this.customLists[this.currentCustomListIndex].list[i].id === itemId) {
-                        itemIndex = i;
-                    }
-                }
-                this.customLists[this.currentCustomListIndex].list.splice(itemIndex, 1);
-            }
-        }
+        methods: {}
     };
 
-    const getCustomListsFromData = () => {
-        return this.customLists.filter(listObject => listObject.shared);
+    const getStudentListsFromData = () => {
+        return data.customLists.filter(listObject => listObject.shared);
     };
 </script>
 
