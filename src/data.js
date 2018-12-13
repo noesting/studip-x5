@@ -122,7 +122,7 @@ export const data = {
         {
             title: 'Marcus Kurs für Kuriositäten',
             list: [],
-            shared: false
+            shared: true
         }
     ]
 };
