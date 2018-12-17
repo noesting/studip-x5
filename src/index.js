@@ -10,7 +10,7 @@ const bootstrap = () => {
 };
 
 const startVue = () => {
-    Vue.use(VModal, { dialog: true });
+    Vue.use(VModal, { dialog: true, dynamic: true, injectModalsContainer: true });
 
     const dozent_vue_element = document.getElementById('dozent_vue');
     const student_vue_element = document.getElementById('student_vue');

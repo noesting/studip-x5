@@ -1,5 +1,5 @@
 <template>
-    <div class="x5_list_item_inner">
+    <div class="x5_list_item_inner" @click="openModal">
         <div class="x5_list_item_thumbnail"></div>
         <div class="x5_list_item_title">{{ item.title }}</div>
         <div
@@ -9,8 +9,15 @@
 </template>
 
 <script>
+    import ItemDetailModal from '../modals/item-detail-modal.vue';
     export default {
-        props: ['item']
+        props: ['item'],
+        methods: {
+            openModal() {
+                console.log('trying to open modal');
+                this.$modal.show(ItemDetailModal, { item: this.item });
+            }
+        }
     };
 </script>
 
@@ -25,6 +32,8 @@
         display: grid;
         grid-template-columns: 20% 80%;
         grid-template-rows: 70% 30%;
+
+        cursor: pointer;
     }
 
     .x5_list_item_thumbnail {
