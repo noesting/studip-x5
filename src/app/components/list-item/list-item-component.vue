@@ -15,7 +15,7 @@
         methods: {
             openModal() {
                 console.log('trying to open modal');
-                this.$modal.show(ItemDetailModal, { item: this.item }, { height: 'auto' });
+                this.$modal.show(ItemDetailModal, { item: this.item }, { height: 'auto', width: '70%' });
             }
         }
     };
