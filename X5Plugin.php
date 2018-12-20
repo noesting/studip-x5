@@ -1,12 +1,15 @@
 <?php
+use Argonauts\Contracts\JsonApiPlugin;
 
 /**
  * X5 Stud.IP plugin.
  */
+
 class X5Plugin extends StudIPPlugin implements
 /* Plugin Interfaces */
 SystemPlugin,
-StandardPlugin
+StandardPlugin,
+JsonApiPlugin
 {
     public function __construct()
     {
@@ -166,4 +169,18 @@ StandardPlugin
     {
         return $GLOBALS['perm']->have_perm('dozent');
     }
+
+    // JSON API Methods
+
+    public function registerAuthenticatedRoutes(\Slim\App $app)
+    {}
+
+    public function registerUnauthenticatedRoutes(\Slim\App $app)
+    {}
+
+    public function registerSchemas()
+    {
+        return [];
+    }
+
 }
