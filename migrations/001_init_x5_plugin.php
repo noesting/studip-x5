@@ -14,6 +14,14 @@ class InitX5Plugin extends Migration
             PRIMARY KEY (`id`)
         );");
 
+        DBManager::get()->query("CREATE TABLE IF NOT EXISTS `x5_items` (
+            `item_id` varchar(32) NOT NULL,
+            `mkdate` int(11) NOT NULL DEFAULT '0',
+            `chdate` int(11) NOT NULL DEFAULT '0',
+            `likes` int(11) NOT NULL DEFAULT '0',
+            PRIMARY KEY (`item_id`)
+        );");
+
         DBManager::get()->query("CREATE TABLE IF NOT EXISTS `x5_list_items` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `position` int(10) unsigned NOT NULL,
