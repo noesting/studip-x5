@@ -13,14 +13,14 @@
 
             <div class="interaction-fields">
                 <div class="interaction-grid-item">
-                    Sichtbar für Studenten ab dem {{ dateString }}
+                    Sichtbar für Studenten ab dem {{ dateString }}<br>
                     <StudipButton :text="'Datum auswählen'"></StudipButton>
                 </div>
                 <div class="interaction-grid-item">
                     Kommentarfeld
                     <textarea class="comment-text-area" rows="4"></textarea>
                 </div>
-                <div class="interaction-grid-item">Bewertung
+                <div class="interaction-grid-item">Bewertung<br>
                     <StudipButton :text="'Bewerten'"></StudipButton>
                 </div>
             </div>
