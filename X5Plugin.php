@@ -173,7 +173,9 @@ JsonApiPlugin
     // JSON API Methods
 
     public function registerAuthenticatedRoutes(\Slim\App $app)
-    {}
+    {
+        $list = new X5List();
+    }
 
     public function registerUnauthenticatedRoutes(\Slim\App $app)
     {}
