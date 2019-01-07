@@ -9,7 +9,7 @@
 
         <div class="x5_button_line x5_list_header_section">
             <div class="x5_button_container">
-                <StudipButton v-bind:text="'Filter'"></StudipButton>
+                <StudipButton @studipbuttonClick="showFilterModal" v-bind:text="'Filter'"></StudipButton>
             </div>
             <div class="x5_button_container">
                 <StudipButton v-bind:text="'Sortierung'"></StudipButton>
@@ -21,10 +21,18 @@
 <script>
     import StudipButton from '../studip-components/studip-button-component.vue';
     import StudipIcon from '../studip-components/studip-icon-button-component.vue';
+    import FilterModal from '../modals/filter-modal';
+
     export default {
         components: {
             StudipButton,
-            StudipIcon
+            StudipIcon,
+            FilterModal
+        },
+        methods: {
+            showFilterModal() {
+                this.$modal.show(FilterModal, {}, { height: 'auto', width: '40%' });
+            }
         }
     };
 </script>
