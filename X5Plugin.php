@@ -119,8 +119,8 @@ StandardPlugin
         //     'oer' => $navigation,
         // ];
         $navigation = new Navigation('X5GON Material', $url = PluginEngine::getURL($this, [], 'oer'));
-        $navigation->addSubNavigation('dozent_view', new Navigation('Dozent/in', $url));
-        $navigation->addSubNavigation('student_view', new Navigation('Student/in', PluginEngine::getURL($this, [], 'oer/student_view')));
+        $navigation->addSubNavigation('dozent_view', new Navigation('Listen bearbeiten', $url));
+        $navigation->addSubNavigation('student_view', new Navigation('Studentenansicht', PluginEngine::getURL($this, [], 'oer/student_view')));
 
         return array('oer' => $navigation);
     }
