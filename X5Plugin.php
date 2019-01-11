@@ -1,5 +1,24 @@
 <?php
+include 'routes/x5lists/GetX5List.php';
+include 'routes/x5lists/GetX5Lists.php';
+include 'routes/x5lists/RemoveX5List.php';
+include 'routes/x5lists/AlterX5List.php';
+include 'routes/x5lists/AddX5List.php';
+include 'routes/x5items/GetX5Item.php';
+include 'routes/x5items/AddX5Item.php';
+include 'routes/x5items/AlterX5Item.php';
+include 'routes/x5items/RemoveX5Item.php';
+
 use Argonauts\Contracts\JsonApiPlugin;
+use Argonauts\x5\Routes\Items\AddX5Item;
+use Argonauts\x5\Routes\Items\AlterX5Item;
+use Argonauts\x5\Routes\Items\GetX5Item;
+use Argonauts\x5\Routes\Items\RemoveX5Item;
+use Argonauts\x5\Routes\Lists\AddX5List;
+use Argonauts\x5\Routes\Lists\AlterX5List;
+use Argonauts\x5\Routes\Lists\GetX5List;
+use Argonauts\x5\Routes\Lists\GetX5Lists;
+use Argonauts\x5\Routes\Lists\RemoveX5List;
 
 /**
  * X5 Stud.IP plugin.
@@ -174,7 +193,16 @@ JsonApiPlugin
 
     public function registerAuthenticatedRoutes(\Slim\App $app)
     {
-        $list = new X5List();
+        $app->get('/list', GetX5List::class);
+        $app->get('/lists', GetX5Lists::class);
+        $app->get('/list/add', AddX5List::class);
+        $app->get('/list/alter', AlterX5List::class);
+        $app->get('/list/remove', RemoveX5List::class);
+
+        $app->get('/item', GetX5Item::class);
+        $app->get('/item/add', AddX5Item::class);
+        $app->get('/item/alter', AlterX5Item::class);
+        $app->get('/item/remove', RemoveX5Item::class);
     }
 
     public function registerUnauthenticatedRoutes(\Slim\App $app)
