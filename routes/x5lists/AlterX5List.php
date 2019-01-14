@@ -20,6 +20,6 @@ class AlterX5List extends JsonApiController
 
         // return $this->getContentResponse($lists);
 
-        return json_encode(array('AlterX5List' => 'works'));
+        return json_encode(array('AlterX5List' => $args['id']));
     }
 }

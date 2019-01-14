@@ -20,6 +20,6 @@ class GetX5Item extends JsonApiController
 
         // return $this->getContentResponse($lists);
 
-        return json_encode(array('GetX5Item' => 'works'));
+        return json_encode(array('GetX5Item' => $args['id']));
     }
 }

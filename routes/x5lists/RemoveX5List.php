@@ -20,6 +20,6 @@ class RemoveX5List extends JsonApiController
 
         // return $this->getContentResponse($lists);
 
-        return json_encode(array('RemoveX5List' => 'works'));
+        return json_encode(array('RemoveX5List' => $args['id']));
     }
 }
