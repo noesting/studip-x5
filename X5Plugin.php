@@ -1,18 +1,7 @@
 <?php
-// include 'routes/x5lists/GetX5List.php';
-// include 'routes/x5lists/GetX5Lists.php';
-// include 'routes/x5lists/RemoveX5List.php';
-// include 'routes/x5lists/AlterX5List.php';
-// include 'routes/x5lists/AddX5List.php';
-// include 'routes/x5items/GetX5Item.php';
-// include 'routes/x5items/AddX5Item.php';
-// include 'routes/x5items/AlterX5Item.php';
-// include 'routes/x5items/RemoveX5Item.php';
-
-include 'routes/Routemap.php';
 
 use Argonauts\Contracts\JsonApiPlugin;
-use Argonauts\x5\Routemap;
+use X5\Routes\Routemap;
 
 /**
  * X5 Stud.IP plugin.
@@ -195,7 +184,10 @@ JsonApiPlugin
 
     public function registerSchemas()
     {
-        return [];
+        return [
+            X5\Models\X5ItemDummy::class => X5\Schemas\X5Item::class,
+            // X5\Models\X5Item::class => X5\Schemas\X5Item::class,
+        ];
     }
 
 }

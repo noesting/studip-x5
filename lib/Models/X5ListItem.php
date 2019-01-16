@@ -1,6 +1,8 @@
 <?php
 
-class X5ListItem extends SimpleORMap
+namespace X5\Models;
+
+class X5ListItem extends \SimpleORMap
 {
     protected static function configure($config = array())
     {

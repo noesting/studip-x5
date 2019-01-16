@@ -1,19 +1,6 @@
 <?php
 
-namespace Argonauts\x5;
-
-include 'x5lists/GetX5List.php';
-include 'x5lists/GetX5Lists.php';
-include 'x5lists/RemoveX5List.php';
-include 'x5lists/AlterX5List.php';
-include 'x5lists/AddX5List.php';
-include 'x5items/GetX5Item.php';
-include 'x5items/AddX5Item.php';
-include 'x5items/AlterX5Item.php';
-include 'x5items/RemoveX5Item.php';
-
-use Argonauts\x5\Routes\Items;
-use Argonauts\x5\Routes\Lists;
+namespace X5\Routes;
 
 class Routemap
 {

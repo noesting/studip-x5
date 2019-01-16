@@ -1,10 +1,12 @@
 <?php
 
-class X5List extends SimpleORMap
+namespace X5\Models;
+
+class X5Item extends \SimpleORMap
 {
     protected static function configure($config = array())
     {
-        $config['db_table'] = 'x5_lists';
+        $config['db_table'] = 'x5_list_items';
         parent::configure($config);
     }
 }

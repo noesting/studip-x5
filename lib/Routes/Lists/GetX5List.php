@@ -1,12 +1,12 @@
 <?php
 
-namespace Argonauts\x5\Routes\Lists;
+namespace X5\Routes\Lists;
 
 use Argonauts\JsonApiController;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class GetX5Lists extends JsonApiController
+class GetX5List extends JsonApiController
 {
     public function __invoke(Request $request, Response $response, $args)
     {
@@ -20,6 +20,6 @@ class GetX5Lists extends JsonApiController
 
         // return $this->getContentResponse($lists);
 
-        return json_encode(array('GetX5Lists' => 'works'));
+        return json_encode(array('GetX5List' => $args['id']));
     }
 }
