@@ -187,7 +187,7 @@ JsonApiPlugin
         return [
             X5\Models\X5ItemDummy::class => X5\Schemas\X5Item::class,
             // X5\Models\X5Item::class => X5\Schemas\X5Item::class,
+            X5\Models\X5List::class => X5\Schemas\X5List::class,
         ];
     }
-
 }
