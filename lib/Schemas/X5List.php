@@ -2,6 +2,8 @@
 
 namespace X5\Schemas;
 
+use Argonauts\Schemas\SchemaProvider;
+
 class X5List extends SchemaProvider
 {
     const TYPE = 'x5-lists';
