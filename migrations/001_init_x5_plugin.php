@@ -6,8 +6,9 @@ class InitX5Plugin extends Migration
     {
         DBManager::get()->query("CREATE TABLE IF NOT EXISTS `x5_lists` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
+            `title` varchar(32) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,
             `range_id` varchar(32) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,
-            `position` int(10) unsigned NOT NULL,
+            `position` int(10) unsigned NOT NULL DEFAULT '0',
             `mkdate` int(11) NOT NULL DEFAULT '0',
             `chdate` int(11) NOT NULL DEFAULT '0',
             `visible` boolean NOT NULL,
@@ -24,7 +25,7 @@ class InitX5Plugin extends Migration
 
         DBManager::get()->query("CREATE TABLE IF NOT EXISTS `x5_list_items` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
-            `position` int(10) unsigned NOT NULL,
+            `position` int(10) unsigned NOT NULL DEFAULT '0',
             `mkdate` int(11) NOT NULL DEFAULT '0',
             `chdate` int(11) NOT NULL DEFAULT '0',
             `item_id` varchar(32) NOT NULL,

@@ -16,6 +16,7 @@ class X5List extends SchemaProvider
     public function getAttributes($resource)
     {
         return [
+            'title' => $resource['title'],
             'range_id' => $resource['range_id'],
             'position' => (int) $resource['position'],
             'mkdate' => date('c', $resource['mkdate']),
@@ -23,11 +24,9 @@ class X5List extends SchemaProvider
             'visible' => (boolean) $resource['visible'],
         ];
     }
-}
 
-//             `id` int(11) NOT NULL AUTO_INCREMENT,
-//             `range_id` varchar(32) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,
-//             `position` int(10) unsigned NOT NULL,
-//             `mkdate` int(11) NOT NULL DEFAULT '0',
-//             `chdate` int(11) NOT NULL DEFAULT '0',
-//             `visible` boolean NOT NULL,
+    public function getRelationships($resource, $isPrimary, array $includeRelationships)
+    {
+        return [];
+    }
+}
