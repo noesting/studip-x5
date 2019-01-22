@@ -3,6 +3,8 @@ import VModal from 'vue-js-modal';
 import DozentVue from './app/Dozent';
 import StudentVue from './app/Student';
 
+const VueResource = require('vue-resource');
+
 const bootstrap = () => {
     document.addEventListener('DOMContentLoaded', function(event) {
         startVue();
@@ -11,6 +13,7 @@ const bootstrap = () => {
 
 const startVue = () => {
     Vue.use(VModal, { dialog: true, dynamic: true, injectModalsContainer: true });
+    Vue.use(VueResource);
 
     const dozent_vue_element = document.getElementById('dozent_vue');
     const student_vue_element = document.getElementById('student_vue');
