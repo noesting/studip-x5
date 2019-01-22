@@ -122,6 +122,31 @@
         let newListItem = { title: 'Neue Liste', list: [] };
         if (!itemExistsInListByTitle(newListItem, customLists)) {
             customLists.push(newListItem);
+            const headers = {
+                Authorization: 'Basic dGVzdF9kb3plbnQ6dGVzdGluZw==',
+                'Content-Type': 'application/json'
+            };
+
+            const listObj = {
+                data: {
+                    type: 'x5-lists',
+                    attributes: {
+                        title: newListItem.title
+                    },
+
+                    relationships: {
+                        course: {
+                            type: 'courses',
+                            id: '12345'
+                        }
+                    }
+                }
+            };
+            Vue.http
+                .post('http://localhost/studip-42/plugins.php/argonautsplugin/list/add', listObj, { headers })
+                .then(response => {
+                    console.log('response', response);
+                });
         } else {
             addIncrementedNewListTocustomLists(newListItem, customLists);
         }
