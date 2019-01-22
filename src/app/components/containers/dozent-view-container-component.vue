@@ -124,7 +124,6 @@
             const currentUrl = window.location.href;
             const rangeId = currentUrl.split('?cid=')[1];
             const headers = {
-                Authorization: 'Basic dGVzdF9kb3plbnQ6dGVzdGluZw==',
                 'Content-Type': 'application/json'
             };
 
