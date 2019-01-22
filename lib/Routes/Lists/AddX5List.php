@@ -66,18 +66,19 @@ class AddX5List extends JsonApiController
 
         // $x5list->store();
 
-        return $this->createX5List($title, $course_id);
+        return $this->createX5List($title, $courseId);
     }
 
     private function createX5List($title, $range_id)
     {
+        $currentTime = time();
         return X5List::create(
             [
                 'title' => $title,
                 'range_id' => $range_id,
                 'position' => '0',
-                'mkdate' => time(),
-                'chdate' => $x5list->mkdate,
+                'mkdate' => $currentTime,
+                'chdate' => $currentTime,
                 'visible' => false,
             ]
         );
