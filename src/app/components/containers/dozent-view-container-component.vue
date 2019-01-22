@@ -121,7 +121,8 @@
     const addNewListToCustomLists = customLists => {
         let newListItem = { title: 'Neue Liste', list: [] };
         if (!itemExistsInListByTitle(newListItem, customLists)) {
-            customLists.push(newListItem);
+            const currentUrl = window.location.href;
+            const rangeId = currentUrl.split('?cid=')[1];
             const headers = {
                 Authorization: 'Basic dGVzdF9kb3plbnQ6dGVzdGluZw==',
                 'Content-Type': 'application/json'
@@ -137,7 +138,7 @@
                     relationships: {
                         course: {
                             type: 'courses',
-                            id: '12345'
+                            id: rangeId
                         }
                     }
                 }
@@ -146,6 +147,10 @@
                 .post('http://localhost/studip-42/plugins.php/argonautsplugin/list/add', listObj, { headers })
                 .then(response => {
                     console.log('response', response);
+                    if (response.ok) {
+                        console.log('list successfully created');
+                        customLists.push(newListItem);
+                    }
                 });
         } else {
             addIncrementedNewListTocustomLists(newListItem, customLists);
