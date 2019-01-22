@@ -87,9 +87,7 @@
             },
 
             addNewCustomList() {
-                addNewListToCustomLists(this.customLists);
-                this.setCurrentCustomListIndex(this.customLists.length - 1);
-                this.$refs.customListHeader.renameListClick();
+                addNewList(this.customLists, this);
             },
 
             removeCurrentListItem() {
@@ -118,65 +116,79 @@
         }
     };
 
-    const addNewListToCustomLists = customLists => {
-        let newListItem = { title: 'Neue Liste', list: [] };
-        if (!itemExistsInListByTitle(newListItem, customLists)) {
-            const currentUrl = window.location.href;
-            const rangeId = currentUrl.split('?cid=')[1];
-            const headers = {
-                'Content-Type': 'application/json'
-            };
-
-            const listObj = {
-                data: {
-                    type: 'x5-lists',
-                    attributes: {
-                        title: newListItem.title
-                    },
-
-                    relationships: {
-                        course: {
-                            type: 'courses',
-                            id: rangeId
-                        }
-                    }
-                }
-            };
-            Vue.http
-                .post('http://localhost/studip-42/plugins.php/argonautsplugin/list/add', listObj, { headers })
-                .then(response => {
-                    console.log('response', response);
-                    if (response.ok) {
-                        console.log('list successfully created');
-                        customLists.push(newListItem);
-                    }
-                });
-        } else {
-            addIncrementedNewListTocustomLists(newListItem, customLists);
-        }
-    };
-
-    const addIncrementedNewListTocustomLists = (newListItem, customLists) => {
-        let i = 1;
-        let inserted = false;
-        while (!inserted || i > 100) {
-            newListItem.title = 'Neue Liste ' + i;
-            if (!itemExistsInListByTitle(newListItem, customLists)) {
-                customLists.push(newListItem);
-                inserted = true;
+    const addNewList = (customLists, dozentViewContainer) => {
+        const listObject = getNewListObjectForCustomLists(customLists);
+        const json = getJsonApiFormatFromList(listObject);
+        addListToDatabase(json).then(response => {
+            if (response.ok) {
+                addNewListToArray(listObject, customLists, dozentViewContainer);
             }
-            i++;
-        }
+        });
     };
 
-    const itemExistsInListByTitle = (item, list) => {
+    const getNewListObjectForCustomLists = customLists => {
+        const newListObject = {
+            title: getNewListTitle(customLists),
+            list: []
+        };
+
+        return newListObject;
+    };
+
+    const getNewListTitle = customLists => {
+        let title = 'Neue Liste';
+        let index = 1;
+        while (titleExistsInList(title, customLists)) {
+            title = 'Neue Liste ' + index;
+            index++;
+        }
+
+        return title;
+    };
+
+    const titleExistsInList = (title, list) => {
         for (let i = 0; i < list.length; i++) {
-            if (list[i].title === item.title) {
+            if (list[i].title === title) {
                 return true;
             }
         }
 
         return false;
+    };
+
+    const getJsonApiFormatFromList = newListItem => {
+        const currentUrl = window.location.href;
+        const rangeId = currentUrl.split('?cid=')[1];
+
+        return {
+            data: {
+                type: 'x5-lists',
+                attributes: {
+                    title: newListItem.title
+                },
+
+                relationships: {
+                    course: {
+                        type: 'courses',
+                        id: rangeId
+                    }
+                }
+            }
+        };
+    };
+
+    const addListToDatabase = newListJson => {
+        const headers = {
+            'Content-Type': 'application/json'
+        };
+
+        return Vue.http.post('http://localhost/studip-42/plugins.php/argonautsplugin/list/add', newListJson, { headers });
+    };
+
+    const addNewListToArray = (listObject, customLists, dozentViewContainer) => {
+        customLists.push(listObject);
+        dozentViewContainer.setCurrentCustomListIndex(customLists.length - 1);
+        dozentViewContainer.$refs.customListHeader.renameListClick();
     };
 </script>
 
