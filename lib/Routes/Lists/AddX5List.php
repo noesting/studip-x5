@@ -15,15 +15,10 @@ class AddX5List extends JsonApiController
     use ValidationTrait;
     public function __invoke(Request $request, Response $response, $args)
     {
-        // if (!$lists = X5List::find($args['id'])) {
-        //     throw new RecordNotFoundException();
-        // }
-
+        // TODO Authorization
         // if (1 == 2) {
         //     throw new AuthorizationFailedException();
         // }
-
-        // return $this->getContentResponse($lists);
 
         $x5list = $this->addX5List($request);
 
@@ -54,17 +49,6 @@ class AddX5List extends JsonApiController
 
         $title = self::arrayGet($json, 'data.attributes.title');
         $courseId = self::arrayGet($json, 'data.relationships.course.id');
-
-        // $x5list = new X5List();
-        // $x5list->title = $title;
-        // $x5list->range_id = $courseId;
-        // // $x5list->range_id = 'a07535cf2f8a72df33c12ddfa4b53dde'; // Test Veranstaltung
-        // $x5list->position = '0';
-        // $x5list->mkdate = time();
-        // $x5list->chdate = $x5list->mkdate;
-        // $x5list->visible = false;
-
-        // $x5list->store();
 
         return $this->createX5List($title, $courseId);
     }
