@@ -39,13 +39,15 @@
             RecommendationsList,
             CustomList
         },
+
         data() {
             return {
                 recommendations: data.recommendations,
-                customLists: getCustomListData(),
+                customLists: setInitialCustomLists(),
                 currentCustomListIndex: 0
             };
         },
+
         computed: {
             customListItemlist() {
                 if (this.customLists && this.customLists.length > 0) {
@@ -55,6 +57,12 @@
                 return null;
             }
         },
+
+        created() {
+            console.log('customLists before', this.customLists);
+            setCustomListsFromDB(this.customLists);
+        },
+
         methods: {
             recommendationsListClick(itemId) {
                 let exists = false;
@@ -113,11 +121,52 @@
         }
     };
 
-    const getCustomListData = () => {
-        if (data.customLists && data.customLists.length > 0) {
-            return data.customLists;
-        } else {
-            return [{ title: 'Neue Liste', list: [] }];
+    const setInitialCustomLists = () => {
+        return [{}];
+    };
+
+    const setCustomListsFromDB = customLists => {
+        const headers = getHeaders();
+        const rangeId = getRangeId();
+
+        return Vue.http
+            .get('http://localhost/studip-42/plugins.php/argonautsplugin/x5lists/' + rangeId, { headers })
+            .then(response => handleGetListsResponse(response, customLists));
+    };
+
+    const getRangeId = () => {
+        const currentUrl = window.location.href;
+        const rangeId = currentUrl.split('?cid=')[1];
+
+        return rangeId;
+    };
+
+    const getHeaders = () => {
+        const headers = {
+            'Content-Type': 'application/json'
+        };
+
+        return headers;
+    };
+
+    const setCustomListsFromResponse = (response, customLists) => {
+        customLists.shift();
+        for (let i = 0; i < response.body.data.length; i++) {
+            addListToArray(customLists, response.body.data[i].attributes);
+        }
+    };
+
+    const addListToArray = (customLists, list) => {
+        customLists.push({
+            id,
+            title,
+            list: []
+        });
+    };
+
+    const handleGetListsResponse = (response, customLists) => {
+        if (response.ok) {
+            setCustomListsFromResponse(response, customLists);
         }
     };
 
@@ -208,8 +257,7 @@
     };
 
     const getJsonApiFormatForUpdate = listItem => {
-        const currentUrl = window.location.href;
-        const rangeId = currentUrl.split('?cid=')[1];
+        const rangeId = getRangeId();
 
         return {
             data: {
