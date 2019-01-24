@@ -133,6 +133,7 @@
 
             listTitleFocusOut() {
                 this.listTitleDisabled = true;
+                this.$emit('alterList');
             },
 
             addList() {
