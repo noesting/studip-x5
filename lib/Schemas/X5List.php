@@ -3,6 +3,7 @@
 namespace X5\Schemas;
 
 use Argonauts\Schemas\SchemaProvider;
+use Neomerx\JsonApi\Document\Link;
 
 class X5List extends SchemaProvider
 {
@@ -19,7 +20,6 @@ class X5List extends SchemaProvider
     {
         return [
             'title' => $resource['title'],
-            'range_id' => $resource['range_id'],
             'position' => (int) $resource['position'],
             'mkdate' => date('c', $resource['mkdate']),
             'chdate' => date('c', $resource['chdate']),
@@ -29,6 +29,11 @@ class X5List extends SchemaProvider
 
     public function getRelationships($resource, $isPrimary, array $includeRelationships)
     {
-        return [];
+        return [
+            'course' => [
+                self::DATA => $resource->course,
+                self::LINKS => [Link::RELATED => new Link('/courses/' . $resource->range_id)],
+            ],
+        ];
     }
 }
