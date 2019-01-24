@@ -7,6 +7,7 @@
             :currentCustomListIndex="currentCustomListIndex"
             @setCurrentCustomListIndex="setCurrentCustomListIndex"
             @addNewList="addNewCustomList"
+            @alterList="alterCustomList"
             @removeCurrentListItem="removeCurrentListItem"
             @shareListToggle="shareShareCurrentCustomList"
         ></CustomListHeader>
@@ -90,6 +91,10 @@
                 addNewList(this.customLists, this);
             },
 
+            alterCustomList() {
+                alterCustomList(this.customLists, this.currentCustomListIndex, this);
+            },
+
             removeCurrentListItem() {
                 const deleteListIndex = this.currentCustomListIndex;
                 this.setCurrentCustomListIndex(--this.currentCustomListIndex);
@@ -121,6 +126,8 @@
         const json = getJsonApiFormatFromList(listObject);
         addListToDatabase(json).then(response => {
             if (response.ok) {
+                console.log('response', response);
+                listObject.id = response.body.data.id;
                 addNewListToArray(listObject, customLists, dozentViewContainer);
             }
         });
@@ -189,6 +196,51 @@
         customLists.push(listObject);
         dozentViewContainer.setCurrentCustomListIndex(customLists.length - 1);
         dozentViewContainer.$refs.customListHeader.renameListClick();
+    };
+
+    const alterCustomList = (customLists, currentCustomListIndex, dozentViewContainer) => {
+        const json = getJsonApiFormatForUpdate(customLists[currentCustomListIndex]);
+        alterListInDatabase(json).then(response => {
+            if (response.ok) {
+                console.log('WOHOO update worked');
+            }
+        });
+    };
+
+    const getJsonApiFormatForUpdate = listItem => {
+        const currentUrl = window.location.href;
+        const rangeId = currentUrl.split('?cid=')[1];
+
+        return {
+            data: {
+                id: listItem.id,
+                type: 'x5-lists',
+                attributes: {
+                    title: listItem.title,
+                    visible: listItem.visible || false,
+                    position: listItem.position || '0'
+                },
+
+                relationships: {
+                    course: {
+                        type: 'courses',
+                        id: rangeId
+                    }
+                }
+            }
+        };
+    };
+
+    const alterListInDatabase = alteredListJson => {
+        const headers = {
+            'Content-Type': 'application/json'
+        };
+
+        return Vue.http.patch(
+            'http://localhost/studip-42/plugins.php/argonautsplugin/list/' + alteredListJson.data.id + '/alter',
+            alteredListJson,
+            { headers }
+        );
     };
 </script>
 
