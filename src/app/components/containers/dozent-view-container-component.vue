@@ -32,6 +32,11 @@
     import RecommendationsList from '../recommendations-list/recommendations-list-component.vue';
     import CustomList from '../custom-list/custom-list.component.vue';
 
+    import * as DBX5ListsGet from './db-methods/x5lists/x5lists_get';
+    import * as DBX5ListCreate from './db-methods/x5lists/x5lists_create';
+    import * as DBX5ListEdit from './db-methods/x5lists/x5list_edit';
+    import * as DBX5ListRemove from './db-methods/x5lists/x5lists_remove';
+
     export default {
         components: {
             RecommendationsListHeader,
@@ -43,7 +48,7 @@
         data() {
             return {
                 recommendations: data.recommendations,
-                customLists: setInitialCustomLists(),
+                customLists: DBX5ListsGet.setInitialCustomLists(),
                 currentCustomListIndex: 0
             };
         },
@@ -59,7 +64,7 @@
         },
 
         created() {
-            setCustomListsFromDB(this.customLists);
+            DBX5ListsGet.setCustomListsFromDB(this.customLists, this);
         },
 
         methods: {
@@ -95,11 +100,11 @@
             },
 
             addNewCustomList() {
-                addNewList(this.customLists, this);
+                DBX5ListCreate.addNewList(this.customLists, this);
             },
 
             alterCustomList() {
-                alterCustomList(this.customLists, this.currentCustomListIndex, this);
+                DBX5ListEdit.alterCustomList(this.customLists, this.currentCustomListIndex, this);
             },
 
             removeCurrentListItem() {
@@ -110,7 +115,7 @@
                     addNewList(this.customLists, this);
                 }
 
-                removeListFromDB(this.customLists, deleteListIndex, this);
+                DBX5ListRemove.removeListFromDB(this.customLists, deleteListIndex, this);
             },
 
             shareShareCurrentCustomList() {
@@ -118,190 +123,6 @@
                     .shared;
             }
         }
-    };
-
-    const removeListFromDB = (customLists, deleteListIndex, dozentViewContainer) => {
-        const idToDelete = customLists[deleteListIndex].id;
-
-        const headers = getHeaders();
-
-        Vue.http
-            .delete('http://localhost/studip-42/plugins.php/argonautsplugin/x5list/' + idToDelete + '/remove')
-            .then(response => {
-                if (response.ok) {
-                    customLists.splice(deleteListIndex, 1);
-                }
-            });
-    };
-
-    const setInitialCustomLists = () => {
-        return [{}];
-    };
-
-    const setCustomListsFromDB = customLists => {
-        const headers = getHeaders();
-        const rangeId = getRangeId();
-
-        return Vue.http
-            .get('http://localhost/studip-42/plugins.php/argonautsplugin/x5lists/' + rangeId, { headers })
-            .then(response => handleGetListsResponse(response, customLists));
-    };
-
-    const getRangeId = () => {
-        const currentUrl = window.location.href;
-        const rangeId = currentUrl.split('?cid=')[1];
-
-        return rangeId;
-    };
-
-    const getHeaders = () => {
-        const headers = {
-            'Content-Type': 'application/json'
-        };
-
-        return headers;
-    };
-
-    const setCustomListsFromResponse = (response, customLists) => {
-        for (let i = 0; i < response.body.data.length; i++) {
-            addListToArray(customLists, response.body.data[i]);
-        }
-        customLists.shift();
-    };
-
-    const addListToArray = (customLists, data) => {
-        customLists.push({
-            id: data.id,
-            title: data.attributes.title,
-            list: []
-        });
-    };
-
-    const handleGetListsResponse = (response, customLists) => {
-        if (response.ok) {
-            setCustomListsFromResponse(response, customLists);
-        }
-    };
-
-    const addNewList = (customLists, dozentViewContainer) => {
-        const listObject = getNewListObjectForCustomLists(customLists);
-        const json = getJsonApiFormatFromList(listObject);
-        addListToDatabase(json).then(response => {
-            if (response.ok) {
-                console.log('response', response);
-                listObject.id = response.body.data.id;
-                addNewListToArray(listObject, customLists, dozentViewContainer);
-            }
-        });
-    };
-
-    const getNewListObjectForCustomLists = customLists => {
-        const newListObject = {
-            title: getNewListTitle(customLists),
-            list: []
-        };
-
-        return newListObject;
-    };
-
-    const getNewListTitle = customLists => {
-        let title = 'Neue Liste';
-        let index = 1;
-        while (titleExistsInList(title, customLists)) {
-            title = 'Neue Liste ' + index;
-            index++;
-        }
-
-        return title;
-    };
-
-    const titleExistsInList = (title, list) => {
-        for (let i = 0; i < list.length; i++) {
-            if (list[i].title === title) {
-                return true;
-            }
-        }
-
-        return false;
-    };
-
-    const getJsonApiFormatFromList = newListItem => {
-        const currentUrl = window.location.href;
-        const rangeId = currentUrl.split('?cid=')[1];
-
-        return {
-            data: {
-                type: 'x5-lists',
-                attributes: {
-                    title: newListItem.title
-                },
-
-                relationships: {
-                    course: {
-                        type: 'courses',
-                        id: rangeId
-                    }
-                }
-            }
-        };
-    };
-
-    const addListToDatabase = newListJson => {
-        const headers = {
-            'Content-Type': 'application/json'
-        };
-
-        return Vue.http.post('http://localhost/studip-42/plugins.php/argonautsplugin/list/add', newListJson, { headers });
-    };
-
-    const addNewListToArray = (listObject, customLists, dozentViewContainer) => {
-        customLists.push(listObject);
-        dozentViewContainer.setCurrentCustomListIndex(customLists.length - 1);
-        dozentViewContainer.$refs.customListHeader.renameListClick();
-    };
-
-    const alterCustomList = (customLists, currentCustomListIndex, dozentViewContainer) => {
-        const json = getJsonApiFormatForUpdate(customLists[currentCustomListIndex]);
-        alterListInDatabase(json).then(response => {
-            if (response.ok) {
-                console.log('WOHOO update worked');
-            }
-        });
-    };
-
-    const getJsonApiFormatForUpdate = listItem => {
-        const rangeId = getRangeId();
-
-        return {
-            data: {
-                id: listItem.id,
-                type: 'x5-lists',
-                attributes: {
-                    title: listItem.title,
-                    visible: listItem.visible || false,
-                    position: listItem.position || '0'
-                },
-
-                relationships: {
-                    course: {
-                        type: 'courses',
-                        id: rangeId
-                    }
-                }
-            }
-        };
-    };
-
-    const alterListInDatabase = alteredListJson => {
-        const headers = {
-            'Content-Type': 'application/json'
-        };
-
-        return Vue.http.patch(
-            'http://localhost/studip-42/plugins.php/argonautsplugin/list/' + alteredListJson.data.id + '/alter',
-            alteredListJson,
-            { headers }
-        );
     };
 </script>
 
