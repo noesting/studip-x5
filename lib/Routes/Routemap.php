@@ -10,7 +10,7 @@ class Routemap
         $app->get('/x5lists/{range_id}', Lists\GetX5Lists::class);
         $app->post('/list/add', Lists\AddX5List::class);
         $app->patch('/list/{id}/alter', Lists\AlterX5List::class);
-        $app->get('/list/{id}/remove', Lists\RemoveX5List::class);
+        $app->delete('/x5list/{id}/remove', Lists\RemoveX5List::class);
 
         $app->get('/item/{id}/show', Items\GetX5Item::class);
         $app->get('/item/add', Items\AddX5Item::class);
