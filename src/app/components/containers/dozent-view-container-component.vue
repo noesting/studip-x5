@@ -59,7 +59,6 @@
         },
 
         created() {
-            console.log('customLists before', this.customLists);
             setCustomListsFromDB(this.customLists);
         },
 
@@ -108,10 +107,10 @@
                 this.setCurrentCustomListIndex(--this.currentCustomListIndex);
 
                 if (this.customLists.length === 1) {
-                    this.customLists.push({ title: 'Neue Liste', list: [] });
+                    addNewList(this.customLists, this);
                 }
 
-                this.customLists.splice(deleteListIndex, 1);
+                removeListFromDB(this.customLists, deleteListIndex, this);
             },
 
             shareShareCurrentCustomList() {
@@ -119,6 +118,20 @@
                     .shared;
             }
         }
+    };
+
+    const removeListFromDB = (customLists, deleteListIndex, dozentViewContainer) => {
+        const idToDelete = customLists[deleteListIndex].id;
+
+        const headers = getHeaders();
+
+        Vue.http
+            .delete('http://localhost/studip-42/plugins.php/argonautsplugin/x5list/' + idToDelete + '/remove')
+            .then(response => {
+                if (response.ok) {
+                    customLists.splice(deleteListIndex, 1);
+                }
+            });
     };
 
     const setInitialCustomLists = () => {
@@ -150,16 +163,16 @@
     };
 
     const setCustomListsFromResponse = (response, customLists) => {
-        customLists.shift();
         for (let i = 0; i < response.body.data.length; i++) {
-            addListToArray(customLists, response.body.data[i].attributes);
+            addListToArray(customLists, response.body.data[i]);
         }
+        customLists.shift();
     };
 
-    const addListToArray = (customLists, list) => {
+    const addListToArray = (customLists, data) => {
         customLists.push({
-            id,
-            title,
+            id: data.id,
+            title: data.attributes.title,
             list: []
         });
     };
