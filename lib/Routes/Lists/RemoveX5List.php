@@ -5,21 +5,25 @@ namespace X5\Routes\Lists;
 use Argonauts\JsonApiController;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use X5\Models\X5List;
 
 class RemoveX5List extends JsonApiController
 {
     public function __invoke(Request $request, Response $response, $args)
     {
-        // if (!$lists = X5List::find($args['id'])) {
-        //     throw new RecordNotFoundException();
-        // }
+        if (!$list = X5List::find($args['id'])) {
+            throw new RecordNotFoundException();
+        }
 
+        // TODO: Authorization
         // if (1 == 2) {
         //     throw new AuthorizationFailedException();
         // }
 
-        // return $this->getContentResponse($lists);
+        if (!$list->delete()) {
+            throw new InternalServerError('Could not delete x5list.');
+        }
 
-        return json_encode(array('RemoveX5List' => $args['id']));
+        return $this->getCodeResponse(204);
     }
 }
