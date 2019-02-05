@@ -48,7 +48,6 @@ const setItems = (customList, recommendations, dozentViewContainer) => {
                         response.body.data.relationships['x5-items'].meta[i].id,
                         recommendations
                     );
-                    console.log('customList Item', item);
                     customList.list.push(item);
                 }
             }
