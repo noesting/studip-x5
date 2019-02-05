@@ -9,7 +9,7 @@ export const setCustomListsFromDB = (customLists, recommendations, dozentViewCon
     const rangeId = Connection.getRangeId();
 
     return dozentViewContainer.$http
-        .get(Connection.REST_ENDPOINT + 'x5lists/' + rangeId, { headers })
+        .get(Connection.REST_ENDPOINT + 'courses/' + rangeId + '/x5lists', { headers })
         .then(response => handleGetListsResponse(response, customLists, recommendations, dozentViewContainer));
 };
 
