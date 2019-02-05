@@ -58,8 +58,16 @@ const setItems = (customList, recommendations, dozentViewContainer) => {
 const getItemFromRecommentdations = (itemId, recommendations) => {
     for (let i = 0; i < recommendations.length; i++) {
         if (recommendations[i].id === itemId) {
-            console.log('found');
             return recommendations[i];
         }
     }
+};
+
+export const setStudentListsFromDB = (studentViewContainer, lists, recommendations) => {
+    const headers = Connection.getHeaders();
+    const rangeId = Connection.getRangeId();
+
+    return studentViewContainer.$http
+        .get(Connection.REST_ENDPOINT + 'x5lists/' + rangeId + '/student', { headers })
+        .then(response => handleGetListsResponse(response, lists, recommendations, studentViewContainer));
 };
