@@ -18,7 +18,7 @@ const getJsonApiFormatForUpdate = listItem => {
             type: 'x5-lists',
             attributes: {
                 title: listItem.title,
-                visible: listItem.visible || false,
+                visible: listItem.shared || false,
                 position: listItem.position || '0'
             },
 

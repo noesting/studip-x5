@@ -126,6 +126,7 @@
             shareShareCurrentCustomList() {
                 this.customLists[this.currentCustomListIndex].shared = !this.customLists[this.currentCustomListIndex]
                     .shared;
+                DBX5ListEdit.alterCustomList(this.customLists, this.currentCustomListIndex, this);
             }
         }
     };
