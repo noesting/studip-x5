@@ -8,7 +8,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use X5\Models\X5List;
 use X5\Models\X5ListItem;
 
-class GetItemsFromList extends JsonApiController
+class X5ListItemsShow extends JsonApiController
 {
     public function __invoke(Request $request, Response $response, $args)
     {

@@ -10,38 +10,19 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use X5\Models\X5List;
 use X5\Schemas\X5List as X5ListSchema;
 
-class AlterX5List extends JsonApiController
+class X5Listcreate extends JsonApiController
 {
     use ValidationTrait;
     public function __invoke(Request $request, Response $response, $args)
     {
-        if (!$x5list = X5List::find($args['id'])) {
-            throw new RecordNotFoundException();
-        }
-
         // TODO Authorization
         // if (1 == 2) {
         //     throw new AuthorizationFailedException();
         // }
 
-        $result = $this->updateX5List($request, $x5list);
+        $x5list = $this->addX5List($request);
 
-        return $this->getCreatedResponse($result);
-    }
-
-    public function updateX5List($request, $x5list)
-    {
-        $json = $this->validate($request);
-
-        $title = self::arrayGet($json, 'data.attributes.title');
-
-        $x5list->title = self::arrayGet($json, 'data.attributes.title');
-        $x5list->position = self::arrayGet($json, 'data.attributes.position');
-        $x5list->visible = self::arrayGet($json, 'data.attributes.visible');
-        $x5list->chdate = time();
-
-        $x5list->store();
-        return $x5list;
+        return $this->getCreatedResponse($x5list);
     }
 
     protected function validateResourceDocument($json, $data)
@@ -60,5 +41,30 @@ class AlterX5List extends JsonApiController
         if (!$this->validateResourceObject($json, 'data.relationships.course', CourseSchema::TYPE)) {
             return 'Missing `course` relationship';
         }
+    }
+
+    private function addX5List($request)
+    {
+        $json = $this->validate($request);
+
+        $title = self::arrayGet($json, 'data.attributes.title');
+        $courseId = self::arrayGet($json, 'data.relationships.course.id');
+
+        return $this->createX5List($title, $courseId);
+    }
+
+    private function createX5List($title, $range_id)
+    {
+        $currentTime = time();
+        return X5List::create(
+            [
+                'title' => $title,
+                'range_id' => $range_id,
+                'position' => '0',
+                'mkdate' => $currentTime,
+                'chdate' => $currentTime,
+                'visible' => false,
+            ]
+        );
     }
 }

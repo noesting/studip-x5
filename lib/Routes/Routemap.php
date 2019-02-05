@@ -13,26 +13,26 @@ class Routemap
 
     public static function registerCoursesRoutes(\Slim\App $app)
     {
-        $app->get('/courses/{range_id}/x5lists', Lists\GetX5Lists::class);
+        $app->get('/courses/{range_id}/x5lists', Lists\CoursesX5ListsShow::class);
         // TODO: handle other role in route
-        $app->get('/courses/{id}/x5lists/student', Lists\StudentGetX5Lists::class);
+        $app->get('/courses/{id}/x5lists/student', Lists\CoursesX5ListsShowStudent::class);
     }
 
     public static function registerX5ListRoutes(\Slim\App $app)
     {
-        $app->get('/x5list/{id}/show', Lists\GetX5List::class);
-        $app->get('/x5list/{id}/items', Lists\GetItemsFromList::class);
-        $app->post('/x5list/{id}/items/add', Lists\AddItemsToList::class);
-        $app->post('/x5list/add', Lists\AddX5List::class);
-        $app->patch('/x5list/{id}/update', Lists\AlterX5List::class);
-        $app->delete('/x5list/{id}/remove', Lists\RemoveX5List::class);
+        $app->get('/x5list/{id}/show', Lists\X5ListShow::class);
+        $app->get('/x5list/{id}/items', Lists\X5ListItemsShow::class);
+        $app->post('/x5list/{id}/items/add', Lists\X5ListItemsAdd::class);
+        $app->post('/x5list/create', Lists\X5ListCreate::class);
+        $app->patch('/x5list/{id}/update', Lists\X5ListUpdate::class);
+        $app->delete('/x5list/{id}/delete', Lists\X5ListDelete::class);
     }
 
     public static function registerX5ItemRoutes(\Slim\App $app)
     {
-        $app->get('/x5item/{id}/show', Items\GetX5Item::class);
-        $app->get('/x5item/add', Items\AddX5Item::class);
-        $app->get('/x5item/{id}/alter', Items\AlterX5Item::class);
-        $app->get('/x5item/{id}/remove', Items\RemoveX5Item::class);
+        $app->get('/x5item/{id}/show', Items\X5ItemShow::class);
+        $app->get('/x5item/create', Items\X5ItemCreate::class);
+        $app->get('/x5item/{id}/update', Items\X5ItemUpdate::class);
+        $app->get('/x5item/{id}/delete', Items\X5ItemDelete::class);
     }
 }

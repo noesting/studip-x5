@@ -10,7 +10,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use X5\Models\X5List;
 use X5\Schemas\X5List as X5ListSchema;
 
-class AddX5List extends JsonApiController
+class X5ItemListAdd extends JsonApiController
 {
     use ValidationTrait;
     public function __invoke(Request $request, Response $response, $args)

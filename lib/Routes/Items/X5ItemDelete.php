@@ -1,25 +1,25 @@
 <?php
 
-namespace X5\Routes\Lists;
+namespace X5\Routes\Items;
 
 use Argonauts\JsonApiController;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use X5\Models\X5List;
 
-class GetX5Lists extends JsonApiController
+class X5ItemDelete extends JsonApiController
 {
     public function __invoke(Request $request, Response $response, $args)
     {
-        if (!$lists = X5List::findManyByRange_id($args['range_id'])) {
-            $lists = [];
-        }
+        // if (!$lists = X5List::find($args['id'])) {
+        //     throw new RecordNotFoundException();
+        // }
 
-        // TODO Authorization
         // if (1 == 2) {
         //     throw new AuthorizationFailedException();
         // }
 
-        return $this->getContentResponse($lists);
+        // return $this->getContentResponse($lists);
+
+        return json_encode(array('RemoveX5Item' => $args['id']));
     }
 }
