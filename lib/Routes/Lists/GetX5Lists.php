@@ -12,7 +12,7 @@ class GetX5Lists extends JsonApiController
     public function __invoke(Request $request, Response $response, $args)
     {
         if (!$lists = X5List::findManyByRange_id($args['range_id'])) {
-            throw new RecordNotFoundException();
+            $lists = [];
         }
 
         // TODO Authorization
