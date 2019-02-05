@@ -11,6 +11,10 @@ class X5ListItem extends \SimpleORMap
             'class_name' => 'X5List',
             'foreign_key' => 'list_id',
         );
+        $config['belongs_to']['x5item'] = array(
+            'class_name' => 'X5Item',
+            'foreign_key' => 'item_id',
+        );
         parent::configure($config);
     }
 }
