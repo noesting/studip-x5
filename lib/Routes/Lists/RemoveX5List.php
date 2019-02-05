@@ -2,6 +2,7 @@
 
 namespace X5\Routes\Lists;
 
+use Argonauts\Errors\RecordNotFoundException;
 use Argonauts\JsonApiController;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
