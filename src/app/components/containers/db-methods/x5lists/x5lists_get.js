@@ -67,6 +67,6 @@ export const setStudentListsFromDB = (studentViewContainer, lists, recommendatio
     const rangeId = Connection.getRangeId();
 
     return studentViewContainer.$http
-        .get(Connection.REST_ENDPOINT + 'x5lists/' + rangeId + '/student', { headers })
+        .get(Connection.REST_ENDPOINT + 'courses/' + rangeId + '/x5lists/student', { headers })
         .then(response => handleGetListsResponse(response, lists, recommendations, studentViewContainer));
 };
