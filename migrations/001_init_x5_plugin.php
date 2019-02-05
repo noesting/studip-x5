@@ -37,6 +37,6 @@ class InitX5Plugin extends Migration
 
     public function down()
     {
-        DBManager::get()->query('DROP TABLE IF EXISTS `x5_lists`, `x5_list_items`;');
+        DBManager::get()->query('DROP TABLE IF EXISTS `x5_lists`, `x5_list_items` ,`x5_items`;');
     }
 }
