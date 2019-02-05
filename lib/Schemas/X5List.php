@@ -4,6 +4,7 @@ namespace X5\Schemas;
 
 use Argonauts\Schemas\SchemaProvider;
 use Neomerx\JsonApi\Document\Link;
+use X5\Models\X5ListItem;
 
 class X5List extends SchemaProvider
 {
@@ -29,11 +30,21 @@ class X5List extends SchemaProvider
 
     public function getRelationships($resource, $isPrimary, array $includeRelationships)
     {
+        $relatedItems = X5ListItem::findManyByList_id($resource->id);
+        $rels = [];
+
+        for ($i = 0; $i < count($relatedItems); $i++) {
+            $rels[] = ['type' => 'x5-items', 'id' => $relatedItems[$i]->item_id];
+        }
+
+        $x5itemrels = ['meta' => $rels];
+
         return [
             'course' => [
                 self::DATA => $resource->course,
                 self::LINKS => [Link::RELATED => new Link('/courses/' . $resource->range_id)],
             ],
+            'x5-items' => $x5itemrels,
         ];
     }
 }
