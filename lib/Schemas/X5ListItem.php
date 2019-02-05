@@ -18,7 +18,7 @@ class X5ListItem extends SchemaProvider
     public function getAttributes($resource)
     {
         return [
-            'comment' => (string) $resource['comment'],
+            'comment' => $resource['comment'],
             'mkdate' => date('c', $resource['mkdate']),
             'chdate' => date('c', $resource['chdate']),
         ];
