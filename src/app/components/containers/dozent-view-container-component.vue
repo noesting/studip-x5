@@ -36,6 +36,7 @@
     import * as DBX5ListCreate from './db-methods/x5lists/x5lists_create';
     import * as DBX5ListEdit from './db-methods/x5lists/x5list_edit';
     import * as DBX5ListRemove from './db-methods/x5lists/x5lists_remove';
+    import * as DBX5LISTAddItems from './db-methods/x5lists/x5lists_items_edit';
 
     export default {
         components: {
@@ -64,7 +65,7 @@
         },
 
         created() {
-            DBX5ListsGet.setCustomListsFromDB(this.customLists, this);
+            DBX5ListsGet.setCustomListsFromDB(this.customLists, this.recommendations, this);
         },
 
         methods: {
@@ -79,6 +80,8 @@
                 if (!exists) {
                     this.customLists[this.currentCustomListIndex].list.push(this.recommendations[itemId]);
                 }
+
+                DBX5LISTAddItems.addItemsToCustomList(this.customLists, this.currentCustomListIndex, this);
             },
 
             customListItemClick(itemId) {
@@ -89,6 +92,8 @@
                     }
                 }
                 this.customLists[this.currentCustomListIndex].list.splice(itemIndex, 1);
+
+                DBX5LISTAddItems.addItemsToCustomList(this.customLists, this.currentCustomListIndex, this);
             },
 
             setCurrentCustomListIndex(newIndex) {
