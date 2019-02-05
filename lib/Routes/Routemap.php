@@ -14,6 +14,8 @@ class Routemap
         $app->patch('/list/{id}/alter', Lists\AlterX5List::class);
         $app->delete('/x5list/{id}/remove', Lists\RemoveX5List::class);
 
+        $app->get('/x5lists/{id}/student', Lists\StudentGetX5Lists::class);
+
         $app->get('/item/{id}/show', Items\GetX5Item::class);
         $app->get('/item/add', Items\AddX5Item::class);
         $app->get('/item/{id}/alter', Items\AlterX5Item::class);
