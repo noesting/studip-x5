@@ -10,10 +10,21 @@ class OerController extends \X5\TrailsController
         \PageLayout::setHelpKeyword('Basis.X5Course');
 
         if (\Navigation::hasItem('/course/oer/dozent_view')) {
-            \Navigation::activateItem('/course/oer/dozent_view');
+            $this->redirect('oer/dozent_view');
+        } else {
+            $this->redirect('oer/student_view');
         }
 
         // just render template for now
+    }
+
+    public function dozent_view_action()
+    {
+        \PageLayout::setHelpKeyword('Basis.X5Course');
+
+        if (\Navigation::hasItem('/course/oer/dozent_view')) {
+            \Navigation::activateItem('/course/oer/dozent_view');
+        }
     }
 
     public function student_view_action()
