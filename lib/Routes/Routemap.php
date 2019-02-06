@@ -13,9 +13,9 @@ class Routemap
 
     public static function registerCoursesRoutes(\Slim\App $app)
     {
-        $app->get('/courses/{range_id}/x5lists', Lists\CoursesX5ListsShow::class);
+        $app->get('/courses/{range_id}/x5lists', Courses\CoursesX5ListsShow::class);
         // TODO: handle other role in route
-        $app->get('/courses/{id}/x5lists/student', Lists\CoursesX5ListsShowStudent::class);
+        $app->get('/courses/{id}/x5lists/student', Courses\CoursesX5ListsShowStudent::class);
     }
 
     public static function registerX5ListRoutes(\Slim\App $app)
