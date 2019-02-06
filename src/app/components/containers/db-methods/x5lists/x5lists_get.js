@@ -43,9 +43,9 @@ const setItems = (customList, recommendations, dozentViewContainer) => {
         .get(Connection.REST_ENDPOINT + 'x5list/' + customList.id + '/items', { headers })
         .then(response => {
             if (response.ok) {
-                for (let i = 0; i < response.body.data.relationships['x5-items'].meta.length; i++) {
+                for (let i = 0; i < response.body.data.relationships['x5-items'].data.length; i++) {
                     const item = getItemFromRecommentdations(
-                        response.body.data.relationships['x5-items'].meta[i].id,
+                        response.body.data.relationships['x5-items'].data[i].id,
                         recommendations
                     );
                     customList.list.push(item);

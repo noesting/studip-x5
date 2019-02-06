@@ -4,6 +4,7 @@ namespace X5\Schemas;
 
 use Argonauts\Schemas\SchemaProvider;
 use Neomerx\JsonApi\Document\Link;
+use X5\Models\X5Item;
 
 class X5List extends SchemaProvider
 {
@@ -57,9 +58,12 @@ class X5List extends SchemaProvider
 
     private function addX5itemsRelationship($relationships, $resource, $includeRelationships)
     {
-        $rels = $resource->list_items;
+        $relatedX5Items = $resource->list_items->map(function ($list_item) {
+            return $list_item->x5item;
+        });
+
         $relationships[self::REL_X5ITEMS] = [
-            self::DATA => $resource->list_items,
+            self::DATA => $relatedX5Items,
         ];
 
         return $relationships;
