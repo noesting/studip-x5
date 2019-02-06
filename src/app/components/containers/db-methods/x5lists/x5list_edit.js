@@ -36,7 +36,7 @@ const alterListInDatabase = (alteredListJson, dozentViewContainer) => {
     const headers = Connection.getHeaders();
 
     return dozentViewContainer.$http.patch(
-        Connection.REST_ENDPOINT + 'x5list/' + alteredListJson.data.id + '/update',
+        Connection.REST_ENDPOINT + 'x5-lists/' + alteredListJson.data.id + '/update',
         alteredListJson,
         { headers }
     );

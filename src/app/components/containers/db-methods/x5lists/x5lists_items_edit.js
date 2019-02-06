@@ -41,7 +41,7 @@ const alterListInDatabase = (alteredListJson, dozentViewContainer) => {
     const headers = Connection.getHeaders();
 
     return dozentViewContainer.$http.post(
-        Connection.REST_ENDPOINT + 'x5list/' + alteredListJson.data.id + '/items/add',
+        Connection.REST_ENDPOINT + 'x5-lists/' + alteredListJson.data.id + '/items/add',
         alteredListJson,
         { headers }
     );

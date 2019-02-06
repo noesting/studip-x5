@@ -65,7 +65,7 @@ const getJsonApiFormatFromList = newListItem => {
 const addListToDatabase = (newListJson, dozentViewContainer) => {
     const headers = Connection.getHeaders();
 
-    return dozentViewContainer.$http.post(Connection.REST_ENDPOINT + 'x5list/create', newListJson, { headers });
+    return dozentViewContainer.$http.post(Connection.REST_ENDPOINT + 'x5-lists/create', newListJson, { headers });
 };
 
 const addNewListToArray = (listObject, customLists, dozentViewContainer) => {

@@ -9,7 +9,7 @@ export const setCustomListsFromDB = (customLists, recommendations, dozentViewCon
     const rangeId = Connection.getRangeId();
 
     return dozentViewContainer.$http
-        .get(Connection.REST_ENDPOINT + 'courses/' + rangeId + '/x5lists', { headers })
+        .get(Connection.REST_ENDPOINT + 'courses/' + rangeId + '/x5-lists', { headers })
         .then(response => handleGetListsResponse(response, customLists, recommendations, dozentViewContainer));
 };
 
@@ -40,7 +40,7 @@ const setItems = (customList, recommendations, dozentViewContainer) => {
     const headers = Connection.getHeaders();
 
     return dozentViewContainer.$http
-        .get(Connection.REST_ENDPOINT + 'x5list/' + customList.id + '/items', { headers })
+        .get(Connection.REST_ENDPOINT + 'x5-lists/' + customList.id + '/items', { headers })
         .then(response => {
             if (response.ok) {
                 for (let i = 0; i < response.body.data.relationships['x5-items'].data.length; i++) {
@@ -67,6 +67,6 @@ export const setStudentListsFromDB = (studentViewContainer, lists, recommendatio
     const rangeId = Connection.getRangeId();
 
     return studentViewContainer.$http
-        .get(Connection.REST_ENDPOINT + 'courses/' + rangeId + '/x5lists/student', { headers })
+        .get(Connection.REST_ENDPOINT + 'courses/' + rangeId + '/x5-lists/student', { headers })
         .then(response => handleGetListsResponse(response, lists, recommendations, studentViewContainer));
 };
