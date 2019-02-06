@@ -7,6 +7,7 @@ use Argonauts\Routes\ValidationTrait;
 use Argonauts\Schemas\Course as CourseSchema;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use X5\Models\X5Item;
 use X5\Models\X5List;
 use X5\Models\X5ListItem;
 use X5\Schemas\X5List as X5ListSchema;
@@ -25,6 +26,10 @@ class X5ListItemsAdd extends JsonApiController
         $this->clearList($args['id']);
 
         for ($i = 0; $i < count($itemIdsToAdd); $i++) {
+            if (!$this->x5itemExists($itemIdsToAdd[$i])) {
+                $this->createX5Item($itemIdsToAdd[$i]);
+            }
+
             if (!$this->listItemExists($args['id'], $itemIdsToAdd[$i])) {
                 $this->addListItem($args['id'], $itemIdsToAdd[$i]);
             }
@@ -73,6 +78,29 @@ class X5ListItemsAdd extends JsonApiController
         $x5ListItem->store();
     }
 
+    private function x5itemExists($itemId)
+    {
+        $x5item = X5Item::find($itemId);
+        if ($x5item) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private function createX5Item($itemId)
+    {
+        $currentTime = time();
+        return X5Item::create(
+            [
+                'item_id' => $itemId,
+                'mkdate' => $currentTime,
+                'chdate' => $currentTime,
+                'likes' => 0,
+            ]
+        );
+    }
+
     public function getItemsToAdd($request, $x5list)
     {
         $json = $this->validate($request);
@@ -81,7 +109,6 @@ class X5ListItemsAdd extends JsonApiController
         $idsToAdd = [];
         for ($i = 0; $i < count($x5Items); $i++) {
             $idToAdd = self::arrayGet($x5Items[$i], 'id');
-            var_dump('id to add', $idToAdd);
             $idsToAdd[] = $idToAdd;
         }
 
