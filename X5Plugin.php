@@ -22,6 +22,8 @@ JsonApiPlugin
 
         bindtextdomain('x5', dirname(__FILE__) . '/locale');
 
+        // SimpleORMap::expireTableScheme();
+
         $this->setupNavigation();
 
         PageLayout::addScript('https://cdn.jsdelivr.net/npm/vue/dist/vue.js');
