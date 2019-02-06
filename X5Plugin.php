@@ -1,7 +1,8 @@
 <?php
+require_once 'vendor/autoload.php';
 
 use Argonauts\Contracts\JsonApiPlugin;
-use X5\Routes\Routemap;
+use X5\RouteMap;
 
 /**
  * X5 Stud.IP plugin.
@@ -13,11 +14,12 @@ SystemPlugin,
 StandardPlugin,
 JsonApiPlugin
 {
+    use RouteMap;
+
     public function __construct()
     {
         parent::__construct();
 
-        require_once 'vendor/autoload.php';
         bindtextdomain('x5', dirname(__FILE__) . '/locale');
 
         $this->setupNavigation();
@@ -174,22 +176,4 @@ JsonApiPlugin
         return $GLOBALS['perm']->have_perm('dozent');
     }
 
-    // JSON API Methods
-
-    public function registerAuthenticatedRoutes(\Slim\App $app)
-    {
-        Routemap::registerAuthenticatedRoutes($app);
-    }
-
-    public function registerUnauthenticatedRoutes(\Slim\App $app)
-    {}
-
-    public function registerSchemas()
-    {
-        return [
-            X5\Models\X5List::class => X5\Schemas\X5List::class,
-            X5\Models\X5ListItem::class => X5\Schemas\X5ListItem::class,
-            X5\Models\X5Item::class => X5\Schemas\X5Item::class,
-        ];
-    }
 }
