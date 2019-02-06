@@ -64,6 +64,10 @@ class X5List extends SchemaProvider
 
         $relationships[self::REL_X5ITEMS] = [
             self::DATA => $relatedX5Items,
+            self::LINKS => [
+                LINK::SELF => new Link('/x5list/' . $resource->getId() . '/relationships/items'),
+                LINK::SELF => $this->getRelationshipSelfLink($resource, self::REL_X5ITEMS),
+            ],
         ];
 
         return $relationships;
