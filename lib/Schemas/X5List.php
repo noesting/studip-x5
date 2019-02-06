@@ -4,12 +4,14 @@ namespace X5\Schemas;
 
 use Argonauts\Schemas\SchemaProvider;
 use Neomerx\JsonApi\Document\Link;
-use X5\Models\X5ListItem;
 
 class X5List extends SchemaProvider
 {
     const TYPE = 'x5-lists';
     protected $resourceType = self::TYPE;
+
+    const REL_COURSE = 'course';
+    const REL_X5ITEMS = 'x5-items';
 
     public function getId($resource)
     {
@@ -30,21 +32,36 @@ class X5List extends SchemaProvider
 
     public function getRelationships($resource, $isPrimary, array $includeRelationships)
     {
-        $relatedItems = X5ListItem::findManyByList_id($resource->id);
-        $rels = [];
+        $relationships = [];
 
-        for ($i = 0; $i < count($relatedItems); $i++) {
-            $rels[] = ['type' => 'x5-items', 'id' => $relatedItems[$i]->item_id];
+        if ($isPrimary) {
+            $relationships = $this->addCourseRelationship($relationships, $resource, $includeRelationships);
+            $relationships = $this->addX5itemsRelationship($relationships, $resource, $includeRelationships);
         }
 
-        $x5itemrels = ['meta' => $rels];
+        return $relationships;
+    }
 
-        return [
-            'course' => [
-                self::DATA => $resource->course,
-                self::LINKS => [Link::RELATED => new Link('/courses/' . $resource->range_id)],
+    private function addCourseRelationship($relationships, $resource, $includeRelationships)
+    {
+        $data = $resource->course;
+        $relationships[self::REL_COURSE] = [
+            self::LINKS => [
+                LINK::RELATED => new Link('/courses/' . $resource->range_id),
             ],
-            'x5-items' => $x5itemrels,
+            self::DATA => $data,
         ];
+
+        return $relationships;
+    }
+
+    private function addX5itemsRelationship($relationships, $resource, $includeRelationships)
+    {
+        $rels = $resource->list_items;
+        $relationships[self::REL_X5ITEMS] = [
+            self::DATA => $resource->list_items,
+        ];
+
+        return $relationships;
     }
 }

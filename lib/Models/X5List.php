@@ -11,6 +11,10 @@ class X5List extends \SimpleORMap
             'class_name' => 'Course',
             'foreign_key' => 'range_id',
         );
+        $config['has_many']['list_items'] = array(
+            'class_name' => X5ListItem::class,
+            'assoc_func' => 'findByList_id',
+        );
         parent::configure($config);
     }
 }
