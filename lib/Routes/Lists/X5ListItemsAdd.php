@@ -80,7 +80,7 @@ class X5ListItemsAdd extends JsonApiController
 
     private function x5itemExists($itemId)
     {
-        $x5item = X5Item::find($itemId);
+        $x5item = X5Item::findOneById($itemId);
         if ($x5item) {
             return true;
         }
@@ -93,10 +93,9 @@ class X5ListItemsAdd extends JsonApiController
         $currentTime = time();
         return X5Item::create(
             [
-                'item_id' => $itemId,
+                'id' => $itemId,
                 'mkdate' => $currentTime,
                 'chdate' => $currentTime,
-                'likes' => 0,
             ]
         );
     }

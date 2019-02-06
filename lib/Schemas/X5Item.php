@@ -25,8 +25,8 @@ class X5Item extends SchemaProvider
             // 'link' => $resource['link'],
             // 'thumbs-ups' => (int) $resource['thumbsUps'],
             // 'thumbnail' => $resource['thumbnail'],
-            'item_id' => $resource['item_id'],
-            'likes' => $resource['likes'],
+            // 'item_id' => $resource['item_id'],
+            // 'likes' => $resource['likes'],
             'mkdate' => date('c', $resource['mkdate']),
             'chdate' => date('c', $resource['chdate']),
         ];

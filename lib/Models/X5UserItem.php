@@ -2,14 +2,14 @@
 
 namespace X5\Models;
 
-class X5ListItem extends \SimpleORMap
+class X5UserItem extends \SimpleORMap
 {
     protected static function configure($config = array())
     {
-        $config['db_table'] = 'x5_list_items';
-        $config['belongs_to']['x5list'] = array(
-            'class_name' => X5List::class,
-            'foreign_key' => 'list_id',
+        $config['db_table'] = 'x5_user_items';
+        $config['belongs_to']['user'] = array(
+            'class_name' => \User::class,
+            'foreign_key' => 'user_id',
         );
         $config['belongs_to']['x5item'] = array(
             'class_name' => X5Item::class,
