@@ -3,7 +3,13 @@
         <div class="x5_headline x5_list_header_section">Vorschläge</div>
 
         <div class="x5_searchbar x5_list_header_section">
-            <input type="text" placeholder="Suche in X5" name="x5-search">
+            <input
+                type="text"
+                placeholder="Suche in X5"
+                name="x5-search"
+                @keyup.enter="search"
+                v-model="searchtext"
+            >
             <StudipIcon :icon_name="'search'" :color="'blue'"></StudipIcon>
         </div>
 
@@ -29,9 +35,19 @@
             StudipIcon,
             FilterModal
         },
+        data() {
+            return {
+                searchtext: ''
+            };
+        },
         methods: {
             showFilterModal() {
                 this.$modal.show(FilterModal, {}, { height: 'auto', width: '40%' });
+            },
+
+            search() {
+                const searchtext = this.searchtext.trim();
+                this.$emit('searchClicked', searchtext);
             }
         }
     };

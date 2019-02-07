@@ -1,6 +1,6 @@
 <template>
     <div class="x5_dozent_view_container">
-        <RecommendationsListHeader class="c x5_list_header"></RecommendationsListHeader>
+        <RecommendationsListHeader class="c x5_list_header" @searchClicked="searchRecommendations"></RecommendationsListHeader>
         <CustomListHeader
             ref="customListHeader"
             :customLists="customLists"
@@ -127,6 +127,18 @@
                 this.customLists[this.currentCustomListIndex].shared = !this.customLists[this.currentCustomListIndex]
                     .shared;
                 DBX5ListEdit.alterCustomList(this.customLists, this.currentCustomListIndex, this);
+            },
+
+            searchRecommendations(searchtext) {
+                console.log('got emitted');
+                if (searchtext) {
+                    this.recommendations = this.recommendations.filter(recommendation => {
+                        const regexp = new RegExp(searchtext, 'i');
+                        return recommendation.title.match(regexp);
+                    });
+                } else {
+                    this.recommendations = data.recommendations;
+                }
             }
         }
     };
