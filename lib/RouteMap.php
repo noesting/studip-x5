@@ -9,6 +9,7 @@ trait RouteMap
         $this->registerCoursesRoutes($app);
         $this->registerX5ListRoutes($app);
         $this->registerX5ItemRoutes($app);
+        $this->registerX5ListItemRoutes($app);
     }
 
     private function registerCoursesRoutes(\Slim\App $app)
@@ -36,6 +37,11 @@ trait RouteMap
         $app->get('/x5-items/create', Routes\Items\X5ItemCreate::class);
         $app->get('/x5-items/{id}/update', Routes\Items\X5ItemUpdate::class);
         $app->get('/x5-items/{id}/delete', Routes\Items\X5ItemDelete::class);
+    }
+
+    private function registerX5ListItemRoutes(\Slim\App $app)
+    {
+        $app->patch('/x5-list-items/{item_id}/{list_id}', Routes\ListItems\X5ListItemUpdate::class);
     }
 
     public function registerUnauthenticatedRoutes(\Slim\App $app)
