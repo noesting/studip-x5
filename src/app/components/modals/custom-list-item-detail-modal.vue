@@ -14,7 +14,11 @@
             <div class="interaction-fields">
                 <div class="interaction-grid-item">
                     Kommentarfeld
-                    <textarea class="comment-text-area" rows="4"></textarea>
+                    <textarea
+                        class="comment-text-area"
+                        rows="4"
+                        v-model="item.comment"
+                    ></textarea>
                 </div>
                 <div class="interaction-grid-item">Bewertung
                     <StudipButton :text="'Bewerten'"></StudipButton>

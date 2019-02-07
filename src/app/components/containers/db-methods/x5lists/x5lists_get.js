@@ -48,7 +48,11 @@ const setItems = (customList, recommendations, dozentViewContainer) => {
                         response.body.data.relationships['x5-items'].data[i].id,
                         recommendations
                     );
-                    customList.list.push(item);
+                    const meta = response.body.data.relationships['x5-items'].meta.filter(m => {
+                        return m.item_id === response.body.data.relationships['x5-items'].data[i].id;
+                    })[0];
+
+                    customList.list.push({ ...item, ...{ comment: meta.comment } });
                 }
             }
         });

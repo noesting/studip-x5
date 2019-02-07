@@ -25,6 +25,7 @@
             :customListItems="customListItemlist"
             class="x5_custom_list"
             @customListItemClick="customListItemClick"
+            @editItem="editItem"
         ></CustomList>
     </div>
 </template>
@@ -195,6 +196,34 @@
 
             recommendationIsInFormats(recommendation) {
                 return this.filters.checkedFormats.indexOf(recommendation.type) > -1;
+            },
+
+            editItem(item) {
+                console.log('now updating item in db', item);
+                const headers = {
+                    'Content-Type': 'application/json'
+                };
+                this.$http
+                    .patch(
+                        'http://localhost/studip-42/plugins.php/argonautsplugin/x5-list-items/' +
+                            item.id +
+                            '/' +
+                            this.customLists[this.currentCustomListIndex].id,
+                        {
+                            data: {
+                                type: 'x5-list-items',
+                                attributes: {
+                                    comment: item.comment
+                                }
+                            }
+                        },
+                        { headers }
+                    )
+                    .then(response => {
+                        if (response.ok) {
+                            console.log('yippi');
+                        }
+                    });
             }
         }
     };

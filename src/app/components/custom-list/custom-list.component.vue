@@ -5,6 +5,7 @@
             v-bind:item="item"
             v-bind:key="item.id"
             @customListClickAction="customListClickAction"
+            @editItem="editItem"
         ></CustomListItem>
     </div>
 </template>
@@ -21,6 +22,10 @@
         methods: {
             customListClickAction(itemId) {
                 this.$emit('customListItemClick', itemId);
+            },
+
+            editItem(item) {
+                this.$emit('editItem', item);
             }
         }
     };

@@ -39,7 +39,17 @@
             },
 
             openModal() {
-                this.$modal.show(CustomListItemDetailModal, { item: this.item }, { height: 'auto', width: '70%' });
+                this.$modal.show(
+                    CustomListItemDetailModal,
+                    { item: this.item },
+                    { height: 'auto', width: '70%' },
+                    { 'before-close': this.detailModalClose }
+                );
+            },
+
+            detailModalClose() {
+                console.log('closed modal', this.item);
+                this.$emit('editItem', this.item);
             }
         }
     };
