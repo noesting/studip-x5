@@ -9,7 +9,8 @@ export const data = {
             publishingYear: '2016',
             link: 'www.google.de',
             thumbsUps: 23,
-            thumbnail: 'ein thumbnail'
+            thumbnail: 'ein thumbnail',
+            type: 'text'
         },
         {
             id: '1',
@@ -21,7 +22,8 @@ export const data = {
             publishingYear: '2016',
             link: 'www.google.de',
             thumbsUps: 2,
-            thumbnail: 'ein thumbnail'
+            thumbnail: 'ein thumbnail',
+            type: 'text'
         },
         {
             id: '2',
@@ -32,7 +34,8 @@ export const data = {
             publishingYear: '2018',
             link: 'www.google.de',
             thumbsUps: 230,
-            thumbnail: 'ein thumbnail'
+            thumbnail: 'ein thumbnail',
+            type: 'text'
         },
         {
             id: '3',
@@ -43,7 +46,8 @@ export const data = {
             publishingYear: '1999',
             link: 'www.google.de',
             thumbsUps: 1,
-            thumbnail: 'ein thumbnail'
+            thumbnail: 'ein thumbnail',
+            type: 'video'
         },
         {
             id: '4',
@@ -54,7 +58,8 @@ export const data = {
             publishingYear: '1999',
             link: 'www.google.de',
             thumbsUps: 1,
-            thumbnail: 'ein thumbnail'
+            thumbnail: 'ein thumbnail',
+            type: 'video'
         },
         {
             id: '5',
@@ -65,7 +70,8 @@ export const data = {
             publishingYear: '2005',
             link: 'www.google.de',
             thumbsUps: 1,
-            thumbnail: 'ein thumbnail'
+            thumbnail: 'ein thumbnail',
+            type: 'audio'
         },
         {
             id: '6',
@@ -76,7 +82,8 @@ export const data = {
             publishingYear: '2008',
             link: 'www.google.de',
             thumbsUps: 1,
-            thumbnail: 'ein thumbnail'
+            thumbnail: 'ein thumbnail',
+            type: 'text'
         },
         {
             id: '7',
@@ -87,7 +94,8 @@ export const data = {
             publishingYear: '2011',
             link: 'www.google.de',
             thumbsUps: 1,
-            thumbnail: 'ein thumbnail'
+            thumbnail: 'ein thumbnail',
+            type: 'text'
         },
         {
             id: '8',
@@ -98,7 +106,8 @@ export const data = {
             publishingYear: '2016',
             link: 'www.google.de',
             thumbsUps: 1,
-            thumbnail: 'ein thumbnail'
+            thumbnail: 'ein thumbnail',
+            type: 'image'
         }
     ],
     customLists: [
@@ -114,7 +123,8 @@ export const data = {
                     publishingYear: '2011',
                     link: 'www.google.de',
                     thumbsUps: 1,
-                    thumbnail: 'ein thumbnail'
+                    thumbnail: 'ein thumbnail',
+                    type: 'text'
                 },
                 {
                     id: '8',
@@ -125,7 +135,8 @@ export const data = {
                     publishingYear: '2016',
                     link: 'www.google.de',
                     thumbsUps: 1,
-                    thumbnail: 'ein thumbnail'
+                    thumbnail: 'ein thumbnail',
+                    type: 'text'
                 }
             ],
             shared: false
@@ -142,7 +153,8 @@ export const data = {
                     publishingYear: '1999',
                     link: 'www.google.de',
                     thumbsUps: 1,
-                    thumbnail: 'ein thumbnail'
+                    thumbnail: 'ein thumbnail',
+                    type: 'text'
                 },
                 {
                     id: '5',
@@ -153,7 +165,8 @@ export const data = {
                     publishingYear: '2005',
                     link: 'www.google.de',
                     thumbsUps: 1,
-                    thumbnail: 'ein thumbnail'
+                    thumbnail: 'ein thumbnail',
+                    type: 'text'
                 }
             ],
             shared: true
