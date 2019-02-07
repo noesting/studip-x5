@@ -42,12 +42,7 @@
         props: ['eventBus', 'filters'],
         computed: {},
         data() {
-            return {
-                // filters: {
-                //     checkedLangs: [],
-                //     checkedFormats: []
-                // }
-            };
+            return {};
         },
         beforeDestroy() {
             this.eventBus.$emit('setRecommendationsFilters', this.filters);
