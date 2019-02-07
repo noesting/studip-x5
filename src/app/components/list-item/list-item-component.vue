@@ -1,15 +1,12 @@
 <template>
-    <div class="x5_list_item_inner" @click="openModal">
+    <!-- <div class="x5_list_item_inner" @click="openModal"> -->
+    <div class="x5_list_item_inner">
         <div class="x5_list_item_thumbnail">
-            <StudipIcon
-                class="x5-thumbnail-icon"
-                v-bind:icon_name="'file-' + item.type"
-                v-bind:color="'blue'"
-            ></StudipIcon>
+            <StudipIcon class="thumbnail-icon" v-bind:icon_name="iconName" v-bind:color="'blue'"></StudipIcon>
         </div>
         <div class="x5_list_item_title">{{ item.title }}</div>
         <div class="x5_list_item_subtitle">
-            <StudipIcon v-bind:icon_name="'smiley'" v-bind:color="'black'"></StudipIcon>
+            <StudipIcon v-bind:icon_name="'star'" v-bind:color="'blue'"></StudipIcon>
             ({{ item.thumbsUps }}) - {{ item.publishingYear }}: {{ item.author }}
         </div>
     </div>
@@ -27,6 +24,22 @@
         methods: {
             openModal() {
                 this.$modal.show(ItemDetailModal, { item: this.item }, { height: 'auto', width: '70%' });
+            }
+        },
+        computed: {
+            iconName() {
+                switch (this.item.type) {
+                    case 'text':
+                        return 'file-text';
+                    case 'audio':
+                        return 'file-audio';
+                    case 'video':
+                        return 'file-video';
+                    case 'image':
+                        return 'file-pic';
+                    default:
+                        return 'file';
+                }
             }
         }
     };
@@ -50,6 +63,8 @@
     .x5_list_item_thumbnail {
         grid-column: 1;
         grid-row: 1/2;
+
+        text-align: center;
     }
 
     .x5_list_item_title {
@@ -66,11 +81,11 @@
         overflow: hidden;
     }
 
-    .x5-thumbnail-icon {
-        margin-top: 0.5em;
+    .thumbnail-icon {
+        width: 2.5em;
+        text-align: center;
 
-        height: 2em;
-        width: 2em;
+        margin-top: 1em;
     }
 </style>
 

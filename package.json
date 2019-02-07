@@ -37,5 +37,8 @@
         "printWidth": 120,
         "tabWidth": 4,
         "singleQuote": true
+    },
+    "dependencies": {
+        "vue-resource": "^1.5.1"
     }
 }

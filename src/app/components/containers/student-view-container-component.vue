@@ -14,13 +14,20 @@
 
     import StudentList from '../student-list/student-list-component.vue';
 
+    import * as DBX5ListsGet from './db-methods/x5lists/x5lists_get';
+
     export default {
         components: {
             StudentList
         },
+        created() {
+            // DBX5ListsGet.setCustomListsFromDB(this.customLists, this.recommendations, this);
+            console.log('setting lists here');
+            DBX5ListsGet.setStudentListsFromDB(this, this.studentLists, data.recommendations);
+        },
         data() {
             return {
-                studentLists: getStudentListsFromData()
+                studentLists: DBX5ListsGet.setInitialCustomLists()
             };
         },
         methods: {}

@@ -7,6 +7,7 @@
             :currentCustomListIndex="currentCustomListIndex"
             @setCurrentCustomListIndex="setCurrentCustomListIndex"
             @addNewList="addNewCustomList"
+            @alterList="alterCustomList"
             @removeCurrentListItem="removeCurrentListItem"
             @shareListToggle="shareShareCurrentCustomList"
         ></CustomListHeader>
@@ -31,6 +32,12 @@
     import RecommendationsList from '../recommendations-list/recommendations-list-component.vue';
     import CustomList from '../custom-list/custom-list.component.vue';
 
+    import * as DBX5ListsGet from './db-methods/x5lists/x5lists_get';
+    import * as DBX5ListCreate from './db-methods/x5lists/x5lists_create';
+    import * as DBX5ListEdit from './db-methods/x5lists/x5list_edit';
+    import * as DBX5ListRemove from './db-methods/x5lists/x5lists_remove';
+    import * as DBX5LISTAddItems from './db-methods/x5lists/x5lists_items_edit';
+
     export default {
         components: {
             RecommendationsListHeader,
@@ -38,13 +45,15 @@
             RecommendationsList,
             CustomList
         },
+
         data() {
             return {
                 recommendations: data.recommendations,
-                customLists: getCustomListData(),
+                customLists: DBX5ListsGet.setInitialCustomLists(),
                 currentCustomListIndex: 0
             };
         },
+
         computed: {
             customListItemlist() {
                 if (this.customLists && this.customLists.length > 0) {
@@ -54,6 +63,11 @@
                 return null;
             }
         },
+
+        created() {
+            DBX5ListsGet.setCustomListsFromDB(this.customLists, this.recommendations, this);
+        },
+
         methods: {
             recommendationsListClick(itemId) {
                 let exists = false;
@@ -66,6 +80,8 @@
                 if (!exists) {
                     this.customLists[this.currentCustomListIndex].list.push(this.recommendations[itemId]);
                 }
+
+                DBX5LISTAddItems.addItemsToCustomList(this.customLists, this.currentCustomListIndex, this);
             },
 
             customListItemClick(itemId) {
@@ -76,6 +92,8 @@
                     }
                 }
                 this.customLists[this.currentCustomListIndex].list.splice(itemIndex, 1);
+
+                DBX5LISTAddItems.addItemsToCustomList(this.customLists, this.currentCustomListIndex, this);
             },
 
             setCurrentCustomListIndex(newIndex) {
@@ -87,9 +105,11 @@
             },
 
             addNewCustomList() {
-                addNewListToCustomLists(this.customLists);
-                this.setCurrentCustomListIndex(this.customLists.length - 1);
-                this.$refs.customListHeader.renameListClick();
+                DBX5ListCreate.addNewList(this.customLists, this);
+            },
+
+            alterCustomList() {
+                DBX5ListEdit.alterCustomList(this.customLists, this.currentCustomListIndex, this);
             },
 
             removeCurrentListItem() {
@@ -97,57 +117,18 @@
                 this.setCurrentCustomListIndex(--this.currentCustomListIndex);
 
                 if (this.customLists.length === 1) {
-                    this.customLists.push({ title: 'Neue Liste', list: [] });
+                    addNewList(this.customLists, this);
                 }
 
-                this.customLists.splice(deleteListIndex, 1);
+                DBX5ListRemove.removeListFromDB(this.customLists, deleteListIndex, this);
             },
 
             shareShareCurrentCustomList() {
                 this.customLists[this.currentCustomListIndex].shared = !this.customLists[this.currentCustomListIndex]
                     .shared;
+                DBX5ListEdit.alterCustomList(this.customLists, this.currentCustomListIndex, this);
             }
         }
-    };
-
-    const getCustomListData = () => {
-        if (data.customLists && data.customLists.length > 0) {
-            return data.customLists;
-        } else {
-            return [{ title: 'Neue Liste', list: [] }];
-        }
-    };
-
-    const addNewListToCustomLists = customLists => {
-        let newListItem = { title: 'Neue Liste', list: [] };
-        if (!itemExistsInListByTitle(newListItem, customLists)) {
-            customLists.push(newListItem);
-        } else {
-            addIncrementedNewListTocustomLists(newListItem, customLists);
-        }
-    };
-
-    const addIncrementedNewListTocustomLists = (newListItem, customLists) => {
-        let i = 1;
-        let inserted = false;
-        while (!inserted || i > 100) {
-            newListItem.title = 'Neue Liste ' + i;
-            if (!itemExistsInListByTitle(newListItem, customLists)) {
-                customLists.push(newListItem);
-                inserted = true;
-            }
-            i++;
-        }
-    };
-
-    const itemExistsInListByTitle = (item, list) => {
-        for (let i = 0; i < list.length; i++) {
-            if (list[i].title === item.title) {
-                return true;
-            }
-        }
-
-        return false;
     };
 </script>
 
