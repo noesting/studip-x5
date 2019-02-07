@@ -1,6 +1,11 @@
 <template>
     <div class="x5_dozent_view_container">
-        <RecommendationsListHeader class="c x5_list_header" @searchClicked="searchRecommendations"></RecommendationsListHeader>
+        <RecommendationsListHeader
+            class="c x5_list_header"
+            @searchClicked="searchRecommendations"
+            :filters="filters"
+            @applyFilters="applyFilters"
+        ></RecommendationsListHeader>
         <CustomListHeader
             ref="customListHeader"
             :customLists="customLists"
@@ -12,7 +17,7 @@
             @shareListToggle="shareShareCurrentCustomList"
         ></CustomListHeader>
         <RecommendationsList
-            :recommendations="recommendations"
+            :recommendations="processedRecommendations"
             class="x5_material_list"
             @recommendationsListClick="recommendationsListClick"
         ></RecommendationsList>
@@ -48,9 +53,14 @@
 
         data() {
             return {
-                recommendations: data.recommendations,
+                recommendations: [],
                 customLists: DBX5ListsGet.setInitialCustomLists(),
-                currentCustomListIndex: 0
+                currentCustomListIndex: 0,
+                filters: {
+                    checkedLangs: [],
+                    checkedFormats: []
+                },
+                searchtext: ''
             };
         },
 
@@ -61,11 +71,20 @@
                 }
 
                 return null;
+            },
+
+            processedRecommendations() {
+                this.recommendations = data.recommendations;
+
+                this.setRecommendationsBySearchText();
+                this.setRecommendationsByFilters();
+
+                return this.recommendations;
             }
         },
 
         created() {
-            DBX5ListsGet.setCustomListsFromDB(this.customLists, this.recommendations, this);
+            DBX5ListsGet.setCustomListsFromDB(this.customLists, data.recommendations, this);
         },
 
         methods: {
@@ -130,15 +149,52 @@
             },
 
             searchRecommendations(searchtext) {
-                console.log('got emitted');
-                if (searchtext) {
+                this.searchtext = searchtext;
+            },
+
+            applyFilters(filters) {
+                this.filters = filters;
+            },
+
+            setRecommendationsBySearchText() {
+                if (this.searchtext) {
                     this.recommendations = this.recommendations.filter(recommendation => {
-                        const regexp = new RegExp(searchtext, 'i');
+                        const regexp = new RegExp(this.searchtext, 'i');
                         return recommendation.title.match(regexp);
                     });
-                } else {
-                    this.recommendations = data.recommendations;
                 }
+            },
+
+            setRecommendationsByFilters() {
+                if (this.filters.checkedLangs.length > 0 || this.filters.checkedFormats.length > 0) {
+                    this.recommendations = this.recommendations.filter(recommendation => {
+                        return (
+                            this.recommendationFitsByLangAndFormat(recommendation) ||
+                            this.recommendationFitsByLang(recommendation) ||
+                            this.recommendationFitsByFormat(recommendation)
+                        );
+                    });
+                }
+            },
+
+            recommendationFitsByLangAndFormat(recommendation) {
+                return this.recommendationIsInLangs(recommendation) && this.recommendationIsInFormats(recommendation);
+            },
+
+            recommendationFitsByLang(recommendation) {
+                return this.recommendationIsInLangs(recommendation) && this.filters.checkedFormats.length === 0;
+            },
+
+            recommendationFitsByFormat(recommendation) {
+                return this.filters.checkedLangs.length === 0 && this.recommendationIsInFormats(recommendation);
+            },
+
+            recommendationIsInLangs(recommendation) {
+                return this.filters.checkedLangs.indexOf(recommendation.language) > -1;
+            },
+
+            recommendationIsInFormats(recommendation) {
+                return this.filters.checkedFormats.indexOf(recommendation.type) > -1;
             }
         }
     };

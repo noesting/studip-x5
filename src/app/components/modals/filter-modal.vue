@@ -6,33 +6,28 @@
 
         <h3>Sprache</h3>
 
-        <input type="checkbox" name="vehicle1" value="Bike">Englisch
+        <input type="checkbox" value="en" v-model="filters.checkedLangs">Englisch
         <br>
-        <input type="checkbox" name="vehicle1" value="Bike">Deutsch
-        <br>
-        <input type="checkbox" name="vehicle1" value="Bike">Französisch
-        <br>
-        <input type="checkbox" name="vehicle1" value="Bike">Spanisch
+        <input type="checkbox" value="de" v-model="filters.checkedLangs">Deutsch
         <br>
 
         <h3>Format</h3>
 
-        <input type="checkbox" name="vehicle1" value="Bike">Text
+        <input type="checkbox" value="text" v-model="filters.checkedFormats">Text
         <br>
-        <input type="checkbox" name="vehicle1" value="Bike">Video
+        <input type="checkbox" value="video" v-model="filters.checkedFormats">Video
         <br>
-        <input type="checkbox" name="vehicle1" value="Bike">Audio
+        <input type="checkbox" value="audio" v-model="filters.checkedFormats">Audio
         <br>
-        <input type="checkbox" name="vehicle1" value="Bike">Website
+        <input type="checkbox" value="image" v-model="filters.checkedFormats">Bild
         <br>
 
-        <h3>Erscheinungsdatum</h3>Frühestes Erscheinungsdatum
+        <!-- <h3>Erscheinungsdatum</h3>Frühestes Erscheinungsdatum
         <input type="date">
         <br>Spätestes Erscheinungsdatum
         <input type="date">
-        <br>
-
-        <StudipButton :text="'OK'"></StudipButton>
+        <br>-->
+        <StudipButton @studipbuttonClick="applyFilters" :text="'OK'"></StudipButton>
     </div>
 </template>
 
@@ -44,12 +39,24 @@
         components: {
             StudipButton
         },
-        props: ['item'],
+        props: ['eventBus', 'filters'],
         computed: {},
         data() {
-            return {};
+            return {
+                // filters: {
+                //     checkedLangs: [],
+                //     checkedFormats: []
+                // }
+            };
         },
-        methods: {}
+        beforeDestroy() {
+            this.eventBus.$emit('setRecommendationsFilters', this.filters);
+        },
+        methods: {
+            applyFilters() {
+                this.$emit('close');
+            }
+        }
     };
 </script>
 

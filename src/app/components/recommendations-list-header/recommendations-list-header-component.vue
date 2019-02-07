@@ -35,14 +35,31 @@
             StudipIcon,
             FilterModal
         },
+        props: ['filters'],
         data() {
             return {
-                searchtext: ''
+                searchtext: '',
+                checkedLangs: []
             };
         },
         methods: {
             showFilterModal() {
-                this.$modal.show(FilterModal, {}, { height: 'auto', width: '40%' });
+                const eventBus = new Vue();
+                this.$modal.show(
+                    FilterModal,
+                    { eventBus: eventBus, filters: this.filters },
+                    { height: 'auto', width: '40%' }
+                );
+
+                eventBus.$on('setRecommendationsFilters', filters => {
+                    this.filters = filters;
+                    this.applyFilter(filters);
+                });
+            },
+
+            applyFilter(filters) {
+                console.log('applying filters', filters);
+                this.$emit('applyFilters', filters);
             },
 
             search() {
