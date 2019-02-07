@@ -47,7 +47,7 @@ export const data = {
             link: 'www.google.de',
             thumbsUps: 1,
             thumbnail: 'ein thumbnail',
-            type: 'pic'
+            type: 'image'
         },
         {
             id: '4',
