@@ -103,7 +103,8 @@ class Items extends RelationshipsController
     private function getItems(\User $user, X5List $list)
     {
         return $list->list_items->map(function ($list_item) {
-            return $list_item->item;
+            // return $list_item->item;
+            return X5Item::find($list_item->item_id);
         });
     }
 
