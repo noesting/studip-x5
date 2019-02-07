@@ -30,6 +30,7 @@ const addListToArray = (customLists, data, recommendations, dozentViewContainer)
     customLists.push({
         id: data.id,
         title: data.attributes.title,
+        shared: data.attributes.visible,
         list: []
     });
 
