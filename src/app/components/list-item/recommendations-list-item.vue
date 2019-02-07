@@ -1,6 +1,8 @@
 <template>
     <div class="x5_list_item_container">
-        <ListItem v-bind:item="item" v-bind:key="item.id"></ListItem>
+        <div @click="openModal()">
+            <ListItem v-bind:item="item" v-bind:key="item.id"></ListItem>
+        </div>
         <div
             class="x5_list_item_action"
             name="recommendations_actionButton"
@@ -17,6 +19,8 @@
     import ListItem from './list-item-component.vue';
     import StudipIcon from '../studip-components/studip-icon-button-component.vue';
 
+    import RecommendationsLiustItemDetailModal from '../modals/recommendation-list-item-detail-modal';
+
     export default {
         props: ['item'],
         components: {
@@ -26,6 +30,14 @@
         methods: {
             action(id) {
                 this.$emit('recListClickAction', id);
+            },
+
+            openModal() {
+                this.$modal.show(
+                    RecommendationsLiustItemDetailModal,
+                    { item: this.item },
+                    { height: 'auto', width: '70%' }
+                );
             }
         }
     };
