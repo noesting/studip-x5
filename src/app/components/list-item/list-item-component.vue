@@ -82,8 +82,8 @@
     }
 
     .thumbnail-icon {
-        width: 2.5em;
-        text-align: center;
+        width: 2em;
+        height: 2em;
 
         margin-top: 1em;
     }
