@@ -53,6 +53,7 @@ trait RouteMap
             Models\X5List::class => Schemas\X5List::class,
             Models\X5ListItem::class => Schemas\X5ListItem::class,
             Models\X5Item::class => Schemas\X5Item::class,
+            Models\X5UserItem::class => Schemas\X5UserItem::class,
         ];
     }
 }
