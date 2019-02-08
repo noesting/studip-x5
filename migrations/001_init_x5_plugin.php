@@ -39,7 +39,7 @@ class InitX5Plugin extends Migration
             `chdate` int(11) NOT NULL DEFAULT '0',
             `item_id` varchar(32) NOT NULL,
             `user_id` int(11) NOT NULL,
-            `likes` int(11) NOT NULL DEFAULT '0',
+            `likes` boolean NOT NULL,
             PRIMARY KEY (`id`)
         );");
     }
