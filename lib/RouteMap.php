@@ -37,6 +37,7 @@ trait RouteMap
         $app->get('/x5-items/create', Routes\Items\X5ItemCreate::class);
         $app->get('/x5-items/{id}/update', Routes\Items\X5ItemUpdate::class);
         $app->get('/x5-items/{id}/delete', Routes\Items\X5ItemDelete::class);
+        $app->get('/x5-items/{id}/users', Routes\Items\X5ItemUsers::class);
     }
 
     private function registerX5ListItemRoutes(\Slim\App $app)
