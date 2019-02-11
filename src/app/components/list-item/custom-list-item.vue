@@ -39,12 +39,19 @@
             },
 
             openModal() {
+                const eventBus = new Vue();
+
                 this.$modal.show(
                     CustomListItemDetailModal,
-                    { item: this.item },
+                    { item: this.item, eventBus: eventBus },
                     { height: 'auto', width: '70%' },
                     { 'before-close': this.detailModalClose }
                 );
+
+                eventBus.$on('like', () => {
+                    console.log('i like!');
+                    this.$emit('likeItem', this.item);
+                });
             },
 
             detailModalClose() {

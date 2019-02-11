@@ -27,13 +27,13 @@ class X5UserItem extends SchemaProvider
     public function getRelationships($resource, $isPrimary, array $includeRelationships)
     {
         return [
-            'x5list' => [
+            'x5-lists' => [
                 self::DATA => $resource->user,
                 // TODO use users/me route instead?
                 self::LINKS => [Link::RELATED => new Link('/users/' . $resource->user_id)],
             ],
             'x5-item' => [
-                self::DATA => $resource->item,
+                self::DATA => $resource->x5item,
                 self::LINKS => [LINK::RELATED => new Link('/x5item/' . $resource->item_id . '/show')],
             ],
         ];

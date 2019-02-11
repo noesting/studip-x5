@@ -6,6 +6,7 @@
             v-bind:key="item.id"
             @customListClickAction="customListClickAction"
             @editItem="editItem"
+            @likeItem="likeItem"
         ></CustomListItem>
     </div>
 </template>
@@ -26,6 +27,10 @@
 
             editItem(item) {
                 this.$emit('editItem', item);
+            },
+
+            likeItem(item) {
+                this.$emit('likeItem', item);
             }
         }
     };

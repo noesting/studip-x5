@@ -26,6 +26,7 @@
             class="x5_custom_list"
             @customListItemClick="customListItemClick"
             @editItem="editItem"
+            @likeItem="likeItem"
         ></CustomList>
     </div>
 </template>
@@ -214,6 +215,37 @@
                                 type: 'x5-list-items',
                                 attributes: {
                                     comment: item.comment
+                                }
+                            }
+                        },
+                        { headers }
+                    )
+                    .then(response => {
+                        if (response.ok) {
+                            console.log('yippi');
+                        }
+                    });
+            },
+
+            likeItem(item) {
+                console.log('now liking item');
+                const headers = {
+                    'Content-Type': 'application/json'
+                };
+                this.$http
+                    .post(
+                        'http://localhost/studip-42/plugins.php/argonautsplugin/x5-user-items/create',
+                        {
+                            data: {
+                                type: 'x5-user-items',
+                                attributes: {
+                                    likes: true
+                                },
+                                relationships: {
+                                    'x5-item': {
+                                        type: 'x5-items',
+                                        id: item.id
+                                    }
                                 }
                             }
                         },

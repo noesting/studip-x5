@@ -21,7 +21,7 @@
                     ></textarea>
                 </div>
                 <div class="interaction-grid-item">Bewertung
-                    <StudipButton :text="'Bewerten'"></StudipButton>
+                    <StudipButton @studipbuttonClick="likeItem" :text="'Bewerten'"></StudipButton>
                 </div>
             </div>
         </div>
@@ -37,14 +37,18 @@
         components: {
             StudipButton
         },
-        props: ['item'],
+        props: ['item', 'eventBus'],
         computed: {
             itemLink() {
                 return getValidLink(this.item.link);
             }
         },
         // data() {},
-        methods: {}
+        methods: {
+            likeItem() {
+                this.eventBus.$emit('like', this.item);
+            }
+        }
     };
 
     const getValidLink = link => {
