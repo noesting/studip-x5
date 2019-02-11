@@ -44,6 +44,11 @@ trait RouteMap
         $app->patch('/x5-list-items/{item_id}/{list_id}', Routes\ListItems\X5ListItemUpdate::class);
     }
 
+    private function registerX5UserItemRoutes(\Slim\App $app)
+    {
+        $app->post('x5-user-items/create', Routes\UserItems\X5UserItemsCreate::class);
+    }
+
     public function registerUnauthenticatedRoutes(\Slim\App $app)
     {}
 
