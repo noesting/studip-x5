@@ -75,3 +75,21 @@ export const setStudentListsFromDB = (studentViewContainer, lists, recommendatio
         .get(Connection.REST_ENDPOINT + 'courses/' + rangeId + '/x5-lists/student', { headers })
         .then(response => handleGetListsResponse(response, lists, recommendations, studentViewContainer));
 };
+
+export const enrichRecommendations = (dozentViewContainer, recommendations) => {
+    if (!recommendations) {
+        return;
+    }
+
+    const headers = Connection.getHeaders();
+
+    for (let i = 0; i < recommendations.length; i++) {
+        dozentViewContainer.$http
+            .get(Connection.REST_ENDPOINT + 'x5-items/' + recommendations[i].id + '/users', { headers })
+            .then(response => {
+                if (response.ok) {
+                    recommendations[i].thumbsUps = response.body.meta.likes;
+                }
+            });
+    }
+};

@@ -8,7 +8,7 @@ export const data = {
             author: 'Feyen, F.',
             publishingYear: '2016',
             link: 'www.google.de',
-            thumbsUps: 23,
+            thumbsUps: 0,
             thumbnail: 'ein thumbnail',
             language: 'de',
             type: 'text'
@@ -22,7 +22,7 @@ export const data = {
             author: 'Oesting, N.',
             publishingYear: '2016',
             link: 'www.google.de',
-            thumbsUps: 2,
+            thumbsUps: 0,
             thumbnail: 'ein thumbnail',
             language: 'de',
             type: 'text'
@@ -35,7 +35,7 @@ export const data = {
             author: 'Leißner, J.F.',
             publishingYear: '2018',
             link: 'www.google.de',
-            thumbsUps: 230,
+            thumbsUps: 0,
             thumbnail: 'ein thumbnail',
             language: 'de',
             type: 'text'
@@ -48,7 +48,7 @@ export const data = {
             author: 'Mustermann, M.',
             publishingYear: '1999',
             link: 'www.google.de',
-            thumbsUps: 1,
+            thumbsUps: 0,
             thumbnail: 'ein thumbnail',
             language: 'de',
             type: 'image'
@@ -61,7 +61,7 @@ export const data = {
             author: 'Eibrink, K.',
             publishingYear: '1999',
             link: 'www.google.de',
-            thumbsUps: 1,
+            thumbsUps: 0,
             thumbnail: 'ein thumbnail',
             language: 'en',
             type: 'text'
@@ -74,7 +74,7 @@ export const data = {
             author: 'Lunzenauer, M.',
             publishingYear: '2005',
             link: 'www.google.de',
-            thumbsUps: 1,
+            thumbsUps: 0,
             thumbnail: 'ein thumbnail',
             language: 'en',
             type: 'text'
@@ -87,7 +87,7 @@ export const data = {
             author: 'Rolf, R.',
             publishingYear: '2008',
             link: 'https://opencast.org/',
-            thumbsUps: 1,
+            thumbsUps: 0,
             thumbnail: 'ein thumbnail',
             language: 'de',
             type: 'text'
@@ -100,7 +100,7 @@ export const data = {
             author: 'Thelen, T.',
             publishingYear: '2011',
             link: 'www.google.de',
-            thumbsUps: 1,
+            thumbsUps: 0,
             thumbnail: 'ein thumbnail',
             language: 'de',
             type: 'video'
@@ -113,7 +113,7 @@ export const data = {
             author: 'Knaden, A.',
             publishingYear: '2016',
             link: 'www.google.de',
-            thumbsUps: 1,
+            thumbsUps: 0,
             thumbnail: 'ein thumbnail',
             language: 'de',
             type: 'audio'
@@ -131,7 +131,7 @@ export const data = {
                     author: 'Thelen, T.',
                     publishingYear: '2011',
                     link: 'www.google.de',
-                    thumbsUps: 1,
+                    thumbsUps: 0,
                     thumbnail: 'ein thumbnail',
                     language: 'de',
                     type: 'video'
@@ -144,7 +144,7 @@ export const data = {
                     author: 'Mustermann, M.',
                     publishingYear: '1999',
                     link: 'www.google.de',
-                    thumbsUps: 1,
+                    thumbsUps: 0,
                     thumbnail: 'ein thumbnail',
                     language: 'de',
                     type: 'pic'
@@ -163,7 +163,7 @@ export const data = {
                     author: 'Eibrink, K.',
                     publishingYear: '1999',
                     link: 'www.google.de',
-                    thumbsUps: 1,
+                    thumbsUps: 0,
                     thumbnail: 'ein thumbnail',
                     language: 'de',
                     type: 'text'
@@ -176,7 +176,7 @@ export const data = {
                     author: 'Feyen, F.',
                     publishingYear: '2016',
                     link: 'www.google.de',
-                    thumbsUps: 23,
+                    thumbsUps: 0,
                     thumbnail: 'ein thumbnail',
                     language: 'de',
                     type: 'text'
@@ -195,7 +195,7 @@ export const data = {
                     author: 'Leißner, J.F.',
                     publishingYear: '2018',
                     link: 'www.google.de',
-                    thumbsUps: 230,
+                    thumbsUps: 0,
                     thumbnail: 'ein thumbnail',
                     language: 'de',
                     type: 'text'

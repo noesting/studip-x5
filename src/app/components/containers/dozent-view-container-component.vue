@@ -77,6 +77,7 @@
 
             processedRecommendations() {
                 this.recommendations = data.recommendations;
+                DBX5ListsGet.enrichRecommendations(this, this.recommendations);
 
                 this.setRecommendationsBySearchText();
                 this.setRecommendationsByFilters();
@@ -87,6 +88,7 @@
 
         created() {
             DBX5ListsGet.setCustomListsFromDB(this.customLists, data.recommendations, this);
+            DBX5ListsGet.enrichRecommendations(this, this.recommendations);
         },
 
         methods: {
