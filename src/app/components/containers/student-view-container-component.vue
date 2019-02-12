@@ -5,6 +5,7 @@
             :list="list"
             v-bind:key="list.title"
             class="x5_custom_list"
+            @likeItem="likeItem"
         ></StudentList>
     </div>
 </template>
@@ -30,11 +31,52 @@
                 studentLists: DBX5ListsGet.setInitialCustomLists()
             };
         },
-        methods: {}
-    };
+        methods: {
+            likeItem(item) {
+                console.log('now liking item');
 
-    const getStudentListsFromData = () => {
-        return data.customLists.filter(listObject => listObject.shared);
+                const headers = {
+                    'Content-Type': 'application/json'
+                };
+
+                if (item.userLiked) {
+                    this.$http
+                        .delete('http://localhost/studip-42/plugins.php/argonautsplugin/x5-user-items/' + item.id, {
+                            headers
+                        })
+                        .then(response => {
+                            item.thumbsUps--;
+                            item.userLiked = false;
+                        });
+                } else {
+                    this.$http
+                        .post(
+                            'http://localhost/studip-42/plugins.php/argonautsplugin/x5-user-items/create',
+                            {
+                                data: {
+                                    type: 'x5-user-items',
+                                    attributes: {
+                                        likes: true
+                                    },
+                                    relationships: {
+                                        'x5-item': {
+                                            type: 'x5-items',
+                                            id: item.id
+                                        }
+                                    }
+                                }
+                            },
+                            { headers }
+                        )
+                        .then(response => {
+                            if (response.ok) {
+                                item.thumbsUps++;
+                                item.userLiked = true;
+                            }
+                        });
+                }
+            }
+        }
     };
 </script>
 

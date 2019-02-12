@@ -2,19 +2,26 @@
     <div>
         <div class="x5_headline">{{ list.title }}</div>
         <div class="x5_list_item" v-for="item in list.list" v-bind:key="item.id">
-            <ListItem v-bind:item="item"></ListItem>
+            <StudentListItem v-bind:item="item" @likeItem="likeItem"></StudentListItem>
         </div>
     </div>
 </template>
 
 <script>
     import ListItem from '../list-item/list-item-component';
+    import StudentListItem from '../list-item/student-list-item.vue';
 
     export default {
         components: {
-            ListItem
+            ListItem,
+            StudentListItem
         },
-        props: ['list']
+        props: ['list'],
+        methods: {
+            likeItem(item) {
+                this.$emit('likeItem', item);
+            }
+        }
     };
 </script>
 

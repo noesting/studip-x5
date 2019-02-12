@@ -20,6 +20,7 @@
             :recommendations="processedRecommendations"
             class="x5_material_list"
             @recommendationsListClick="recommendationsListClick"
+            @likeItem="likeItem"
         ></RecommendationsList>
         <CustomList
             :customListItems="customListItemlist"

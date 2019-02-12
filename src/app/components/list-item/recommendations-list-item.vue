@@ -33,11 +33,17 @@
             },
 
             openModal() {
+                const eventBus = new Vue();
+
                 this.$modal.show(
                     RecommendationsLiustItemDetailModal,
-                    { item: this.item },
+                    { item: this.item, eventBus: eventBus },
                     { height: 'auto', width: '70%' }
                 );
+
+                eventBus.$on('like', () => {
+                    this.$emit('likeItem', this.item);
+                });
             }
         }
     };

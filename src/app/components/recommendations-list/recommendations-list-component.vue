@@ -5,6 +5,7 @@
             v-bind:item="item"
             v-bind:key="item.id"
             @recListClickAction="recListClickAction"
+            @likeItem="likeItem"
         ></RecommendationsListItem>
     </div>
 </template>
@@ -21,6 +22,10 @@
         methods: {
             recListClickAction(itemId) {
                 this.$emit('recommendationsListClick', itemId);
+            },
+
+            likeItem(item) {
+                this.$emit('likeItem', item);
             }
         }
     };

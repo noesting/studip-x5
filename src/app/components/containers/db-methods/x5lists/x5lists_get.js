@@ -53,7 +53,22 @@ const setItems = (customList, recommendations, dozentViewContainer) => {
                         return m.item_id === response.body.data.relationships['x5-items'].data[i].id;
                     })[0];
 
-                    customList.list.push({ ...item, ...{ comment: meta.comment } });
+                    dozentViewContainer.$http
+                        .get(Connection.REST_ENDPOINT + 'x5-items/' + item.id + '/users', { headers })
+                        .then(likesResponse => {
+                            if (likesResponse.ok) {
+                                // recommendations[i].thumbsUps = response.body.meta.likes;
+                                // recommendations[i].userLiked = response.body.meta.liked;
+                                customList.list.push({
+                                    ...item,
+                                    ...{ comment: meta.comment },
+                                    ...{
+                                        thumbsUps: likesResponse.body.meta.likes,
+                                        userLiked: likesResponse.body.meta.liked
+                                    }
+                                });
+                            }
+                        });
                 }
             }
         });

@@ -11,10 +11,21 @@
                 <a :href="itemLink" target="blank">{{ item.link }}</a>
             </div>
 
-            <div class="interaction-grid-item">Bewertung
-                <StudipButton @studipbuttonClick="likeItem" :text="'Bewerten'"></StudipButton>
-                <br>
-                <span v-if="item.userLiked">Bewertet</span>
+            <div class="interaction-fields">
+                <div class="interaction-grid-item">
+                    Kommentarfeld
+                    <textarea
+                        class="comment-text-area"
+                        rows="4"
+                        v-model="item.comment"
+                        disabled
+                    ></textarea>
+                </div>
+                <div class="interaction-grid-item">Bewertung
+                    <StudipButton @studipbuttonClick="likeItem" :text="'Bewerten'"></StudipButton>
+                    <br>
+                    <span v-if="item.userLiked">Bewertet</span>
+                </div>
             </div>
         </div>
         <div class="right-placeholder"></div>
@@ -32,6 +43,7 @@
         props: ['item', 'eventBus'],
         computed: {
             itemLink() {
+                console.log('this.item', this.item);
                 return getValidLink(this.item.link);
             }
         },
