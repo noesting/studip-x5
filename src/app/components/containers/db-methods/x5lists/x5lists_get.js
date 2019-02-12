@@ -57,8 +57,6 @@ const setItems = (customList, recommendations, dozentViewContainer) => {
                         .get(Connection.REST_ENDPOINT + 'x5-items/' + item.id + '/users', { headers })
                         .then(likesResponse => {
                             if (likesResponse.ok) {
-                                // recommendations[i].thumbsUps = response.body.meta.likes;
-                                // recommendations[i].userLiked = response.body.meta.liked;
                                 customList.list.push({
                                     ...item,
                                     ...{ comment: meta.comment },
