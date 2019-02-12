@@ -89,6 +89,7 @@ export const enrichRecommendations = (dozentViewContainer, recommendations) => {
             .then(response => {
                 if (response.ok) {
                     recommendations[i].thumbsUps = response.body.meta.likes;
+                    recommendations[i].userLiked = response.body.meta.liked;
                 }
             });
     }

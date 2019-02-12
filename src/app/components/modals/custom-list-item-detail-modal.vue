@@ -22,6 +22,8 @@
                 </div>
                 <div class="interaction-grid-item">Bewertung
                     <StudipButton @studipbuttonClick="likeItem" :text="'Bewerten'"></StudipButton>
+                    <br>
+                    <span v-if="item.userLiked">Bewertet</span>
                 </div>
             </div>
         </div>
@@ -40,6 +42,7 @@
         props: ['item', 'eventBus'],
         computed: {
             itemLink() {
+                console.log('this.item', this.item);
                 return getValidLink(this.item.link);
             }
         },

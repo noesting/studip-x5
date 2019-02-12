@@ -37,7 +37,7 @@ trait RouteMap
         $app->get('/x5-items/{id}/show', Routes\Items\X5ItemShow::class);
         $app->get('/x5-items/create', Routes\Items\X5ItemCreate::class);
         $app->get('/x5-items/{id}/update', Routes\Items\X5ItemUpdate::class);
-        $app->get('/x5-items/{id}/delete', Routes\Items\X5ItemDelete::class);
+        $app->delete('/x5-items/{id}/delete', Routes\Items\X5ItemDelete::class);
         $app->get('/x5-items/{id}/users', Routes\Items\X5ItemUsers::class);
     }
 
@@ -49,6 +49,7 @@ trait RouteMap
     private function registerX5UserItemRoutes(\Slim\App $app)
     {
         $app->post('/x5-user-items/create', Routes\UserItems\X5UserItemCreate::class);
+        $app->delete('/x5-user-items/{id}', Routes\UserItems\X5UserItemDelete::class);
     }
 
     public function registerUnauthenticatedRoutes(\Slim\App $app)

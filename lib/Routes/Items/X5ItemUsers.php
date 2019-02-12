@@ -17,7 +17,13 @@ class X5ItemUsers extends JsonApiController
 
         $user = $this->getUser($request)->id;
 
-        $iLiked = !!X5UserItem::findOneByUser_id($user->id);
+        $liked = X5UserItem::findOneBySql('user_id = ? AND item_id = ?', [$user, $args['id']]);
+
+        if ($liked) {
+            $iLiked = true;
+        } else {
+            $iLiked = false;
+        }
 
         // TODO Authorization
         // if (1 == 2) {
