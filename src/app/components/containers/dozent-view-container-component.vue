@@ -46,6 +46,7 @@
     import * as DBX5ListRemove from './db-methods/x5lists/x5lists_remove';
     import * as DBX5LISTAddItems from './db-methods/x5lists/x5lists_items_edit';
     import * as DBX5ItemLike from './db-methods/x5items/x5item_like';
+    import * as DBX5ItemEdit from './db-methods/x5items/x5item_edit';
 
     export default {
         components: {
@@ -204,31 +205,7 @@
             },
 
             editItem(item) {
-                console.log('now updating item in db', item);
-                const headers = {
-                    'Content-Type': 'application/json'
-                };
-                this.$http
-                    .patch(
-                        'http://localhost/studip-42/plugins.php/argonautsplugin/x5-list-items/' +
-                            item.id +
-                            '/' +
-                            this.customLists[this.currentCustomListIndex].id,
-                        {
-                            data: {
-                                type: 'x5-list-items',
-                                attributes: {
-                                    comment: item.comment
-                                }
-                            }
-                        },
-                        { headers }
-                    )
-                    .then(response => {
-                        if (response.ok) {
-                            console.log('yippi');
-                        }
-                    });
+                DBX5ItemEdit.editItem(item, this, this.customLists, this.currentCustomListIndex);
             },
 
             likeItem(item) {
