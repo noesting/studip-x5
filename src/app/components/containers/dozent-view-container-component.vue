@@ -45,6 +45,7 @@
     import * as DBX5ListEdit from './db-methods/x5lists/x5list_edit';
     import * as DBX5ListRemove from './db-methods/x5lists/x5lists_remove';
     import * as DBX5LISTAddItems from './db-methods/x5lists/x5lists_items_edit';
+    import * as DBX5ItemLike from './db-methods/x5items/x5item_like';
 
     export default {
         components: {
@@ -231,48 +232,7 @@
             },
 
             likeItem(item) {
-                console.log('now liking item');
-
-                const headers = {
-                    'Content-Type': 'application/json'
-                };
-
-                if (item.userLiked) {
-                    this.$http
-                        .delete('http://localhost/studip-42/plugins.php/argonautsplugin/x5-user-items/' + item.id, {
-                            headers
-                        })
-                        .then(response => {
-                            item.thumbsUps--;
-                            item.userLiked = false;
-                        });
-                } else {
-                    this.$http
-                        .post(
-                            'http://localhost/studip-42/plugins.php/argonautsplugin/x5-user-items/create',
-                            {
-                                data: {
-                                    type: 'x5-user-items',
-                                    attributes: {
-                                        likes: true
-                                    },
-                                    relationships: {
-                                        'x5-item': {
-                                            type: 'x5-items',
-                                            id: item.id
-                                        }
-                                    }
-                                }
-                            },
-                            { headers }
-                        )
-                        .then(response => {
-                            if (response.ok) {
-                                item.thumbsUps++;
-                                item.userLiked = true;
-                            }
-                        });
-                }
+                DBX5ItemLike.likeItem(item, this);
             }
         }
     };
