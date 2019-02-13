@@ -24,7 +24,7 @@
 
 <script>
     import ListItem from './list-item-component.vue';
-    import StudipIcon from '../studip-components/studip-icon-button-component.vue';
+    import StudipIcon from '../studip-components/studip-clickable-icon-component';
     import CustomListItemDetailModal from '../modals/custom-list-item-detail-modal.vue';
 
     export default {

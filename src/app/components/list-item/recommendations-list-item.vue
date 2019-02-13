@@ -17,7 +17,7 @@
 
 <script>
     import ListItem from './list-item-component.vue';
-    import StudipIcon from '../studip-components/studip-icon-button-component.vue';
+    import StudipIcon from '../studip-components/studip-clickable-icon-component';
 
     import RecommendationsLiustItemDetailModal from '../modals/recommendation-list-item-detail-modal';
 

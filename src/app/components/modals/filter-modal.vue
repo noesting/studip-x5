@@ -33,7 +33,6 @@
 
 <script>
     import StudipButton from '../studip-components/studip-button-component.vue';
-    import StudipIcon from '../studip-components/studip-icon-button-component.vue';
 
     export default {
         components: {

@@ -14,7 +14,7 @@
 
 <script>
     import ItemDetailModal from '../modals/item-detail-modal.vue';
-    import StudipIcon from '../studip-components/studip-icon-button-component.vue';
+    import StudipIcon from '../studip-components/studip-clickable-icon-component';
 
     import StudentListItemDetailModal from '../modals/student-list-item-detail-modal.vue';
 

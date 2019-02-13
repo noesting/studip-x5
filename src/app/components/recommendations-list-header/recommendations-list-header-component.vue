@@ -26,7 +26,7 @@
 
 <script>
     import StudipButton from '../studip-components/studip-button-component.vue';
-    import StudipIcon from '../studip-components/studip-icon-button-component.vue';
+    import StudipIcon from '../studip-components/studip-clickable-icon-component';
     import FilterModal from '../modals/filter-modal';
 
     export default {

@@ -14,7 +14,7 @@
 
 <script>
     import ItemDetailModal from '../modals/item-detail-modal.vue';
-    import StudipIcon from '../studip-components/studip-icon-button-component.vue';
+    import StudipIcon from '../studip-components/studip-clickable-icon-component';
 
     export default {
         props: ['item'],

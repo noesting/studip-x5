@@ -13,14 +13,16 @@
 
             <div class="interaction-fields">
                 <div class="interaction-grid-item">
-                    Sichtbar für Studenten ab dem {{ dateString }}<br>
+                    Sichtbar für Studenten ab dem {{ dateString }}
+                    <br>
                     <StudipButton :text="'Datum auswählen'"></StudipButton>
                 </div>
                 <div class="interaction-grid-item">
                     Kommentarfeld
                     <textarea class="comment-text-area" rows="4"></textarea>
                 </div>
-                <div class="interaction-grid-item">Bewertung<br>
+                <div class="interaction-grid-item">Bewertung
+                    <br>
                     <StudipButton :text="'Bewerten'"></StudipButton>
                 </div>
             </div>
@@ -32,7 +34,6 @@
 
 <script>
     import StudipButton from '../studip-components/studip-button-component.vue';
-    import StudipIcon from '../studip-components/studip-icon-button-component.vue';
 
     export default {
         components: {

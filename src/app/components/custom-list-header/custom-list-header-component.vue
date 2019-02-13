@@ -7,7 +7,11 @@
         <div class="x5_button_line">
             <div class="x5_button_container">
                 <div class="dropdown">
-                    <StudipButton :text="'Liste auswählen'"></StudipButton>
+                    <StudipIconButton
+                        class="x5_choose_list_button"
+                        :text="'Liste auswählen'"
+                        :icon="'arr_1down'"
+                    ></StudipIconButton>
                     <div class="dropdown_content choose_list" id="choose_custom_list_select">
                         <div
                             v-for="list in customLists"
@@ -74,14 +78,16 @@
 
 <script>
     import StudipButton from '../studip-components/studip-button-component.vue';
-    import StudipIcon from '../studip-components/studip-icon-button-component.vue';
+    import StudipIcon from '../studip-components/studip-clickable-icon-component';
+    import StudipIconButton from '../studip-components/studip-icon-button-component';
 
     import { data } from '../../../data';
 
     export default {
         components: {
             StudipButton,
-            StudipIcon
+            StudipIcon,
+            StudipIconButton
         },
         props: ['customLists', 'currentCustomListIndex'],
         data() {
