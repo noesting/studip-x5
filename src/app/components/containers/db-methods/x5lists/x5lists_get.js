@@ -42,42 +42,68 @@ const setItems = (customList, recommendations, dozentViewContainer) => {
 
     return dozentViewContainer.$http
         .get(Connection.REST_ENDPOINT + 'x5-lists/' + customList.id + '/items', { headers })
-        .then(response => {
-            if (response.ok) {
-                for (let i = 0; i < response.body.data.relationships['x5-items'].data.length; i++) {
-                    const item = getItemFromRecommentdations(
-                        response.body.data.relationships['x5-items'].data[i].id,
-                        recommendations
-                    );
-                    const meta = response.body.data.relationships['x5-items'].meta.filter(m => {
-                        return m.item_id === response.body.data.relationships['x5-items'].data[i].id;
-                    })[0];
-
-                    dozentViewContainer.$http
-                        .get(Connection.REST_ENDPOINT + 'x5-items/' + item.id + '/users', { headers })
-                        .then(likesResponse => {
-                            if (likesResponse.ok) {
-                                customList.list.push({
-                                    ...item,
-                                    ...{ comment: meta.comment },
-                                    ...{
-                                        thumbsUps: likesResponse.body.meta.likes,
-                                        userLiked: likesResponse.body.meta.liked
-                                    }
-                                });
-                            }
-                        });
-                }
-            }
+        .then(response => enrichItems(response, recommendations, dozentViewContainer))
+        .then(items => customList.list.push(...items))
+        .catch(error => {
+            console.error('Some Error occured', error);
         });
 };
 
-const getItemFromRecommentdations = (itemId, recommendations) => {
-    for (let i = 0; i < recommendations.length; i++) {
-        if (recommendations[i].id === itemId) {
-            return recommendations[i];
-        }
-    }
+const enrichItems = (getItemsResponse, recommendations, vueComponent) => {
+    const listItemsData = getItemsResponse.body.data.relationships['x5-items'].data;
+    const listItemsMeta = getItemsResponse.body.data.relationships['x5-items'].meta;
+
+    const itemsFromRecommendations = enrichFromRecommendations(listItemsData, recommendations);
+    const commentedItems = enrichWithComments(itemsFromRecommendations, listItemsMeta);
+    return enrichWithLikes(commentedItems, vueComponent);
+};
+
+const enrichFromRecommendations = (listItemsData, recommendations) => {
+    return listItemsData.map(listItemData => {
+        const item = getItemFromRecommendations(listItemData.id, recommendations);
+
+        return { ...item };
+    });
+};
+
+const getItemFromRecommendations = (itemId, recommendations) => {
+    return recommendations.find(recommendation => {
+        return recommendation.id === itemId;
+    });
+};
+
+const enrichWithComments = (items, listItemsMeta) => {
+    return items.map(item => {
+        const itemComment = listItemsMeta.find(meta => {
+            return meta.item_id === item.id;
+        }).comment;
+
+        return { ...item, comment: itemComment };
+    });
+};
+
+const enrichWithLikes = (items, vueComponent) => {
+    return Promise.all(getItemLikesAsPromises(items, vueComponent)).then(allItemLikes =>
+        enrichWithLikesHandler(items, allItemLikes)
+    );
+};
+
+const getItemLikesAsPromises = (commentedItems, vueComponent) => {
+    return commentedItems.map(commentedItem => {
+        return vueComponent.$http.get(Connection.REST_ENDPOINT + 'x5-items/' + commentedItem.id + '/users', {
+            headers: Connection.getHeaders()
+        });
+    });
+};
+
+const enrichWithLikesHandler = (commentedItems, allItemLikesJSON) => {
+    allItemLikesJSON.forEach((itemLikeJSON, index) => {
+        const itemLike = itemLikeJSON.body.meta;
+        commentedItems[index].thumbsUps = itemLike.likes;
+        commentedItems[index].userLiked = itemLike.liked;
+    });
+
+    return commentedItems;
 };
 
 export const setStudentListsFromDB = (studentViewContainer, lists, recommendations) => {
@@ -94,16 +120,5 @@ export const enrichRecommendations = (dozentViewContainer, recommendations) => {
         return;
     }
 
-    const headers = Connection.getHeaders();
-
-    for (let i = 0; i < recommendations.length; i++) {
-        dozentViewContainer.$http
-            .get(Connection.REST_ENDPOINT + 'x5-items/' + recommendations[i].id + '/users', { headers })
-            .then(response => {
-                if (response.ok) {
-                    recommendations[i].thumbsUps = response.body.meta.likes;
-                    recommendations[i].userLiked = response.body.meta.liked;
-                }
-            });
-    }
+    enrichWithLikes(recommendations, dozentViewContainer);
 };
