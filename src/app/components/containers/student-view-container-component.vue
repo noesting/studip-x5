@@ -1,10 +1,10 @@
 <template>
     <div class="x5_student_view_container">
         <StudentList
+            class="x5_student_list"
             v-for="list in studentLists"
             :list="list"
             v-bind:key="list.title"
-            class="x5_custom_list"
             @likeItem="likeItem"
         ></StudentList>
     </div>
@@ -22,8 +22,6 @@
             StudentList
         },
         created() {
-            // DBX5ListsGet.setCustomListsFromDB(this.customLists, this.recommendations, this);
-            console.log('setting lists here');
             DBX5ListsGet.setStudentListsFromDB(this, this.studentLists, data.recommendations);
         },
         data() {
@@ -33,8 +31,6 @@
         },
         methods: {
             likeItem(item) {
-                console.log('now liking item');
-
                 const headers = {
                     'Content-Type': 'application/json'
                 };
@@ -84,15 +80,18 @@
     .x5_student_view_container {
         display: grid;
         grid-column-gap: 10px;
-        grid-template-columns: 49% 49%;
+        grid-template-columns: 70% 29%;
     }
 
-    .x5_custom_list {
+    .x5_student_list {
+        grid-column: 1;
         width: 100%;
 
         border-bottom: solid 1px #1f3f70;
         border-left: solid 1px #1f3f70;
         border-right: solid 1px #1f3f70;
+
+        margin-bottom: 1em;
     }
 </style>
 
