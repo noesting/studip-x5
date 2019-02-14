@@ -50,14 +50,14 @@
                         name="editListButton"
                         id="shareListClick"
                         @click="toggleShareListClick"
-                    >Für Studentinnen/-en freigeben</div>
+                    >Für Studierende freigeben</div>
                     <div
                         v-if="customLists[currentCustomListIndex].shared"
                         class="editListButton"
                         name="editListButton"
                         id="unshareListClick"
                         @click="toggleShareListClick"
-                    >Freigabe für Studentinnen/-en entziehen</div>
+                    >Freigabe für Studierende entziehen</div>
                     <div
                         class="editListButton"
                         name="editListButton"

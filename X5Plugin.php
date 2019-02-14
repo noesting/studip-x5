@@ -131,7 +131,7 @@ JsonApiPlugin
         if ($this->currentUserIsDozent()) {
             $navigation->addSubNavigation('dozent_view', new Navigation('Listen bearbeiten', $url));
         }
-        $navigation->addSubNavigation('student_view', new Navigation('Studentenansicht', PluginEngine::getURL($this, [], 'oer/student_view')));
+        $navigation->addSubNavigation('student_view', new Navigation('Studierendenansicht', PluginEngine::getURL($this, [], 'oer/student_view')));
 
         return array('oer' => $navigation);
     }
