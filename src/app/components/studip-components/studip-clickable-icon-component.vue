@@ -1,8 +1,10 @@
 <template>
-    <img :class="['icon-role-clickable', iconShape]" :src="imageSource">
+    <img :class="['icon-role-clickable', iconShape, 'icon-shape-custom']" :src="imageSource">
 </template>
 
 <script>
+    import { studipIcons } from './icons';
+
     export default {
         props: ['icon_name', 'color', 'action'],
         methods: {
@@ -12,20 +14,19 @@
         },
         computed: {
             imageSource: function() {
-                return this.src_root + '/' + this.color + '/' + this.icon_name + '.svg';
+                return studipIcons[this.icon_name];
             },
 
             iconShape: function() {
                 return 'icon-shape-' + this.icon_name;
             }
-        },
-        data() {
-            return {
-                src_root: 'http://localhost/studip-42/assets/images/icons/'
-            };
         }
     };
 </script>
 
 <style lang="scss" scoped>
+    .icon-shape-custom {
+        width: 1.2em;
+        height: 1.2em;
+    }
 </style>

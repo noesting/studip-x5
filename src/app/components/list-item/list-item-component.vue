@@ -6,7 +6,7 @@
         </div>
         <div class="x5_list_item_title">{{ item.title }}</div>
         <div class="x5_list_item_subtitle">
-            <StudipIcon v-bind:icon_name="'star'" v-bind:color="'blue'"></StudipIcon>
+            <StudipIcon v-bind:icon_name="'thumbs_up'" v-bind:color="'blue'"></StudipIcon>
             ({{ item.thumbsUps }}) - {{ item.publishingYear }}: {{ item.author }}
         </div>
     </div>
@@ -30,15 +30,15 @@
             iconName() {
                 switch (this.item.type) {
                     case 'text':
-                        return 'file-text';
+                        return 'file_text';
                     case 'audio':
-                        return 'file-audio';
+                        return 'music';
                     case 'video':
-                        return 'file-video';
+                        return 'video2';
                     case 'image':
-                        return 'file-pic';
+                        return 'image';
                     default:
-                        return 'file';
+                        return 'file_text';
                 }
             }
         }
