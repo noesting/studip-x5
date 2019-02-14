@@ -1,3 +1,4 @@
+import './public_path';
 import VModal from 'vue-js-modal';
 
 import DozentVue from './app/Dozent';
