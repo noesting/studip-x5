@@ -24,6 +24,7 @@
     "homepage": "https://github.com/noesting/studip-x5#readme",
     "devDependencies": {
         "css-loader": "^1.0.1",
+        "file-loader": "^3.0.1",
         "node-sass": "^4.10.0",
         "sass-loader": "^7.1.0",
         "style-loader": "^0.23.1",
