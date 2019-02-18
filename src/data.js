@@ -10,6 +10,7 @@ export const data = {
             link: 'www.google.de',
             thumbsUps: 0,
             thumbnail: 'ein thumbnail',
+            inList: false,
             language: 'de',
             type: 'text'
         },
@@ -24,6 +25,7 @@ export const data = {
             link: 'www.google.de',
             thumbsUps: 0,
             thumbnail: 'ein thumbnail',
+            inList: false,
             language: 'de',
             type: 'text'
         },
@@ -37,6 +39,7 @@ export const data = {
             link: 'www.google.de',
             thumbsUps: 0,
             thumbnail: 'ein thumbnail',
+            inList: false,
             language: 'de',
             type: 'text'
         },
@@ -50,6 +53,7 @@ export const data = {
             link: 'www.google.de',
             thumbsUps: 0,
             thumbnail: 'ein thumbnail',
+            inList: false,
             language: 'de',
             type: 'image'
         },
@@ -63,6 +67,7 @@ export const data = {
             link: 'www.google.de',
             thumbsUps: 0,
             thumbnail: 'ein thumbnail',
+            inList: false,
             language: 'en',
             type: 'text'
         },
@@ -76,6 +81,7 @@ export const data = {
             link: 'www.google.de',
             thumbsUps: 0,
             thumbnail: 'ein thumbnail',
+            inList: false,
             language: 'en',
             type: 'text'
         },
@@ -89,6 +95,7 @@ export const data = {
             link: 'https://opencast.org/',
             thumbsUps: 0,
             thumbnail: 'ein thumbnail',
+            inList: false,
             language: 'de',
             type: 'text'
         },
@@ -102,6 +109,7 @@ export const data = {
             link: 'www.google.de',
             thumbsUps: 0,
             thumbnail: 'ein thumbnail',
+            inList: false,
             language: 'de',
             type: 'video'
         },
@@ -115,6 +123,7 @@ export const data = {
             link: 'www.google.de',
             thumbsUps: 0,
             thumbnail: 'ein thumbnail',
+            inList: false,
             language: 'de',
             type: 'audio'
         }
@@ -133,6 +142,7 @@ export const data = {
                     link: 'www.google.de',
                     thumbsUps: 0,
                     thumbnail: 'ein thumbnail',
+                    inList: false,
                     language: 'de',
                     type: 'video'
                 },
@@ -146,6 +156,7 @@ export const data = {
                     link: 'www.google.de',
                     thumbsUps: 0,
                     thumbnail: 'ein thumbnail',
+                    inList: false,
                     language: 'de',
                     type: 'pic'
                 }
@@ -165,6 +176,7 @@ export const data = {
                     link: 'www.google.de',
                     thumbsUps: 0,
                     thumbnail: 'ein thumbnail',
+                    inList: false,
                     language: 'de',
                     type: 'text'
                 },
@@ -178,6 +190,7 @@ export const data = {
                     link: 'www.google.de',
                     thumbsUps: 0,
                     thumbnail: 'ein thumbnail',
+                    inList: false,
                     language: 'de',
                     type: 'text'
                 }
@@ -197,6 +210,7 @@ export const data = {
                     link: 'www.google.de',
                     thumbsUps: 0,
                     thumbnail: 'ein thumbnail',
+                    inList: false,
                     language: 'de',
                     type: 'text'
                 }
