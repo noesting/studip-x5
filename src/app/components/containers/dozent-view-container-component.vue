@@ -80,7 +80,7 @@
 
             processedRecommendations() {
                 this.recommendations = data.recommendations;
-                DBX5ListsGet.enrichRecommendations(this, this.recommendations);
+                this.prepareRecommendations();
 
                 this.setRecommendationsBySearchText();
                 this.setRecommendationsByFilters();
@@ -90,11 +90,37 @@
         },
 
         created() {
-            DBX5ListsGet.setCustomListsFromDB(this.customLists, data.recommendations, this);
-            DBX5ListsGet.enrichRecommendations(this, this.recommendations);
+            DBX5ListsGet.setCustomListsFromDB(this.customLists, data.recommendations, this).then(() => {
+                this.prepareRecommendations();
+            });
         },
 
         methods: {
+            prepareRecommendations() {
+                DBX5ListsGet.enrichRecommendations(this, this.recommendations).then(() =>
+                    this.markRecommendationsAsAdded()
+                );
+            },
+
+            markRecommendationsAsAdded() {
+                if (!this.recommendations || this.recommendations.length <= 0) {
+                    return;
+                }
+
+                this.recommendations.forEach(recommendation => {
+                    const currentCustomList = this.customLists[this.currentCustomListIndex];
+                    if (currentCustomList && currentCustomList.list) {
+                        let found = false;
+                        for (let i = 0; i < currentCustomList.list.length; i++) {
+                            if (recommendation.id === currentCustomList.list[i].id) {
+                                found = true;
+                            }
+                        }
+                        recommendation.inList = found;
+                    }
+                });
+            },
+
             recommendationsListClick(itemId) {
                 let exists = false;
                 for (let i = 0; i < this.customLists[this.currentCustomListIndex].list.length; i++) {
@@ -106,6 +132,8 @@
                 if (!exists) {
                     this.customLists[this.currentCustomListIndex].list.push(this.recommendations[itemId]);
                 }
+
+                this.recommendations.find(recommendation => recommendation.id === itemId).inList = true;
 
                 DBX5LISTAddItems.addItemsToCustomList(this.customLists, this.currentCustomListIndex, this);
             },
@@ -128,6 +156,8 @@
                 }
 
                 this.currentCustomListIndex = newIndex;
+
+                this.markRecommendationsAsAdded();
             },
 
             addNewCustomList() {
