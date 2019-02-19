@@ -48,6 +48,8 @@
     import * as DBX5ItemLike from './db-methods/x5items/x5item_like';
     import * as DBX5ItemEdit from './db-methods/x5items/x5item_edit';
 
+    import * as RecommendationsProcessor from './recommendations-processor';
+
     export default {
         components: {
             RecommendationsListHeader,
@@ -80,10 +82,14 @@
 
             processedRecommendations() {
                 this.recommendations = data.recommendations;
-                this.prepareRecommendations();
 
-                this.setRecommendationsBySearchText();
-                this.setRecommendationsByFilters();
+                this.recommendations = RecommendationsProcessor.processRecommendations(
+                    this.recommendations,
+                    this.customLists[this.currentCustomListIndex],
+                    this.filters,
+                    this.searchtext,
+                    this
+                );
 
                 return this.recommendations;
             }
@@ -91,36 +97,11 @@
 
         created() {
             DBX5ListsGet.setCustomListsFromDB(this.customLists, data.recommendations, this).then(() => {
-                this.prepareRecommendations();
+                RecommendationsProcessor.prepareRecommendations();
             });
         },
 
         methods: {
-            prepareRecommendations() {
-                DBX5ListsGet.enrichRecommendations(this, this.recommendations).then(() =>
-                    this.markRecommendationsAsAdded()
-                );
-            },
-
-            markRecommendationsAsAdded() {
-                if (!this.recommendations || this.recommendations.length <= 0) {
-                    return;
-                }
-
-                this.recommendations.forEach(recommendation => {
-                    const currentCustomList = this.customLists[this.currentCustomListIndex];
-                    if (currentCustomList && currentCustomList.list) {
-                        let found = false;
-                        for (let i = 0; i < currentCustomList.list.length; i++) {
-                            if (recommendation.id === currentCustomList.list[i].id) {
-                                found = true;
-                            }
-                        }
-                        recommendation.inList = found;
-                    }
-                });
-            },
-
             recommendationsListClick(itemId) {
                 let exists = false;
                 for (let i = 0; i < this.customLists[this.currentCustomListIndex].list.length; i++) {
@@ -191,47 +172,6 @@
 
             applyFilters(filters) {
                 this.filters = filters;
-            },
-
-            setRecommendationsBySearchText() {
-                if (this.searchtext) {
-                    this.recommendations = this.recommendations.filter(recommendation => {
-                        const regexp = new RegExp(this.searchtext, 'i');
-                        return recommendation.title.match(regexp);
-                    });
-                }
-            },
-
-            setRecommendationsByFilters() {
-                if (this.filters.checkedLangs.length > 0 || this.filters.checkedFormats.length > 0) {
-                    this.recommendations = this.recommendations.filter(recommendation => {
-                        return (
-                            this.recommendationFitsByLangAndFormat(recommendation) ||
-                            this.recommendationFitsByLang(recommendation) ||
-                            this.recommendationFitsByFormat(recommendation)
-                        );
-                    });
-                }
-            },
-
-            recommendationFitsByLangAndFormat(recommendation) {
-                return this.recommendationIsInLangs(recommendation) && this.recommendationIsInFormats(recommendation);
-            },
-
-            recommendationFitsByLang(recommendation) {
-                return this.recommendationIsInLangs(recommendation) && this.filters.checkedFormats.length === 0;
-            },
-
-            recommendationFitsByFormat(recommendation) {
-                return this.filters.checkedLangs.length === 0 && this.recommendationIsInFormats(recommendation);
-            },
-
-            recommendationIsInLangs(recommendation) {
-                return this.filters.checkedLangs.indexOf(recommendation.language) > -1;
-            },
-
-            recommendationIsInFormats(recommendation) {
-                return this.filters.checkedFormats.indexOf(recommendation.type) > -1;
             },
 
             editItem(item) {
