@@ -4,11 +4,11 @@
             <br>
         </div>
 
-        <h3>Titel</h3>
+        <h3>Titel der Liste</h3>
 
-        <input type="text" value="en" v-model="title">
+        <input class="list_title_input" type="text" value="en" v-model="title">
 
-        <h3>Freigabedatum</h3>
+        <h3>Für Studierende sichtbar ab</h3>
 
         <input type="date" value="text" v-model="releaseDate">
 
@@ -54,6 +54,11 @@
         padding: 1em;
         color: #1f3f70;
         background-color: #e7ebf1;
+    }
+
+    .list_title_input {
+        width: 100%;
+        max-width: 40em;
     }
 
     .x5-header {

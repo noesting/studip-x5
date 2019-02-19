@@ -149,7 +149,7 @@
                 console.log('open new list modal');
                 const eventBus = new Vue();
 
-                this.$modal.show(NewListAssitentModal, { eventBus: eventBus }, { height: 'auto', width: '70%' });
+                this.$modal.show(NewListAssitentModal, { eventBus: eventBus }, { height: 'auto', width: '50%' });
 
                 eventBus.$on('addList', newListData => {
                     console.log('adding list', newListData);
