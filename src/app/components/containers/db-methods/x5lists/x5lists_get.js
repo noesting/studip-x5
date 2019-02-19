@@ -120,5 +120,5 @@ export const enrichRecommendations = (dozentViewContainer, recommendations) => {
         return;
     }
 
-    enrichWithLikes(recommendations, dozentViewContainer);
+    return enrichWithLikes(recommendations, dozentViewContainer);
 };
