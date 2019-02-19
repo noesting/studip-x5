@@ -1,7 +1,7 @@
 import * as Connection from '../general';
 
-export const addNewList = (customLists, dozentViewContainer) => {
-    const listObject = getNewListObjectForCustomLists(customLists);
+export const addNewList = (customLists, title, dozentViewContainer) => {
+    const listObject = getNewListObjectForCustomLists(customLists, title);
     const json = getJsonApiFormatFromList(listObject);
     addListToDatabase(json, dozentViewContainer).then(response => {
         if (response.ok) {
@@ -11,20 +11,19 @@ export const addNewList = (customLists, dozentViewContainer) => {
     });
 };
 
-const getNewListObjectForCustomLists = customLists => {
+const getNewListObjectForCustomLists = (customLists, title) => {
     const newListObject = {
-        title: getNewListTitle(customLists),
+        title: getNewListTitle(customLists, title),
         list: []
     };
 
     return newListObject;
 };
 
-const getNewListTitle = customLists => {
-    let title = 'Neue Liste';
+const getNewListTitle = (customLists, title) => {
     let index = 1;
     while (titleExistsInList(title, customLists)) {
-        title = 'Neue Liste ' + index;
+        title = title + ' ' + index;
         index++;
     }
 

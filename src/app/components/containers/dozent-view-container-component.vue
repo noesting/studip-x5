@@ -138,11 +138,11 @@
 
                 this.currentCustomListIndex = newIndex;
 
-                this.markRecommendationsAsAdded();
+                RecommendationsProcessor.markRecommendationsAsAdded();
             },
 
-            addNewCustomList() {
-                DBX5ListCreate.addNewList(this.customLists, this);
+            addNewCustomList(newList) {
+                DBX5ListCreate.addNewList(this.customLists, newList.title, this);
             },
 
             alterCustomList() {

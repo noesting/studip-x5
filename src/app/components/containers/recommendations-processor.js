@@ -16,7 +16,7 @@ export const prepareRecommendations = (recommendations, currentCustomList, vueIn
     return markRecommendationsAsAdded(recommendations, currentCustomList);
 };
 
-const markRecommendationsAsAdded = (recommendations, currentCustomList) => {
+export const markRecommendationsAsAdded = (recommendations, currentCustomList) => {
     if (!recommendations || recommendations.length <= 0) {
         return;
     }
