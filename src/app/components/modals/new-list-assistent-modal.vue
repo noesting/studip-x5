@@ -6,11 +6,12 @@
 
         <h3>Titel der Liste</h3>
 
-        <input class="list_title_input" type="text" value="en" v-model="title">
+        <input class="list_title_input" type="text" maxlength="160" v-model="title">
 
         <h3>Für Studierende sichtbar ab</h3>
 
-        <input type="date" value="text" v-model="releaseDate">
+        <!-- <input type="text" class="has-date-picker" :value="dateText"> -->
+        <input type="text" class="has-date-picker" v-model="releaseDate" ref="dateInput">
 
         <br>
 
@@ -26,24 +27,56 @@
         components: {
             StudipButton
         },
+        mounted() {
+            console.log('ref', this.$refs.dateInput);
+            this.$refs.dateInput.addEventListener('change', function(event) {
+                console.log('change', event);
+            });
+        },
         props: ['eventBus'],
-        computed: {},
         data() {
             return {
                 title: 'Neue Liste',
-                releaseDate: new Date()
+                releaseDate: this.formatDate(new Date())
             };
         },
         methods: {
             add() {
-                console.log('adding list with title', this.title, 'and date', this.releaseDate);
-                this.eventBus.$emit('addList', { title: this.title, date: this.releaseDate });
+                const date = this.getDateFromString(this.releaseDate);
+                console.log('adding list with title', this.title, 'and date', date);
+                this.eventBus.$emit('addList', { title: this.title, date: date });
                 this.close();
             },
 
             close() {
                 this.$emit('close');
                 console.log('close');
+            },
+
+            getDateFromString(dateString) {
+                if (!dateString) {
+                    return null;
+                }
+
+                dateString.trim();
+
+                const dateArray = dateString.split('.');
+                console.log('dateArray', dateArray);
+                if (dateArray.length !== 3) {
+                    return null;
+                }
+
+                return new Date(dateArray[2], --dateArray[1], dateArray[0]);
+            },
+
+            formatDate(date) {
+                const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+                const month = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
+                return day + '.' + month + '.' + date.getFullYear();
+            },
+
+            updateReleaseDate(event) {
+                console.log('updating to', event);
             }
         }
     };
