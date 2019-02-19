@@ -12,7 +12,11 @@
                         :text="'Liste auswählen'"
                         :icon="'arr_1down'"
                     ></StudipIconButton>
-                    <div class="dropdown_content choose_list" id="choose_custom_list_select">
+                    <div
+                        class="dropdown_content choose_list"
+                        id="choose_custom_list_select"
+                        v-if="listsExists"
+                    >
                         <div
                             v-for="list in customLists"
                             v-bind:key="list.title"
@@ -28,7 +32,7 @@
             </div>
         </div>
 
-        <div class="x5_current_list">
+        <div class="x5_current_list" v-if="listsExists">
             <input
                 ref="listTitleRef"
                 type="text"
@@ -100,6 +104,10 @@
         computed: {
             inputDisabled() {
                 return this.listTitleDisabled;
+            },
+
+            listsExists() {
+                return this.customLists && this.customLists.length > 0;
             }
         },
         methods: {
@@ -153,6 +161,7 @@
 
                 eventBus.$on('addList', newListData => {
                     console.log('adding list', newListData);
+                    this.$emit('addNewList', newListData);
                 });
             },
 
