@@ -14,7 +14,7 @@
         },
         computed: {
             imageSource: function() {
-                return studipIcons[this.icon_name];
+                return studipIcons[this.color || 'blue'][this.icon_name];
             },
 
             iconShape: function() {

@@ -11,10 +11,10 @@
     import { studipIcons } from './icons';
 
     export default {
-        props: ['text', 'action', 'icon'],
+        props: ['text', 'action', 'icon', 'iconColor'],
         computed: {
             computedIcon() {
-                return studipIcons[this.icon];
+                return studipIcons[this.iconColor || 'blue'][this.icon];
             }
         },
         methods: {
