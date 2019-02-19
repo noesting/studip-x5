@@ -81,6 +81,8 @@
     import StudipIcon from '../studip-components/studip-clickable-icon-component';
     import StudipIconButton from '../studip-components/studip-icon-button-component';
 
+    import NewListAssitentModal from '../modals/new-list-assistent-modal.vue';
+
     import { data } from '../../../data';
 
     export default {
@@ -143,7 +145,15 @@
             },
 
             addList() {
-                this.$emit('addNewList');
+                // this.$emit('addNewList');
+                console.log('open new list modal');
+                const eventBus = new Vue();
+
+                this.$modal.show(NewListAssitentModal, { eventBus: eventBus }, { height: 'auto', width: '70%' });
+
+                eventBus.$on('addList', newListData => {
+                    console.log('adding list', newListData);
+                });
             },
 
             toggleShareListClick() {
