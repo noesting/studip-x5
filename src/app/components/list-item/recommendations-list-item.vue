@@ -1,7 +1,7 @@
 <template>
     <div v-bind:class="[item.inList ? 'x5_list_item_container_in_list' : 'x5_list_item_container']">
         <div @click="openModal()">
-            <ListItem v-bind:item="item" v-bind:key="item.id"></ListItem>
+            <ListItem v-bind:item="item" v-bind:iconColor="iconColor" v-bind:key="item.id"></ListItem>
         </div>
         <div
             class="x5_list_item_action"
@@ -9,7 +9,7 @@
             @click="action(item.id)"
         >
             <h3>
-                <StudipIcon v-bind:icon_name="'arr_1right'" v-bind:color="'blue'"></StudipIcon>
+                <StudipIcon v-bind:icon_name="'arr_1right'" v-bind:color="iconColor"></StudipIcon>
             </h3>
         </div>
     </div>
@@ -26,6 +26,15 @@
         components: {
             ListItem,
             StudipIcon
+        },
+        computed: {
+            iconColor() {
+                if (this.item.inList) {
+                    return 'grey';
+                } else {
+                    return 'blue';
+                }
+            }
         },
         methods: {
             action(id) {
@@ -68,10 +77,11 @@
         text-overflow: ellipsis;
         overflow: hidden;
         margin-top: 1em;
-        background-color: lightgrey !important;
+        background-color: #eeeeee;
 
         display: grid;
         grid-template-columns: 95% 5%;
+        color: #999999;
     }
 
     .x5_list_item_action {

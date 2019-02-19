@@ -6,7 +6,7 @@
         </div>
         <div class="x5_list_item_title">{{ item.title }}</div>
         <div class="x5_list_item_subtitle">
-            <StudipIcon v-bind:icon_name="'star'" v-bind:color="'blue'"></StudipIcon>
+            <StudipIcon v-bind:icon_name="'thumbs_up'" v-bind:color="'blue'"></StudipIcon>
             ({{ item.thumbsUps }}) - {{ item.publishingYear }}: {{ item.author }}
         </div>
     </div>
@@ -17,6 +17,8 @@
     import StudipIcon from '../studip-components/studip-clickable-icon-component';
 
     import StudentListItemDetailModal from '../modals/student-list-item-detail-modal.vue';
+
+    import * as IconHelper from './icon-helpers';
 
     export default {
         props: ['item'],
@@ -35,25 +37,13 @@
                 );
 
                 eventBus.$on('like', () => {
-                    console.log('i like!');
                     this.$emit('likeItem', this.item);
                 });
             }
         },
         computed: {
             iconName() {
-                switch (this.item.type) {
-                    case 'text':
-                        return 'file-text';
-                    case 'audio':
-                        return 'file-audio';
-                    case 'video':
-                        return 'file-video';
-                    case 'image':
-                        return 'file-pic';
-                    default:
-                        return 'file';
-                }
+                return IconHelper.getItemTypeIconName(this.item);
             }
         }
     };

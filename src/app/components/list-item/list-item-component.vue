@@ -2,11 +2,11 @@
     <!-- <div class="x5_list_item_inner" @click="openModal"> -->
     <div class="x5_list_item_inner">
         <div class="x5_list_item_thumbnail">
-            <StudipIcon class="thumbnail-icon" v-bind:icon_name="iconName" v-bind:color="'blue'"></StudipIcon>
+            <StudipIcon class="thumbnail-icon" v-bind:icon_name="iconName" v-bind:color="iconColor"></StudipIcon>
         </div>
         <div class="x5_list_item_title">{{ item.title }}</div>
         <div class="x5_list_item_subtitle">
-            <StudipIcon v-bind:icon_name="'thumbs_up'" v-bind:color="'blue'"></StudipIcon>
+            <StudipIcon v-bind:icon_name="'thumbs_up'" v-bind:color="iconColor"></StudipIcon>
             ({{ item.thumbsUps }}) - {{ item.publishingYear }}: {{ item.author }}
         </div>
     </div>
@@ -16,8 +16,10 @@
     import ItemDetailModal from '../modals/item-detail-modal.vue';
     import StudipIcon from '../studip-components/studip-clickable-icon-component';
 
+    import * as IconHelper from './icon-helpers';
+
     export default {
-        props: ['item'],
+        props: ['item', 'iconColor'],
         components: {
             StudipIcon
         },
@@ -28,18 +30,7 @@
         },
         computed: {
             iconName() {
-                switch (this.item.type) {
-                    case 'text':
-                        return 'file_text';
-                    case 'audio':
-                        return 'music';
-                    case 'video':
-                        return 'video2';
-                    case 'image':
-                        return 'image';
-                    default:
-                        return 'file_text';
-                }
+                return IconHelper.getItemTypeIconName(this.item);
             }
         }
     };
@@ -51,7 +42,6 @@
         height: 4.5em;
         text-overflow: ellipsis;
         overflow: hidden;
-        background-color: #e7ebf1;
 
         display: grid;
         grid-template-columns: 20% 80%;
