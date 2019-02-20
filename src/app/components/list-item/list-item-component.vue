@@ -40,6 +40,8 @@
     .x5_list_item_inner {
         width: 100%;
         height: 4.5em;
+        padding-bottom: 0.5rem;
+        padding-top: 0.5rem;
         text-overflow: ellipsis;
         overflow: hidden;
 
