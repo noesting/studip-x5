@@ -142,7 +142,8 @@
             },
 
             addNewCustomList(newList) {
-                DBX5ListCreate.addNewList(this.customLists, newList.title, this);
+                console.log('create new customList', newList);
+                DBX5ListCreate.addNewList(this.customLists, newList, this);
             },
 
             alterCustomList() {

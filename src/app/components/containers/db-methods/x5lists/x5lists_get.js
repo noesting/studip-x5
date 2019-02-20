@@ -31,10 +31,19 @@ const addListToArray = (customLists, data, recommendations, dozentViewContainer)
         id: data.id,
         title: data.attributes.title,
         shared: data.attributes.visible,
+        releaseDate: getReleaseDate(data),
         list: []
     });
 
     setItems(customLists[customLists.length - 1], recommendations, dozentViewContainer);
+};
+
+const getReleaseDate = data => {
+    if (data.attributes['release_date']) {
+        return new Date(data.attributes.release_date);
+    }
+
+    return new Date('1990-01-01');
 };
 
 const setItems = (customList, recommendations, dozentViewContainer) => {

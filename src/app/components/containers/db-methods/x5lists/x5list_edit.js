@@ -19,7 +19,8 @@ const getJsonApiFormatForUpdate = listItem => {
             attributes: {
                 title: listItem.title,
                 visible: listItem.shared || false,
-                position: listItem.position || '0'
+                position: listItem.position || '0',
+                releaseDate: listItem.releaseDate.toISOString()
             },
 
             relationships: {

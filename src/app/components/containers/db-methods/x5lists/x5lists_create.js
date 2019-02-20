@@ -1,7 +1,7 @@
 import * as Connection from '../general';
 
-export const addNewList = (customLists, title, dozentViewContainer) => {
-    const listObject = getNewListObjectForCustomLists(customLists, title);
+export const addNewList = (customLists, list, dozentViewContainer) => {
+    const listObject = getNewListObjectForCustomLists(customLists, list);
     const json = getJsonApiFormatFromList(listObject);
     addListToDatabase(json, dozentViewContainer).then(response => {
         if (response.ok) {
@@ -11,9 +11,10 @@ export const addNewList = (customLists, title, dozentViewContainer) => {
     });
 };
 
-const getNewListObjectForCustomLists = (customLists, title) => {
+const getNewListObjectForCustomLists = (customLists, list) => {
     const newListObject = {
-        title: getNewListTitle(customLists, title),
+        title: getNewListTitle(customLists, list.title),
+        releaseDate: list.releaseDate || new Date(),
         list: []
     };
 
@@ -48,7 +49,8 @@ const getJsonApiFormatFromList = newListItem => {
         data: {
             type: 'x5-lists',
             attributes: {
-                title: newListItem.title
+                title: newListItem.title,
+                releaseDate: newListItem.releaseDate.toISOString()
             },
 
             relationships: {
