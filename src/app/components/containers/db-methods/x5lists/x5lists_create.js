@@ -14,7 +14,7 @@ export const addNewList = (customLists, list, dozentViewContainer) => {
 const getNewListObjectForCustomLists = (customLists, list) => {
     const newListObject = {
         title: getNewListTitle(customLists, list.title),
-        releaseDate: list.releaseDate || new Date(),
+        releaseDate: list.date || new Date(),
         list: []
     };
 
@@ -72,5 +72,4 @@ const addListToDatabase = (newListJson, dozentViewContainer) => {
 const addNewListToArray = (listObject, customLists, dozentViewContainer) => {
     customLists.push(listObject);
     dozentViewContainer.setCurrentCustomListIndex(customLists.length - 1);
-    dozentViewContainer.$refs.customListHeader.renameListClick();
 };
