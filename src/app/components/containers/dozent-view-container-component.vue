@@ -83,15 +83,13 @@
             processedRecommendations() {
                 this.recommendations = data.recommendations;
 
-                this.recommendations = RecommendationsProcessor.processRecommendations(
+                return RecommendationsProcessor.processRecommendations(
                     this.recommendations,
                     this.customLists[this.currentCustomListIndex],
                     this.filters,
                     this.searchtext,
                     this
                 );
-
-                return this.recommendations;
             }
         },
 
@@ -105,7 +103,10 @@
             recommendationsListClick(itemId) {
                 let exists = false;
                 for (let i = 0; i < this.customLists[this.currentCustomListIndex].list.length; i++) {
-                    if (this.customLists[this.currentCustomListIndex].list[i].id === itemId) {
+                    if (
+                        this.customLists[this.currentCustomListIndex].list[i] &&
+                        this.customLists[this.currentCustomListIndex].list[i].id === itemId
+                    ) {
                         exists = true;
                     }
                 }
@@ -122,7 +123,10 @@
             customListItemClick(itemId) {
                 let itemIndex;
                 for (let i = 0; i < this.customLists[this.currentCustomListIndex].list.length; i++) {
-                    if (this.customLists[this.currentCustomListIndex].list[i].id === itemId) {
+                    if (
+                        this.customLists[this.currentCustomListIndex].list[i] &&
+                        this.customLists[this.currentCustomListIndex].list[i].id === itemId
+                    ) {
                         itemIndex = i;
                     }
                 }
