@@ -40,6 +40,7 @@
         "singleQuote": true
     },
     "dependencies": {
-        "vue-resource": "^1.5.1"
+        "vue-resource": "^1.5.1",
+        "vuejs-datepicker": "^1.5.4"
     }
 }
