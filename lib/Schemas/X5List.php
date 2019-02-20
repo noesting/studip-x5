@@ -27,6 +27,7 @@ class X5List extends SchemaProvider
             'mkdate' => date('c', $resource['mkdate']),
             'chdate' => date('c', $resource['chdate']),
             'visible' => (boolean) $resource['visible'],
+            'release-date' => date('c', $resource['release_date']),
         ];
     }
 

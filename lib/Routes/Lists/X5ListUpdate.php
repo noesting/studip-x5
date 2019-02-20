@@ -38,6 +38,7 @@ class X5ListUpdate extends JsonApiController
         $x5list->title = self::arrayGet($json, 'data.attributes.title');
         $x5list->position = self::arrayGet($json, 'data.attributes.position');
         $x5list->visible = self::arrayGet($json, 'data.attributes.visible');
+        $x5list->release_date = self::arrayGet($json, 'data.attributes.releaseDate');
         $x5list->chdate = time();
 
         $x5list->store();

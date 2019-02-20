@@ -3,6 +3,7 @@
 namespace X5\Routes\Lists;
 
 use Argonauts\JsonApiController;
+use Argonauts\Routes\TimestampTrait;
 use Argonauts\Routes\ValidationTrait;
 use Argonauts\Schemas\Course as CourseSchema;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -12,7 +13,7 @@ use X5\Schemas\X5List as X5ListSchema;
 
 class X5Listcreate extends JsonApiController
 {
-    use ValidationTrait;
+    use ValidationTrait, TimestampTrait;
     public function __invoke(Request $request, Response $response, $args)
     {
         // TODO Authorization
@@ -37,6 +38,11 @@ class X5Listcreate extends JsonApiController
             return '`title` must not be empty.';
         }
 
+        //Attribute: release date
+        if (self::isValidTomestamp(self::arrayGet($json, 'data.attributes.releaseDate', ''))) {
+            return '`releaseDate` is not a valid Timestamp.';
+        }
+
         // Relationship: course
         if (!$this->validateResourceObject($json, 'data.relationships.course', CourseSchema::TYPE)) {
             return 'Missing `course` relationship';
@@ -48,12 +54,16 @@ class X5Listcreate extends JsonApiController
         $json = $this->validate($request);
 
         $title = self::arrayGet($json, 'data.attributes.title');
+        $release_date = self::fromISO8601(self::arrayGet($json, 'data.attributes.releaseDate'));
+        if (!$release_date) {
+            $release_date = $time();
+        }
         $courseId = self::arrayGet($json, 'data.relationships.course.id');
 
-        return $this->createX5List($title, $courseId);
+        return $this->createX5List($title, $release_date, $courseId);
     }
 
-    private function createX5List($title, $range_id)
+    private function createX5List($title, $release_date, $range_id)
     {
         $currentTime = time();
         return X5List::create(
@@ -64,6 +74,7 @@ class X5Listcreate extends JsonApiController
                 'mkdate' => $currentTime,
                 'chdate' => $currentTime,
                 'visible' => false,
+                'release_date' => $release_date,
             ]
         );
     }
