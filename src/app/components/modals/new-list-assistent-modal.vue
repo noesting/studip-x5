@@ -10,8 +10,13 @@
 
         <h3>Für Studierende sichtbar ab</h3>
 
-        <!-- <input type="text" class="has-date-picker" :value="dateText"> -->
-        <input type="text" class="has-date-picker" v-model="releaseDate" ref="dateInput">
+        <Datepicker
+            v-model="releaseDate"
+            name="releaseDatePicker"
+            :calendar-class="'x5_calendar'"
+            :language="language.de"
+            :format="'dd.MM.yyyy'"
+        ></Datepicker>
 
         <br>
 
@@ -21,62 +26,34 @@
 </template>
 
 <script>
+    import Datepicker from 'vuejs-datepicker';
+    import { en, de } from 'vuejs-datepicker/dist/locale';
     import StudipButton from '../studip-components/studip-button-component.vue';
 
     export default {
         components: {
+            Datepicker,
             StudipButton
-        },
-        mounted() {
-            console.log('ref', this.$refs.dateInput);
-            this.$refs.dateInput.addEventListener('change', function(event) {
-                console.log('change', event);
-            });
         },
         props: ['eventBus'],
         data() {
             return {
                 title: 'Neue Liste',
-                releaseDate: this.formatDate(new Date())
+                releaseDate: new Date(),
+                language: {
+                    en,
+                    de
+                }
             };
         },
         methods: {
             add() {
-                const date = this.getDateFromString(this.releaseDate);
-                console.log('adding list with title', this.title, 'and date', date);
-                this.eventBus.$emit('addList', { title: this.title, date: date });
+                this.eventBus.$emit('addList', { title: this.title, date: this.releaseDate });
                 this.close();
             },
 
             close() {
                 this.$emit('close');
-                console.log('close');
-            },
-
-            getDateFromString(dateString) {
-                if (!dateString) {
-                    return null;
-                }
-
-                dateString.trim();
-
-                const dateArray = dateString.split('.');
-                console.log('dateArray', dateArray);
-                if (dateArray.length !== 3) {
-                    return null;
-                }
-
-                return new Date(dateArray[2], --dateArray[1], dateArray[0]);
-            },
-
-            formatDate(date) {
-                const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
-                const month = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
-                return day + '.' + month + '.' + date.getFullYear();
-            },
-
-            updateReleaseDate(event) {
-                console.log('updating to', event);
             }
         }
     };
@@ -99,5 +76,26 @@
         color: #1f3f70;
         font-size: 1.5em;
         font-weight: bold;
+    }
+</style>
+
+<style lang="scss">
+    .x5_calendar {
+        position: fixed;
+        z-index: 1000;
+    }
+
+    .vdp-datepicker__calendar .cell.selected {
+        background-color: #1f3f70;
+        color: #ffffff;
+    }
+
+    .vdp-datepicker__calendar .cell.selected:hover {
+        background-color: #1f3f70;
+        color: #ffffff;
+    }
+
+    .vdp-datepicker__calendar .cell:not(.blank):not(.disabled).day:hover {
+        border: 1px solid #1f3f70;
     }
 </style>
