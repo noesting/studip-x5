@@ -39,7 +39,7 @@ class X5Listcreate extends JsonApiController
         }
 
         //Attribute: release date
-        if (self::isValidTomestamp(self::arrayGet($json, 'data.attributes.releaseDate', ''))) {
+        if (self::isValidTimestamp(self::arrayGet($json, 'data.attributes.releaseDate', ''))) {
             return '`releaseDate` is not a valid Timestamp.';
         }
 
@@ -56,7 +56,7 @@ class X5Listcreate extends JsonApiController
         $title = self::arrayGet($json, 'data.attributes.title');
         $release_date = self::fromISO8601(self::arrayGet($json, 'data.attributes.releaseDate'));
         if (!$release_date) {
-            $release_date = $time();
+            $release_date = time();
         }
         $courseId = self::arrayGet($json, 'data.relationships.course.id');
 
