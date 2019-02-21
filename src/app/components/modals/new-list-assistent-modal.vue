@@ -1,17 +1,18 @@
 <template>
     <div class="new-list-assistent-modal-container">
-        <div class="x5-header">Neue Liste anlegen
+        <div class="x5-header">
+            {{ headerText }}
             <br>
         </div>
 
         <h3>Titel der Liste</h3>
 
-        <input class="list_title_input" type="text" maxlength="160" v-model="title">
+        <input class="list_title_input" type="text" maxlength="160" v-model="list.title">
 
         <h3>Für Studierende sichtbar ab</h3>
 
         <Datepicker
-            v-model="releaseDate"
+            v-model="list.releaseDate"
             name="releaseDatePicker"
             :calendar-class="'x5_calendar'"
             :language="language.de"
@@ -20,7 +21,7 @@
 
         <br>
 
-        <StudipButton @studipbuttonClick="add" :text="'Anlegen'"></StudipButton>
+        <StudipButton @studipbuttonClick="save" :text="saveButtonText"></StudipButton>
         <StudipButton @studipbuttonClick="close" :text="'Abbrechen'"></StudipButton>
     </div>
 </template>
@@ -35,20 +36,50 @@
             Datepicker,
             StudipButton
         },
-        props: ['eventBus'],
+        props: ['eventBus', 'listFromParent'],
         data() {
             return {
-                title: 'Neue Liste',
-                releaseDate: new Date(),
                 language: {
                     en,
                     de
+                },
+                list: {
+                    title: 'Neue Liste',
+                    releaseDate: new Date()
                 }
             };
         },
+        computed: {
+            headerText() {
+                return this.isUpdateModal() ? 'Liste aktualisieren' : 'Neue Liste anlegen';
+            },
+
+            saveButtonText() {
+                return this.isUpdateModal() ? 'Speichern' : 'Anlegen';
+            }
+        },
+        created() {
+            this.initList();
+        },
         methods: {
-            add() {
-                this.eventBus.$emit('addList', { title: this.title, date: this.releaseDate });
+            initList() {
+                if (this.listFromParent && this.listFromParent.id) {
+                    this.list = this.listFromParent;
+                }
+                console.log('this.listFromParent', this.listFromParent);
+                console.log('this.list', this.list);
+            },
+
+            isUpdateModal() {
+                return this.list && this.list.id;
+            },
+
+            save() {
+                if (this.list.id) {
+                    this.eventBus.$emit('updateList', this.list);
+                } else {
+                    this.eventBus.$emit('addList', this.list);
+                }
                 this.close();
             },
 

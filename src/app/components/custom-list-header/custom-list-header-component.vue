@@ -48,7 +48,7 @@
                     <StudipIcon :icon_name="'action'" :color="'blue'"></StudipIcon>
                 </div>
                 <div class="dropdown_content options_menu">
-                    <div
+                    <!-- <div
                         v-if="!customLists[currentCustomListIndex].shared"
                         class="editListButton"
                         name="editListButton"
@@ -67,7 +67,13 @@
                         name="editListButton"
                         id="renameListClick"
                         @click="renameListClick"
-                    >Umbenennen</div>
+                    >Umbenennen</div>-->
+                    <div
+                        class="editListButton"
+                        name="editListButton"
+                        id="editListClick"
+                        @click="editListClick"
+                    >Bearbeiten</div>
                     <div
                         class="editListButton"
                         name="editListButton"
@@ -147,14 +153,25 @@
                 });
             },
 
+            editListClick() {
+                console.log('Editing List');
+                const eventBus = new Vue();
+                const listFromParent = this.customLists[this.currentCustomListIndex];
+
+                this.$modal.show(NewListAssitentModal, { eventBus, listFromParent }, { height: 'auto', width: '50%' });
+
+                eventBus.$on('updateList', list => {
+                    Object.assign(this.customLists[this.currentCustomListIndex], list);
+                    this.$emit('alterList');
+                });
+            },
+
             listTitleFocusOut() {
                 this.listTitleDisabled = true;
                 this.$emit('alterList');
             },
 
             addList() {
-                // this.$emit('addNewList');
-                console.log('open new list modal');
                 const eventBus = new Vue();
 
                 this.$modal.show(NewListAssitentModal, { eventBus: eventBus }, { height: 'auto', width: '50%' });
