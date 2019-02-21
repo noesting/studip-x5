@@ -9,7 +9,7 @@
                 <div class="dropdown">
                     <StudipIconButton
                         class="x5_choose_list_button"
-                        :text="'Liste auswählen'"
+                        :text="chooseListButtonText"
                         :icon="'arr_1down'"
                     ></StudipIconButton>
                     <div
@@ -114,6 +114,11 @@
 
             listsExists() {
                 return this.customLists && this.customLists.length > 0;
+            },
+
+            chooseListButtonText() {
+                const appendix = this.customLists.length === 0 ? '' : ' (' + this.customLists.length + ')';
+                return 'Liste auswählen' + appendix;
             }
         },
         methods: {
