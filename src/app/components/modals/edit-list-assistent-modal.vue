@@ -1,5 +1,5 @@
 <template>
-    <div class="new-list-assistent-modal-container">
+    <div class="edit-list-assistent-modal-container">
         <div class="x5-header">
             {{ headerText }}
             <br>
@@ -89,7 +89,7 @@
 </script>
 
 <style lang="scss" scoped>
-    .new-list-assistent-modal-container {
+    .edit-list-assistent-modal-container {
         padding: 1em;
         color: #1f3f70;
         background-color: #e7ebf1;

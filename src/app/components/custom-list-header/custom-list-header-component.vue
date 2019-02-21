@@ -91,7 +91,7 @@
     import StudipIcon from '../studip-components/studip-clickable-icon-component';
     import StudipIconButton from '../studip-components/studip-icon-button-component';
 
-    import NewListAssitentModal from '../modals/new-list-assistent-modal.vue';
+    import EditListAssitentModal from '../modals/edit-list-assistent-modal.vue';
 
     import { data } from '../../../data';
 
@@ -158,7 +158,7 @@
                 const eventBus = new Vue();
                 const listFromParent = this.customLists[this.currentCustomListIndex];
 
-                this.$modal.show(NewListAssitentModal, { eventBus, listFromParent }, { height: 'auto', width: '50%' });
+                this.$modal.show(EditListAssitentModal, { eventBus, listFromParent }, { height: 'auto', width: '50%' });
 
                 eventBus.$on('updateList', list => {
                     Object.assign(this.customLists[this.currentCustomListIndex], list);
@@ -174,7 +174,7 @@
             addList() {
                 const eventBus = new Vue();
 
-                this.$modal.show(NewListAssitentModal, { eventBus: eventBus }, { height: 'auto', width: '50%' });
+                this.$modal.show(EditListAssitentModal, { eventBus: eventBus }, { height: 'auto', width: '50%' });
 
                 eventBus.$on('addList', newListData => {
                     console.log('adding list', newListData);
