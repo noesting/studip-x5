@@ -3,6 +3,7 @@
 namespace X5\Routes\Lists;
 
 use Argonauts\JsonApiController;
+use Argonauts\Routes\TimestampTrait;
 use Argonauts\Routes\ValidationTrait;
 use Argonauts\Schemas\Course as CourseSchema;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -12,7 +13,7 @@ use X5\Schemas\X5List as X5ListSchema;
 
 class X5ListUpdate extends JsonApiController
 {
-    use ValidationTrait;
+    use ValidationTrait, TimestampTrait;
     public function __invoke(Request $request, Response $response, $args)
     {
         if (!$x5list = X5List::find($args['id'])) {
@@ -34,11 +35,14 @@ class X5ListUpdate extends JsonApiController
         $json = $this->validate($request);
 
         $title = self::arrayGet($json, 'data.attributes.title');
+        $release_date_string = self::arrayGet($json, 'data.attributes.releaseDate', '');
+        $release_date = self::fromISO8601($release_date_string)->getTimestamp();
 
-        $x5list->title = self::arrayGet($json, 'data.attributes.title');
+        $x5list->title = $title;
         $x5list->position = self::arrayGet($json, 'data.attributes.position');
         $x5list->visible = self::arrayGet($json, 'data.attributes.visible');
-        $x5list->release_date = self::arrayGet($json, 'data.attributes.releaseDate');
+        // $x5list->release_date = self::arrayGet($json, 'data.attributes.releaseDate');
+        $x5list->release_date = $release_date;
         $x5list->chdate = time();
 
         $x5list->store();
@@ -55,6 +59,11 @@ class X5ListUpdate extends JsonApiController
         if (!$title = self::arrayGet($json, 'data.attributes.title', '')
             || !mb_strlen(trim($title))) {
             return '`title` must not be empty.';
+        }
+
+        //Attribute: release date
+        if (!self::isValidTimestamp(self::arrayGet($json, 'data.attributes.releaseDate', ''))) {
+            return '`releaseDate` (' . self::arrayGet($json, 'data.attributes.releaseDate', '') . ') is not a valid Timestamp. ';
         }
 
         // Relationship: course
