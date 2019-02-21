@@ -66,8 +66,6 @@
                 if (this.listFromParent && this.listFromParent.id) {
                     this.list = this.listFromParent;
                 }
-                console.log('this.listFromParent', this.listFromParent);
-                console.log('this.list', this.list);
             },
 
             isUpdateModal() {
