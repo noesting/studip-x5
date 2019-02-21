@@ -39,8 +39,8 @@ const addListToArray = (customLists, data, recommendations, dozentViewContainer)
 };
 
 const getReleaseDate = data => {
-    if (data.attributes['release_date']) {
-        return new Date(data.attributes.release_date);
+    if (data.attributes['release-date']) {
+        return new Date(data.attributes['release-date']);
     }
 
     return new Date('1990-01-01');
