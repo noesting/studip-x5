@@ -127,4 +127,12 @@
     .vdp-datepicker__calendar .cell:not(.blank):not(.disabled).day:hover {
         border: 1px solid #1f3f70;
     }
+
+    .vdp-datepicker__calendar .cell:not(.blank):not(.disabled).month:hover {
+        border: 1px solid #1f3f70;
+    }
+
+    .vdp-datepicker__calendar .cell:not(.blank):not(.disabled).year:hover {
+        border: 1px solid #1f3f70;
+    }
 </style>
