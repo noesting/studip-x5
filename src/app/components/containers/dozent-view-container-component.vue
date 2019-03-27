@@ -102,6 +102,9 @@
         methods: {
             recommendationsListClick(itemId) {
                 let exists = false;
+                if (!this.customLists[this.currentCustomListIndex] || !this.customLists[this.currentCustomListIndex].list) {
+                    return
+                }
                 for (let i = 0; i < this.customLists[this.currentCustomListIndex].list.length; i++) {
                     if (
                         this.customLists[this.currentCustomListIndex].list[i] &&

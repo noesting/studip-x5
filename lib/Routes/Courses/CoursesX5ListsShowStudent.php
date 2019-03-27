@@ -16,7 +16,8 @@ class CoursesX5ListsShowStudent extends JsonApiController
         // }
 
         //$items = X5ListItem::findBySQL('item_id = ? AND list_id = ?', [$item_id, $list_id]);
-        if (!$lists = X5List::findBySQL('range_id = ? AND visible = true', [$args['id']])) {
+        $now = time();
+        if (!$lists = X5List::findBySQL('range_id = ? AND release_date <= ?', [$args['id'], $now])) {
             // throw new RecordNotFoundException();
             $lists = [];
         }

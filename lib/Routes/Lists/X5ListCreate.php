@@ -39,8 +39,8 @@ class X5Listcreate extends JsonApiController
         }
 
         //Attribute: release date
-        if (self::isValidTimestamp(self::arrayGet($json, 'data.attributes.releaseDate', ''))) {
-            return '`releaseDate` is not a valid Timestamp.';
+        if (!self::isValidTimestamp(self::arrayGet($json, 'data.attributes.releaseDate', ''))) {
+            return '`releaseDate` is not a valid Timestamp. ' . self::arrayGet($json, 'data.attributes.releaseDate', '');
         }
 
         // Relationship: course
@@ -54,10 +54,7 @@ class X5Listcreate extends JsonApiController
         $json = $this->validate($request);
 
         $title = self::arrayGet($json, 'data.attributes.title');
-        $release_date = self::fromISO8601(self::arrayGet($json, 'data.attributes.releaseDate'));
-        if (!$release_date) {
-            $release_date = time();
-        }
+        $release_date = self::fromISO8601(self::arrayGet($json, 'data.attributes.releaseDate'))->getTimestamp();
         $courseId = self::arrayGet($json, 'data.relationships.course.id');
 
         return $this->createX5List($title, $release_date, $courseId);

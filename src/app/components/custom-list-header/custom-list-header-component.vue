@@ -9,7 +9,7 @@
                 <div class="dropdown">
                     <StudipIconButton
                         class="x5_choose_list_button"
-                        :text="'Liste auswählen'"
+                        :text="chooseListButtonText"
                         :icon="'arr_1down'"
                     ></StudipIconButton>
                     <div
@@ -48,7 +48,7 @@
                     <StudipIcon :icon_name="'action'" :color="'blue'"></StudipIcon>
                 </div>
                 <div class="dropdown_content options_menu">
-                    <div
+                    <!-- <div
                         v-if="!customLists[currentCustomListIndex].shared"
                         class="editListButton"
                         name="editListButton"
@@ -67,7 +67,13 @@
                         name="editListButton"
                         id="renameListClick"
                         @click="renameListClick"
-                    >Umbenennen</div>
+                    >Umbenennen</div>-->
+                    <div
+                        class="editListButton"
+                        name="editListButton"
+                        id="editListClick"
+                        @click="editListClick"
+                    >Bearbeiten</div>
                     <div
                         class="editListButton"
                         name="editListButton"
@@ -85,7 +91,7 @@
     import StudipIcon from '../studip-components/studip-clickable-icon-component';
     import StudipIconButton from '../studip-components/studip-icon-button-component';
 
-    import NewListAssitentModal from '../modals/new-list-assistent-modal.vue';
+    import EditListAssitentModal from '../modals/edit-list-assistent-modal.vue';
 
     import { data } from '../../../data';
 
@@ -108,6 +114,11 @@
 
             listsExists() {
                 return this.customLists && this.customLists.length > 0;
+            },
+
+            chooseListButtonText() {
+                const appendix = this.customLists.length === 0 ? '' : ' (' + this.customLists.length + ')';
+                return 'Liste auswählen' + appendix;
             }
         },
         methods: {
@@ -147,17 +158,28 @@
                 });
             },
 
+            editListClick() {
+                console.log('Editing List');
+                const eventBus = new Vue();
+                const listFromParent = this.customLists[this.currentCustomListIndex];
+
+                this.$modal.show(EditListAssitentModal, { eventBus, listFromParent }, { height: 'auto', width: '50%' });
+
+                eventBus.$on('updateList', list => {
+                    Object.assign(this.customLists[this.currentCustomListIndex], list);
+                    this.$emit('alterList');
+                });
+            },
+
             listTitleFocusOut() {
                 this.listTitleDisabled = true;
                 this.$emit('alterList');
             },
 
             addList() {
-                // this.$emit('addNewList');
-                console.log('open new list modal');
                 const eventBus = new Vue();
 
-                this.$modal.show(NewListAssitentModal, { eventBus: eventBus }, { height: 'auto', width: '50%' });
+                this.$modal.show(EditListAssitentModal, { eventBus: eventBus }, { height: 'auto', width: '50%' });
 
                 eventBus.$on('addList', newListData => {
                     console.log('adding list', newListData);
