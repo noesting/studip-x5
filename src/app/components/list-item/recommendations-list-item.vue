@@ -62,6 +62,8 @@
     .x5_list_item_container {
         width: 100%;
         height: 4.5em;
+        padding-bottom: 0.33rem;
+        padding-top: 0.33rem;
         text-overflow: ellipsis;
         overflow: hidden;
         margin-top: 1em;
@@ -74,6 +76,8 @@
     .x5_list_item_container_in_list {
         width: 100%;
         height: 4.5em;
+        padding-bottom: 0.33rem;
+        padding-top: 0.33rem;
         text-overflow: ellipsis;
         overflow: hidden;
         margin-top: 1em;
