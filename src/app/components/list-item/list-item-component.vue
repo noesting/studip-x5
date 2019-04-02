@@ -45,7 +45,7 @@
 
         display: grid;
         grid-template-columns: 20% 80%;
-        grid-template-rows: 70% 30%;
+        grid-template-rows: 66% 33%;
 
         cursor: pointer;
     }
