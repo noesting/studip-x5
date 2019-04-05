@@ -39,10 +39,27 @@
 </script>
 
 <style lang="scss" scoped>
+    @media (max-width: 1024px) { 
+        .x5_student_view_container {
+            grid-template-columns: 99% 0%;
+        }
+    } 
+
+    @media (min-width: 1025px) { 
+        .x5_student_view_container {
+            grid-template-columns: 85% 14%;
+        }
+    } 
+
+    @media (min-width: 1299px) { 
+        .x5_student_view_container {
+            grid-template-columns: 70% 29%;
+        }
+    } 
+    
     .x5_student_view_container {
         display: grid;
         grid-column-gap: 10px;
-        grid-template-columns: 70% 29%;
     }
 
     .x5_student_list {
