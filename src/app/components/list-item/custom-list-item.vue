@@ -64,13 +64,13 @@
 
 <style lang="scss" scoped>
     .x5_list_item_container {
-        width: 100%;
+        width: 99.9%; 
         height: 4.5em;
         padding-bottom: 0.33rem;
         padding-top: 0.33rem;
         text-overflow: ellipsis;
         overflow: hidden;
-        margin-top: 1em;
+        margin-top: 0.33em;
         background-color: #e7ebf1;
 
         display: grid;
