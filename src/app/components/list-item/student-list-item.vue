@@ -5,7 +5,7 @@
             <StudipIcon class="thumbnail-icon" v-bind:icon_name="iconName" v-bind:color="'blue'"></StudipIcon>
         </div>
         <div class="x5_list_item_title">{{ item.title }}</div>
-        <div class="x5_list_item_subtitle">
+        <div class="x5_list_item_subtitle" @click="whereIAm()">
             <StudipIcon v-bind:icon_name="'thumbs_up'" v-bind:color="'blue'"></StudipIcon>
             ({{ item.thumbsUps }}) - {{ item.publishingYear }}: {{ item.author }}
         </div>
@@ -39,6 +39,9 @@
                 eventBus.$on('like', () => {
                     this.$emit('likeItem', this.item);
                 });
+            },
+            whereIAm() {
+                console.log(this);
             }
         },
         computed: {

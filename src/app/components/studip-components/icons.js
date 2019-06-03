@@ -1,5 +1,6 @@
 import action_b from '../../../assets/icons/blue/action.svg';
 import arr_1down_b from '../../../assets/icons/blue/arr_1down.svg';
+import arr_1up_b from '../../../assets/icons/blue/arr_1up.svg';
 import arr_1right_b from '../../../assets/icons/blue/arr_1right.svg';
 import arr_2right_b from '../../../assets/icons/blue/arr_2right.svg';
 import bookmark_b from '../../../assets/icons/blue/bookmark.svg';
@@ -35,6 +36,7 @@ export const studipIcons = {
         action: action_b,
         arr_1down: arr_1down_b,
         arr_1right: arr_1right_b,
+        arr_1up: arr_1up_b,
         arr_2right: arr_2right_b,
         bookmark: bookmark_b,
         decline: decline_b,
