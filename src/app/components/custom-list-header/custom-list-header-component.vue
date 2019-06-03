@@ -7,8 +7,16 @@
         <div class="x5_button_line">
             <div class="x5_button_container">
                 <div class="dropdown">
-                    <StudipButton :text="'Liste auswählen'"></StudipButton>
-                    <div class="dropdown_content choose_list" id="choose_custom_list_select">
+                    <StudipIconButton
+                        class="x5_choose_list_button"
+                        :text="chooseListButtonText"
+                        :icon="'arr_1down'"
+                    ></StudipIconButton>
+                    <div
+                        class="dropdown_content choose_list"
+                        id="choose_custom_list_select"
+                        v-if="listsExists"
+                    >
                         <div
                             v-for="list in customLists"
                             v-bind:key="list.title"
@@ -24,7 +32,7 @@
             </div>
         </div>
 
-        <div class="x5_current_list">
+        <div class="x5_current_list" v-if="listsExists">
             <input
                 ref="listTitleRef"
                 type="text"
@@ -40,26 +48,32 @@
                     <StudipIcon :icon_name="'action'" :color="'blue'"></StudipIcon>
                 </div>
                 <div class="dropdown_content options_menu">
-                    <div
+                    <!-- <div
                         v-if="!customLists[currentCustomListIndex].shared"
                         class="editListButton"
                         name="editListButton"
                         id="shareListClick"
                         @click="toggleShareListClick"
-                    >Für Studentinnen/-en freigeben</div>
+                    >Für Studierende freigeben</div>
                     <div
                         v-if="customLists[currentCustomListIndex].shared"
                         class="editListButton"
                         name="editListButton"
                         id="unshareListClick"
                         @click="toggleShareListClick"
-                    >Freigabe für Studentinnen/-en entziehen</div>
+                    >Freigabe für Studierende entziehen</div>
                     <div
                         class="editListButton"
                         name="editListButton"
                         id="renameListClick"
                         @click="renameListClick"
-                    >Umbenennen</div>
+                    >Umbenennen</div>-->
+                    <div
+                        class="editListButton"
+                        name="editListButton"
+                        id="editListClick"
+                        @click="editListClick"
+                    >Bearbeiten</div>
                     <div
                         class="editListButton"
                         name="editListButton"
@@ -74,14 +88,18 @@
 
 <script>
     import StudipButton from '../studip-components/studip-button-component.vue';
-    import StudipIcon from '../studip-components/studip-icon-button-component.vue';
+    import StudipIcon from '../studip-components/studip-clickable-icon-component';
+    import StudipIconButton from '../studip-components/studip-icon-button-component';
+
+    import EditListAssitentModal from '../modals/edit-list-assistent-modal.vue';
 
     import { data } from '../../../data';
 
     export default {
         components: {
             StudipButton,
-            StudipIcon
+            StudipIcon,
+            StudipIconButton
         },
         props: ['customLists', 'currentCustomListIndex'],
         data() {
@@ -92,6 +110,15 @@
         computed: {
             inputDisabled() {
                 return this.listTitleDisabled;
+            },
+
+            listsExists() {
+                return this.customLists && this.customLists.length > 0;
+            },
+
+            chooseListButtonText() {
+                const appendix = this.customLists.length === 0 ? '' : ' (' + this.customLists.length + ')';
+                return 'Liste auswählen' + appendix;
             }
         },
         methods: {
@@ -131,12 +158,33 @@
                 });
             },
 
+            editListClick() {
+                console.log('Editing List');
+                const eventBus = new Vue();
+                const listFromParent = this.customLists[this.currentCustomListIndex];
+
+                this.$modal.show(EditListAssitentModal, { eventBus, listFromParent }, { height: 'auto', width: '50%' });
+
+                eventBus.$on('updateList', list => {
+                    Object.assign(this.customLists[this.currentCustomListIndex], list);
+                    this.$emit('alterList');
+                });
+            },
+
             listTitleFocusOut() {
                 this.listTitleDisabled = true;
+                this.$emit('alterList');
             },
 
             addList() {
-                this.$emit('addNewList');
+                const eventBus = new Vue();
+
+                this.$modal.show(EditListAssitentModal, { eventBus: eventBus }, { height: 'auto', width: '50%' });
+
+                eventBus.$on('addList', newListData => {
+                    console.log('adding list', newListData);
+                    this.$emit('addNewList', newListData);
+                });
             },
 
             toggleShareListClick() {
@@ -284,10 +332,6 @@
         padding-right: 0.4em;
 
         cursor: pointer;
-    }
-
-    .v--modal-overlay {
-        background: rgba(40, 73, 124, 0.4);
     }
 </style>
 

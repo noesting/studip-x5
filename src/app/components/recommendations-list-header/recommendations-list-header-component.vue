@@ -3,13 +3,19 @@
         <div class="x5_headline x5_list_header_section">Vorschläge</div>
 
         <div class="x5_searchbar x5_list_header_section">
-            <input type="text" placeholder="Suche in X5" name="x5-search">
+            <input
+                type="text"
+                placeholder="Suche in X5"
+                name="x5-search"
+                @keyup.enter="search"
+                v-model="searchtext"
+            >
             <StudipIcon :icon_name="'search'" :color="'blue'"></StudipIcon>
         </div>
 
         <div class="x5_button_line x5_list_header_section">
             <div class="x5_button_container">
-                <StudipButton v-bind:text="'Filter'"></StudipButton>
+                <StudipButton @studipbuttonClick="showFilterModal" v-bind:text="'Filter'"></StudipButton>
             </div>
             <div class="x5_button_container">
                 <StudipButton v-bind:text="'Sortierung'"></StudipButton>
@@ -20,11 +26,46 @@
 
 <script>
     import StudipButton from '../studip-components/studip-button-component.vue';
-    import StudipIcon from '../studip-components/studip-icon-button-component.vue';
+    import StudipIcon from '../studip-components/studip-clickable-icon-component';
+    import FilterModal from '../modals/filter-modal';
+
     export default {
         components: {
             StudipButton,
-            StudipIcon
+            StudipIcon,
+            FilterModal
+        },
+        props: ['filters'],
+        data() {
+            return {
+                searchtext: '',
+                checkedLangs: []
+            };
+        },
+        methods: {
+            showFilterModal() {
+                const eventBus = new Vue();
+                this.$modal.show(
+                    FilterModal,
+                    { eventBus: eventBus, filters: this.filters },
+                    { height: 'auto', width: '40%' }
+                );
+
+                eventBus.$on('setRecommendationsFilters', filters => {
+                    this.filters = filters;
+                    this.applyFilter(filters);
+                });
+            },
+
+            applyFilter(filters) {
+                console.log('applying filters', filters);
+                this.$emit('applyFilters', filters);
+            },
+
+            search() {
+                const searchtext = this.searchtext.trim();
+                this.$emit('searchClicked', searchtext);
+            }
         }
     };
 </script>

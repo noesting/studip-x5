@@ -1,19 +1,28 @@
 <?php
+require_once 'vendor/autoload.php';
+
+use Argonauts\Contracts\JsonApiPlugin;
+use X5\RouteMap;
 
 /**
  * X5 Stud.IP plugin.
  */
+
 class X5Plugin extends StudIPPlugin implements
 /* Plugin Interfaces */
 SystemPlugin,
-StandardPlugin
+StandardPlugin,
+JsonApiPlugin
 {
+    use RouteMap;
+
     public function __construct()
     {
         parent::__construct();
 
-        require_once 'vendor/autoload.php';
         bindtextdomain('x5', dirname(__FILE__) . '/locale');
+
+        // SimpleORMap::expireTableScheme();
 
         $this->setupNavigation();
 
@@ -119,8 +128,10 @@ StandardPlugin
         //     'oer' => $navigation,
         // ];
         $navigation = new Navigation('X5GON Material', $url = PluginEngine::getURL($this, [], 'oer'));
-        $navigation->addSubNavigation('dozent_view', new Navigation('Dozent/in', $url));
-        $navigation->addSubNavigation('student_view', new Navigation('Student/in', PluginEngine::getURL($this, [], 'oer/student_view')));
+        if ($this->currentUserIsDozent()) {
+            $navigation->addSubNavigation('dozent_view', new Navigation('Listen bearbeiten', $url));
+        }
+        $navigation->addSubNavigation('student_view', new Navigation('Studierendenansicht', PluginEngine::getURL($this, [], 'oer/student_view')));
 
         return array('oer' => $navigation);
     }
@@ -166,4 +177,5 @@ StandardPlugin
     {
         return $GLOBALS['perm']->have_perm('dozent');
     }
+
 }

@@ -1,5 +1,5 @@
 <template>
-    <button type="submit" class="button" @click="performClick()">{{ text }}</button>
+    <button type="submit" class="button x5_button" @click="performClick()">{{ text }}</button>
 </template>
 
 <script>
@@ -16,4 +16,3 @@
 
 <style lang="scss" scoped>
 </style>
-
