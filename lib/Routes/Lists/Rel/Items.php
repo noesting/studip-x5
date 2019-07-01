@@ -2,8 +2,8 @@
 
 namespace X5\Routes\Lists\Rel;
 
-use Argonauts\Errors\RecordNotFoundException;
-use Argonauts\Routes\RelationshipsController;
+use JsonApi\Errors\RecordNotFoundException;
+use JsonApi\Routes\RelationshipsController;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use X5\Models\X5Item;
 use X5\Models\X5List;

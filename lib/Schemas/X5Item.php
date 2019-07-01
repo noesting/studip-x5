@@ -2,7 +2,7 @@
 
 namespace X5\Schemas;
 
-use Argonauts\Schemas\SchemaProvider;
+use JsonApi\Schemas\SchemaProvider;
 
 class X5Item extends SchemaProvider
 {

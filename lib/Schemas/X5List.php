@@ -2,7 +2,7 @@
 
 namespace X5\Schemas;
 
-use Argonauts\Schemas\SchemaProvider;
+use JsonApi\Schemas\SchemaProvider;
 use Neomerx\JsonApi\Document\Link;
 
 class X5List extends SchemaProvider

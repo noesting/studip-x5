@@ -2,10 +2,10 @@
 
 namespace X5\Routes\Lists;
 
-use Argonauts\JsonApiController;
-use Argonauts\Routes\TimestampTrait;
-use Argonauts\Routes\ValidationTrait;
-use Argonauts\Schemas\Course as CourseSchema;
+use JsonApi\JsonApiController;
+use JsonApi\Routes\TimestampTrait;
+use JsonApi\Routes\ValidationTrait;
+use JsonApi\Schemas\Course as CourseSchema;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use X5\Models\X5List;

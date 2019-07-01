@@ -2,8 +2,8 @@
 
 namespace X5\Routes\ListItems;
 
-use Argonauts\JsonApiController;
-use Argonauts\Routes\ValidationTrait;
+use JsonApi\JsonApiController;
+use JsonApi\Routes\ValidationTrait;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use X5\Models\X5ListItem;
