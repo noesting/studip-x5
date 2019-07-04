@@ -45,7 +45,7 @@ const getJsonApiFormatFromList = newListItem => {
     const currentUrl = window.location.href;
     const rangeId = currentUrl.split('?cid=')[1];
 
-    return {
+    return JSON.stringify({
         data: {
             type: 'x5-lists',
             attributes: {
@@ -60,7 +60,7 @@ const getJsonApiFormatFromList = newListItem => {
                 }
             }
         }
-    };
+    });
 };
 
 const addListToDatabase = (newListJson, dozentViewContainer) => {
