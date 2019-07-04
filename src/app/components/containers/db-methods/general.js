@@ -6,7 +6,8 @@ export const REST_ENDPOINT = `${STUDIP.ABSOLUTE_URI_STUDIP}plugins.php/argonauts
 
 export const getHeaders = () => {
     const headers = {
-        'Content-Type': 'application/json'
+        // 2019-07-04 ffeyen: Content-Typ header results in client side error 406 "Wrong Media Type" after JsonApiPlugin update
+        //'Content-Type': 'application/json'
     };
 
     return headers;
