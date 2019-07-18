@@ -2,6 +2,7 @@ import * as Connection from '../general';
 
 export const addItemsToCustomList = (customLists, currentCustomListIndex, dozentViewContainer) => {
     const json = getJsonApiFormatForUpdate(customLists[currentCustomListIndex]);
+
     alterListInDatabase(json, dozentViewContainer).then(response => {
         if (response.ok) {
             console.log('yeah!!!');
@@ -16,7 +17,6 @@ const getJsonApiFormatForUpdate = listItem => {
         data: {
             id: listItem.id,
             type: 'x5-lists',
-
             relationships: {
                 x5items: itemRelationShips
             }
@@ -39,10 +39,9 @@ const getItemRelationships = listItem => {
 
 const alterListInDatabase = (alteredListJson, dozentViewContainer) => {
     const headers = Connection.getHeaders();
-
     return dozentViewContainer.$http.post(
         Connection.REST_ENDPOINT + 'x5-lists/' + alteredListJson.data.id + '/items/add',
-        alteredListJson,
+        JSON.stringify(alteredListJson),
         { headers }
     );
 };
