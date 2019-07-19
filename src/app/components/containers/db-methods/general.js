@@ -1,12 +1,12 @@
-// for development
-export const REST_ENDPOINT = `${STUDIP.ABSOLUTE_URI_STUDIP}plugins.php/argonautsplugin/`;
+// for development jsonapi in core
+export const REST_ENDPOINT = `${STUDIP.ABSOLUTE_URI_STUDIP}jsonapi.php/v1/`;
 
 // for test system
 // export const REST_ENDPOINT = 'https://vm222.rz.uni-osnabrueck.de/studip/plugins.php/argonautsplugin/';
 
 export const getHeaders = () => {
     const headers = {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/vnd.api+json'
     };
 
     return headers;

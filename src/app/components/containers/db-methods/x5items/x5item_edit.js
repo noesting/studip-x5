@@ -4,7 +4,7 @@ export const editItem = (item, vueComponent, customLists, currentCustomListIndex
     vueComponent.$http
         .patch(
             Connection.REST_ENDPOINT + 'x5-list-items/' + item.id + '/' + customLists[currentCustomListIndex].id,
-            getJSONAPICommentObject(item),
+            JSON.stringify(getJSONAPICommentObject(item)),
             { headers: Connection.getHeaders() }
         )
         .then(response => handleResponse(response));

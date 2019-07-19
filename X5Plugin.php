@@ -1,7 +1,7 @@
 <?php
 require_once 'vendor/autoload.php';
 
-use Argonauts\Contracts\JsonApiPlugin;
+use JsonApi\Contracts\JsonApiPlugin;
 use X5\RouteMap;
 
 /**

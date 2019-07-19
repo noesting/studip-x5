@@ -20,7 +20,7 @@ const deleteUserItem = (item, vueComponent) => {
 
 const createUserItem = (item, vueComponent) => {
     vueComponent.$http
-        .post(Connection.REST_ENDPOINT + 'x5-user-items/create', getUserItemJsonApiObject(item), {
+        .post(Connection.REST_ENDPOINT + 'x5-user-items/create', JSON.stringify(getUserItemJsonApiObject(item)), {
             headers: Connection.getHeaders()
         })
         .then(response => {
