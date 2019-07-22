@@ -99,7 +99,7 @@
         created() {
             DBX5CourseGet.getCourseMetadata(this).then((response) => {
                 this.courseMetadata = response;
-                RecommendationsGet.getX5Recommendations(this.courseMetadata);
+                RecommendationsGet.getX5Recommendations(this.courseMetadata, this);
             });
             DBX5ListsGet.setCustomListsFromDB(this.customLists, data.recommendations, this).then(() => {
                 RecommendationsProcessor.prepareRecommendations();
