@@ -20,10 +20,24 @@
                         v-model="item.comment"
                     ></textarea>
                 </div>
-                <div class="interaction-grid-item">Bewertung
-                    <StudipButton @studipbuttonClick="likeItem" :text="'Bewerten'"></StudipButton>
-                    <br>
-                    <span v-if="item.userLiked">Bewertet</span>
+                <div class="interaction-grid-item">Gefällt mir 
+                    <div
+                        name="like-button"
+                        @click="likeItem"
+                        class="x5_btn_like">
+                        <h3>
+                            <StudipIcon
+                                v-if="itemLikedByUser"
+                                :icon_name="'thumbs_up'"
+                                :color="'blue'">
+                            </StudipIcon>
+                            <StudipIcon
+                                v-else
+                                :icon_name="'thumbs_up'" 
+                                :color="'grey'">
+                            </StudipIcon>
+                        </h3>
+                    </div>
                 </div>
             </div>
         </div>
@@ -33,10 +47,12 @@
 
 <script>
     import StudipButton from '../studip-components/studip-button-component.vue';
+    import StudipIcon from '../studip-components/studip-clickable-icon-component';
 
     export default {
         components: {
-            StudipButton
+            StudipButton,
+            StudipIcon
         },
         props: ['item', 'eventBus'],
         computed: {
@@ -45,9 +61,14 @@
                 return getValidLink(this.item.link);
             }
         },
-        // data() {},
+        data() {
+            return {
+                itemLikedByUser: this.item.userLiked
+            }
+        },
         methods: {
             likeItem() {
+                this.itemLikedByUser = !this.itemLikedByUser;
                 this.eventBus.$emit('like', this.item);
             }
         }
