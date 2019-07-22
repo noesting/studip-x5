@@ -49,6 +49,7 @@
     import * as DBX5ItemEdit from './db-methods/x5items/x5item_edit';
     import * as DBX5CourseGet from './db-methods/x5courses/x5course_get';
 
+    import * as RecommendationsGet from './recommendations-get';
     import * as RecommendationsProcessor from './recommendations-processor';
 
     export default {
@@ -98,6 +99,7 @@
         created() {
             DBX5CourseGet.getCourseMetadata(this).then((response) => {
                 this.courseMetadata = response;
+                RecommendationsGet.getX5Recommendations(this.courseMetadata);
             });
             DBX5ListsGet.setCustomListsFromDB(this.customLists, data.recommendations, this).then(() => {
                 RecommendationsProcessor.prepareRecommendations();
@@ -199,44 +201,44 @@
 </script>
 
 <style lang="scss" scoped>
-    .x5_dozent_view_container {
-        display: grid;
-        grid-column-gap: 10px;
-        grid-template-columns: 49% 49%;
-    }
+.x5_dozent_view_container {
+    display: grid;
+    grid-column-gap: 10px;
+    grid-template-columns: 49% 49%;
+}
 
-    .x5_list_header {
-        width: 100%;
-        height: 100%;
+.x5_list_header {
+    width: 100%;
+    height: 100%;
 
-        display: flex;
-        flex-direction: column;
-        background-color: #e7ebf1;
+    display: flex;
+    flex-direction: column;
+    background-color: #e7ebf1;
 
-        border: 1px solid #1f3f70;
-    }
+    border: 1px solid #1f3f70;
+}
 
-    .x5_material_list {
-        width: 100%;
+.x5_material_list {
+    width: 100%;
 
-        border-bottom: solid 1px #1f3f70;
-        border-left: solid 1px #1f3f70;
-        border-right: solid 1px #1f3f70;
+    border-bottom: solid 1px #1f3f70;
+    border-left: solid 1px #1f3f70;
+    border-right: solid 1px #1f3f70;
 
-        grid-column: 1;
-    }
+    grid-column: 1;
+}
 
-    .x5_custom_list {
-        width: 100%;
+.x5_custom_list {
+    width: 100%;
 
-        border-bottom: solid 1px #1f3f70;
-        border-left: solid 1px #1f3f70;
-        border-right: solid 1px #1f3f70;
-    }
+    border-bottom: solid 1px #1f3f70;
+    border-left: solid 1px #1f3f70;
+    border-right: solid 1px #1f3f70;
+}
 
-    .c {
-        grid-column: 1;
-        grid-row: 1;
-    }
+.c {
+    grid-column: 1;
+    grid-row: 1;
+}
 </style>
 
