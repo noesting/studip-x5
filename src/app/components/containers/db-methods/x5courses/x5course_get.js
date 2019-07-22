@@ -11,6 +11,6 @@ export const getCourseMetadata = (dozentViewContainer) => {
 
 const handleCourseMetadataResponse = (response, dozentViewContainer) => {
   if (response.ok) {
-    return response.body;
+    return response.body.data.attributes;
   }
 };

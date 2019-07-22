@@ -96,13 +96,12 @@
         },
 
         created() {
+            DBX5CourseGet.getCourseMetadata(this).then((response) => {
+                this.courseMetadata = response;
+            });
             DBX5ListsGet.setCustomListsFromDB(this.customLists, data.recommendations, this).then(() => {
                 RecommendationsProcessor.prepareRecommendations();
             });
-            DBX5CourseGet.getCourseMetadata(this).then((res) => {
-                console.log('DBX5CourseGet.getCourseMetadata');
-                this.courseMetadata = res;
-            })
         },
 
         methods: {
