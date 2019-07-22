@@ -47,6 +47,7 @@
     import * as DBX5LISTAddItems from './db-methods/x5lists/x5lists_items_edit';
     import * as DBX5ItemLike from './db-methods/x5items/x5item_like';
     import * as DBX5ItemEdit from './db-methods/x5items/x5item_edit';
+    import * as DBX5CourseGet from './db-methods/x5courses/x5course_get';
 
     import * as RecommendationsProcessor from './recommendations-processor';
 
@@ -67,7 +68,8 @@
                     checkedLangs: [],
                     checkedFormats: []
                 },
-                searchtext: ''
+                searchtext: '',
+                courseMetadata: []
             };
         },
 
@@ -97,6 +99,10 @@
             DBX5ListsGet.setCustomListsFromDB(this.customLists, data.recommendations, this).then(() => {
                 RecommendationsProcessor.prepareRecommendations();
             });
+            DBX5CourseGet.getCourseMetadata(this).then((res) => {
+                console.log('DBX5CourseGet.getCourseMetadata');
+                this.courseMetadata = res;
+            })
         },
 
         methods: {
