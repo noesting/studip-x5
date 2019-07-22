@@ -51,8 +51,8 @@
     import * as DBX5ItemEdit from './db-methods/x5items/x5item_edit';
     import * as DBX5CourseGet from './db-methods/x5courses/x5course_get';
 
-    import * as RecommendationsGet from './recommendations-get';
-    import * as RecommendationsProcessor from './recommendations-processor';
+    import * as RecommendationsGet from './x5api/recommendations-get';
+    import * as RecommendationsProcessor from './x5api/recommendations-processor';
 
     export default {
         components: {
