@@ -19,7 +19,7 @@
                     <h3>
                         <StudipIcon
                             v-if="itemLikedByUser"
-                            icon_name="'thumbs_up'" 
+                            :icon_name="'thumbs_up'"
                             :color="'blue'">
                         </StudipIcon>
                         <StudipIcon
