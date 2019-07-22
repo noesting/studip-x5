@@ -1,5 +1,5 @@
-import { data } from '../../../data';
-import * as DBX5ListsGet from './db-methods/x5lists/x5lists_get';
+import { data } from '../../../../data';
+import * as DBX5ListsGet from '../db-methods/x5lists/x5lists_get';
 
 export const processRecommendations = (recommendations, currentCustomList, filters, searchtext, vueInstance) => {
     recommendations = data.recommendations;
