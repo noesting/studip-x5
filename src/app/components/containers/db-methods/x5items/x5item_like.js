@@ -33,7 +33,8 @@ const getUserItemJsonApiObject = item => {
         data: {
             type: 'x5-user-items',
             attributes: {
-                likes: true
+                likes: true,
+                read: false
             },
             relationships: {
                 'x5-item': {
