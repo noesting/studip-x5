@@ -50,6 +50,7 @@ trait RouteMap
     {
         $app->post('/x5-user-items/create', Routes\UserItems\X5UserItemCreate::class);
         $app->delete('/x5-user-items/{id}', Routes\UserItems\X5UserItemDelete::class);
+        $app->patch('/x5-user-items/{id}', Routes\UserItems\X5UserItemUpdate::class);
     }
 
     public function registerUnauthenticatedRoutes(\Slim\App $app)
