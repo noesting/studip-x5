@@ -51,19 +51,27 @@ const setItems = (customList, recommendations, dozentViewContainer) => {
 
     return dozentViewContainer.$http
         .get(Connection.REST_ENDPOINT + 'x5-lists/' + customList.id + '/items', { headers })
-        .then(response => enrichItems(response, recommendations, dozentViewContainer))
-        .then(items => customList.list.push(...items))
+        .then(response => enrichItems(response, recommendations, dozentViewContainer)           
+        .then(items => {
+            customList.list.push(...items);
+        })
         .catch(error => {
             console.error('Some Error occured', error);
-        });
+        }));
 };
 
 const enrichItems = (getItemsResponse, recommendations, vueComponent) => {
     const listItemsData = getItemsResponse.body.data.relationships['x5-items'].data;
     const listItemsMeta = getItemsResponse.body.data.relationships['x5-items'].meta;
+    //console.log("listItemsData > " + JSON.stringify(listItemsData))
+    //console.log("listItemsMeta > " + JSON.stringify(listItemsMeta))
 
     const itemsFromRecommendations = enrichFromRecommendations(listItemsData, recommendations);
+    //console.log("itemsFromRecommendations > " + JSON.stringify(itemsFromRecommendations))
+
     const commentedItems = enrichWithComments(itemsFromRecommendations, listItemsMeta);
+    //console.log("commentedItems > " + JSON.stringify(commentedItems))
+
     return enrichWithLikes(commentedItems, vueComponent);
 };
 
@@ -106,6 +114,8 @@ const getItemLikesAsPromises = (commentedItems, vueComponent) => {
 };
 
 const enrichWithLikesHandler = (commentedItems, allItemLikesJSON) => {
+    console.log(commentedItems)
+    console.log(allItemLikesJSON)
     allItemLikesJSON.forEach((itemLikeJSON, index) => {
         const itemLike = itemLikeJSON.body.meta;
         commentedItems[index].thumbsUps = itemLike.likes;

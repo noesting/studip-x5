@@ -33,6 +33,11 @@
             ListItem,
             StudipIcon
         },
+        data() {
+            return {
+                itemMarkedAsRead: this.item.markedAsRead
+            }
+        },
         methods: {
             action(id) {
                 this.$emit('customListClickAction', id);
@@ -47,6 +52,8 @@
                     { height: 'auto', width: '70%' },
                     { 'before-close': this.detailModalClose }
                 );
+
+                console.log('read in costum list');
 
                 eventBus.$on('like', () => {
                     console.log('i like!');

@@ -50,6 +50,8 @@
                     { height: 'auto', width: '70%' }
                 );
 
+                console.log('read in recommendation list');
+
                 eventBus.$on('like', () => {
                     this.$emit('likeItem', this.item);
                 });
