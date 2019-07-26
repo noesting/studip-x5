@@ -1,11 +1,34 @@
 import * as Connection from '../general';
 
 export const likeItem = (item, vueComponent) => {
-    if (item.userLiked) {
-        deleteUserItem(item, vueComponent);
-    } else {
+    checkIfUserItemExists(item, vueComponent);
+};
+
+const checkIfUserItemExists = (item, vueComponent) => {
+    if (!item) {
         createUserItem(item, vueComponent);
+    } else {
+        updateUserItem(item, vueComponent, 'like');
+        checkIfUserItemIsAlreadyLiked(item, vueComponent);
     }
+};
+
+const checkIfUserItemIsAlreadyLiked = (item, vueComponent) => {
+    //console.log("checkIfUserItemIsAlreadyLiked")
+    //console.log(item)
+};
+
+const updateUserItem = (item, vueComponent, updateCol) => {
+    console.log(item)
+    console.log(updateCol)
+    vueComponent.$http
+        .patch(Connection.REST_ENDPOINT + 'x5-user-items/' + item.id + "/update", updateCol, {
+            headers: Connection.getHeaders()
+        })
+        .then(response => {
+            console.log(response)
+            //handleResponse(response, item, true);
+        });
 };
 
 const deleteUserItem = (item, vueComponent) => {
@@ -14,6 +37,7 @@ const deleteUserItem = (item, vueComponent) => {
             headers: Connection.getHeaders()
         })
         .then(response => {
+            console.log(response)
             handleResponse(response, item, false);
         });
 };
@@ -24,6 +48,7 @@ const createUserItem = (item, vueComponent) => {
             headers: Connection.getHeaders()
         })
         .then(response => {
+            console.log(response)
             handleResponse(response, item, true);
         });
 };
@@ -48,11 +73,11 @@ const getUserItemJsonApiObject = item => {
 
 const handleResponse = (response, item, create) => {
     if (response.ok) {
-        modifyItem(item, create);
+        modifyItemLikes(item, create);
     }
 };
 
-const modifyItem = (item, create) => {
+const modifyItemLikes = (item, create) => {
     if (create) {
         item.thumbsUps++;
         item.userLiked = true;
