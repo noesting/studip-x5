@@ -23,6 +23,7 @@
 </template>
 
 <script>
+    import * as DBX5ItemLike from '../containers/db-methods/x5items/x5item_like';
     import ListItem from './list-item-component.vue';
     import StudipIcon from '../studip-components/studip-clickable-icon-component';
     import CustomListItemDetailModal from '../modals/custom-list-item-detail-modal.vue';
@@ -53,7 +54,7 @@
                     { 'before-close': this.detailModalClose }
                 );
 
-                console.log('read in costum list');
+                this.makeItemAsRead(this.item);
 
                 eventBus.$on('like', () => {
                     console.log('i like!');
@@ -64,6 +65,10 @@
             detailModalClose() {
                 console.log('closed modal', this.item);
                 this.$emit('editItem', this.item);
+            },
+
+            makeItemAsRead(item) {
+                DBX5ItemLike.markItemAsRead(item, this);
             }
         }
     };
