@@ -101,7 +101,7 @@ const enrichWithComments = (items, listItemsMeta) => {
 
 const enrichWithLikes = (items, vueComponent) => {
     return Promise.all(getItemLikesAsPromises(items, vueComponent)).then(allItemLikes =>
-        enrichWithLikesHandler(items, allItemLikes)
+        enrichWithLikesAndReadHandler(items, allItemLikes)
     );
 };
 
@@ -113,13 +113,12 @@ const getItemLikesAsPromises = (commentedItems, vueComponent) => {
     });
 };
 
-const enrichWithLikesHandler = (commentedItems, allItemLikesJSON) => {
-    console.log(commentedItems)
-    console.log(allItemLikesJSON)
+const enrichWithLikesAndReadHandler = (commentedItems, allItemLikesJSON) => {
     allItemLikesJSON.forEach((itemLikeJSON, index) => {
         const itemLike = itemLikeJSON.body.meta;
         commentedItems[index].thumbsUps = itemLike.likes;
         commentedItems[index].userLiked = itemLike.liked;
+        commentedItems[index].userRead = itemLike.read; 
     });
 
     return commentedItems;
