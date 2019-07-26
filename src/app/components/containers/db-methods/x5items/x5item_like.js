@@ -1,15 +1,14 @@
 import * as Connection from '../general';
 
 export const likeItem = (item, vueComponent) => {
-    checkIfUserItemExists(item, vueComponent, 'like');
+    checkForOperationToPerform(item, vueComponent, 'like');
 };
 
 export const markItemAsRead = (item, vueComponent) => {
-    checkIfUserItemExists(item, vueComponent, 'read');
+    checkForOperationToPerform(item, vueComponent, 'read');
 };
 
-const checkIfUserItemExists = (item, vueComponent, colToUpdate) => {
-    console.log(item.userLiked + " // " + item.userRead);
+const checkForOperationToPerform = (item, vueComponent, colToUpdate) => {
     if (colToUpdate === 'like' && item.userLiked && !item.userRead) {
         deleteUserItem(item, vueComponent);
     } else if (colToUpdate === 'read' && item.userLiked && !item.userRead) {
