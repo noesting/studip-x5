@@ -5,7 +5,9 @@ export const likeItem = (item, vueComponent) => {
 };
 
 export const markItemAsRead = (item, vueComponent) => {
-    checkForOperationToPerform(item, vueComponent, 'read');
+    if (!item.userRead) {
+        checkForOperationToPerform(item, vueComponent, 'read');
+    } 
 };
 
 const checkForOperationToPerform = (item, vueComponent, colToUpdate) => {
@@ -89,6 +91,9 @@ const handleResponse = (response, item, type) => {
 };
 
 const modifyItem = (response, item, type) => {
+    console.log(response)
+    console.log(item)
+    console.log(type)
     if (type === 'create' || type === 'update') {
         item.userLiked = Boolean(parseInt(response.body.data.attributes.likes));
         item.userRead = Boolean(parseInt(response.body.data.attributes.read));
