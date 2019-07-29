@@ -85,16 +85,12 @@ const handleResponse = (response, item, type) => {
 };
 
 const modifyItem = (response, item, type) => {
-    console.log(response)
-    console.log(item)
-    console.log(type)
-    if (type === 'create' || type === 'update') {
-        item.userLiked = Boolean(parseInt(response.body.data.attributes.likes));
-        item.userRead = Boolean(parseInt(response.body.data.attributes.read));
+    item.userLiked = Boolean(parseInt(response.body.data.attributes.likes));
 
+    if (type === 'create' || type === 'update') {
         if (item.userLiked) {
             item.thumbsUps++;
-        } else {
+        } else if (!item.userLiked && type === 'update') {
             item.thumbsUps--;
         }
     } else if (type === 'delete') {
