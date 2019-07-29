@@ -1,28 +1,22 @@
 import * as Connection from '../general';
 
 export const likeItem = (item, vueComponent) => {
-    checkForOperationToPerform(item, vueComponent, 'like');
+    invokeCorrectFunction(item, vueComponent, 'like');
 };
 
 export const markItemAsRead = (item, vueComponent) => {
     if (!item.userRead) {
-        checkForOperationToPerform(item, vueComponent, 'read');
+        invokeCorrectFunction(item, vueComponent, 'read');
     } 
 };
 
-const checkForOperationToPerform = (item, vueComponent, colToUpdate) => {
-    if (colToUpdate === 'like' && item.userLiked && !item.userRead) {
+const invokeCorrectFunction = (item, vueComponent, colToUpdate) => {
+    if ((colToUpdate === 'like' && item.userLiked && !item.userRead) || (colToUpdate === 'read' && item.userLiked && !item.userRead)){
         deleteUserItem(item, vueComponent);
-    } else if (colToUpdate === 'read' && item.userLiked && !item.userRead) {
-        deleteUserItem(item, vueComponent);
-    } else if (item.userLiked || item.userRead) {
-        if (colToUpdate === 'like') {
-            updateUserItem(item, vueComponent, 'like');
-        } else if (colToUpdate === 'read') {
-            updateUserItem(item, vueComponent, 'read');
-        }
+    } else if (!item.userLiked && !item.userRead) {
+        createUserItem(item, vueComponent, colToUpdate);;
     } else {
-        createUserItem(item, vueComponent, colToUpdate);
+        updateUserItem(item, vueComponent, colToUpdate); 
     }
 };
 
