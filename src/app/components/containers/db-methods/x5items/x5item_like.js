@@ -11,10 +11,12 @@ export const markItemAsRead = (item, vueComponent) => {
 };
 
 const invokeCorrectFunction = (item, vueComponent, colToUpdate) => {
+    // call delete function if userLiked and userRead will be 0 after execution
     if ((colToUpdate === 'like' && item.userLiked && !item.userRead) || (colToUpdate === 'read' && item.userLiked && !item.userRead)){
         deleteUserItem(item, vueComponent);
+    // call create function if no db entry exists
     } else if (!item.userLiked && !item.userRead) {
-        createUserItem(item, vueComponent, colToUpdate);;
+        createUserItem(item, vueComponent, colToUpdate);
     } else {
         updateUserItem(item, vueComponent, colToUpdate); 
     }
@@ -88,8 +90,10 @@ const modifyItem = (response, item, type) => {
     item.userLiked = Boolean(parseInt(response.body.data.attributes.likes));
 
     if (type === 'create' || type === 'update') {
+        // increase thumbsUps count when update or create db entry ...
         if (item.userLiked) {
             item.thumbsUps++;
+        // ... except for a "dislike" (at db entry update)
         } else if (!item.userLiked && type === 'update') {
             item.thumbsUps--;
         }
