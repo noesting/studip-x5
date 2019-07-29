@@ -34,8 +34,8 @@
                 this.$emit('likeItem', item);
             },
 
-            markItemAsRead() {
-                this.$emit('markItemAsRead', this.item);
+            markItemAsRead(item) {
+                this.$emit('markItemAsRead', item);
             }
         }
     };

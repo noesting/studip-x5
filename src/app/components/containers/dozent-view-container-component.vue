@@ -21,6 +21,7 @@
             class="x5_material_list"
             @recommendationsListClick="recommendationsListClick"
             @likeItem="likeItem"
+            @markItemAsRead="markItemAsRead"
         ></RecommendationsList>
         <CustomList
             :customListItems="customListItemlist"
@@ -28,6 +29,7 @@
             @customListItemClick="customListItemClick"
             @editItem="editItem"
             @likeItem="likeItem"
+            @markItemAsRead="markItemAsRead"
         ></CustomList>
     </div>
 </template>
@@ -197,7 +199,7 @@
                 DBX5ItemLike.likeItem(item, this);
             },
 
-            markItemAsRead() {
+            markItemAsRead(item) {
                 DBX5ItemLike.markItemAsRead(item, this);
             }
         }

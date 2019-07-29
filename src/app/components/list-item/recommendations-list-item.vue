@@ -16,6 +16,7 @@
 </template>
 
 <script>
+    import * as DBX5ItemLike from '../containers/db-methods/x5items/x5item_like';
     import ListItem from './list-item-component.vue';
     import StudipIcon from '../studip-components/studip-clickable-icon-component';
 
@@ -50,11 +51,15 @@
                     { height: 'auto', width: '70%' }
                 );
 
-                console.log('read in recommendation list');
+                this.markItemAsRead();
 
                 eventBus.$on('like', () => {
                     this.$emit('likeItem', this.item);
                 });
+            },
+
+            markItemAsRead() {
+                this.$emit('markItemAsRead', this.item)
             }
         }
     };
