@@ -7,6 +7,7 @@
             @customListClickAction="customListClickAction"
             @editItem="editItem"
             @likeItem="likeItem"
+            @markItemAsRead="markItemAsRead"
         ></CustomListItem>
     </div>
 </template>
@@ -31,6 +32,10 @@
 
             likeItem(item) {
                 this.$emit('likeItem', item);
+            },
+
+            markItemAsRead() {
+                this.$emit('markItemAsRead', this.item);
             }
         }
     };

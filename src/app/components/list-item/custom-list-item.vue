@@ -23,7 +23,6 @@
 </template>
 
 <script>
-    import * as DBX5ItemLike from '../containers/db-methods/x5items/x5item_like';
     import ListItem from './list-item-component.vue';
     import StudipIcon from '../studip-components/studip-clickable-icon-component';
     import CustomListItemDetailModal from '../modals/custom-list-item-detail-modal.vue';
@@ -54,7 +53,7 @@
                     { 'before-close': this.detailModalClose }
                 );
 
-                this.makeItemAsRead(this.item);
+                this.markItemAsRead();
 
                 eventBus.$on('like', () => {
                     console.log('i like!');
@@ -67,8 +66,8 @@
                 this.$emit('editItem', this.item);
             },
 
-            makeItemAsRead(item) {
-                DBX5ItemLike.markItemAsRead(item, this);
+            markItemAsRead() {
+                this.$emit('markItemAsRead', this.item);
             }
         }
     };

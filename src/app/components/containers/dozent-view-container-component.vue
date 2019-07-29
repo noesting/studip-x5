@@ -195,6 +195,10 @@
 
             likeItem(item) {
                 DBX5ItemLike.likeItem(item, this);
+            },
+
+            markItemAsRead() {
+                DBX5ItemLike.markItemAsRead(item, this);
             }
         }
     };
