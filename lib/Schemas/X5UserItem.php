@@ -19,6 +19,7 @@ class X5UserItem extends SchemaProvider
     {
         return [
             'likes' => $resource['likes'],
+            'read' => $resource['read'],
             'mkdate' => date('c', $resource['mkdate']),
             'chdate' => date('c', $resource['chdate']),
         ];

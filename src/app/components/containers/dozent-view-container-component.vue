@@ -21,6 +21,7 @@
             class="x5_material_list"
             @recommendationsListClick="recommendationsListClick"
             @likeItem="likeItem"
+            @markItemAsRead="markItemAsRead"
         ></RecommendationsList>
         <CustomList
             :customListItems="customListItemlist"
@@ -28,6 +29,7 @@
             @customListItemClick="customListItemClick"
             @editItem="editItem"
             @likeItem="likeItem"
+            @markItemAsRead="markItemAsRead"
         ></CustomList>
     </div>
 </template>
@@ -195,6 +197,22 @@
 
             likeItem(item) {
                 DBX5ItemLike.likeItem(item, this);
+            },
+
+            markItemAsRead(item) {
+                this.recommendations.find(recommendation => recommendation.id === item.id).userRead = true;
+                this.updateReadInCustomLists(item.id);
+                DBX5ItemLike.markItemAsRead(item, this);
+            },
+
+            updateReadInCustomLists(itemId) {
+                for (var i = 0; i < this.customLists.length; i++) {
+                    for (var k = 0; k < this.customLists[i].list.length; k++) {
+                        if (this.customLists[i].list[k].id === itemId) {
+                            this.customLists[i].list[k].userRead = true;
+                        }
+                    };
+                };
             }
         }
     };

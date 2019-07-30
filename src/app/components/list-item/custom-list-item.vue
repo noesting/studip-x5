@@ -1,6 +1,7 @@
 <template>
     <div class="x5_list_item_container">
         <div @click="openModal()">
+            <div :class="{ x5_item_unread: !item.userRead }"></div>
             <ListItem v-bind:item="item" v-bind:key="item.id"></ListItem>
         </div>
         <!-- <div class="x5_list_item_comment" @click="action(item.id)">
@@ -48,6 +49,8 @@
                     { 'before-close': this.detailModalClose }
                 );
 
+                this.markItemAsRead();
+
                 eventBus.$on('like', () => {
                     console.log('i like!');
                     this.$emit('likeItem', this.item);
@@ -57,6 +60,11 @@
             detailModalClose() {
                 console.log('closed modal', this.item);
                 this.$emit('editItem', this.item);
+            },
+
+            markItemAsRead() {
+                this.$forceUpdate();
+                this.$emit('markItemAsRead', this.item);
             }
         }
     };
@@ -98,6 +106,16 @@
         grid-column: 2;
 
         cursor: pointer;
+    }
+
+    .x5_item_unread {
+        position: absolute;
+        padding-bottom: 0.66em;
+        margin-top: -0.33em;
+        background-color: #1f3f70;
+        height: 4.5em;
+        width: 4px;
+        z-index: 10;
     }
 </style>
 

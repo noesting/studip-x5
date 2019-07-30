@@ -6,6 +6,7 @@
             v-bind:key="item.id"
             @recListClickAction="recListClickAction"
             @likeItem="likeItem"
+            @markItemAsRead="markItemAsRead"
         ></RecommendationsListItem>
     </div>
 </template>
@@ -26,6 +27,10 @@
 
             likeItem(item) {
                 this.$emit('likeItem', item);
+            },
+
+            markItemAsRead(item) {
+                this.$emit('markItemAsRead', item)
             }
         }
     };

@@ -56,13 +56,14 @@ class X5UserItemCreate extends JsonApiController
         $json = $this->validate($request);
 
         $likes = self::arrayGet($json, 'data.attributes.likes');
+        $read = self::arrayGet($json, 'data.attributes.read');
         $item_id = self::arrayGet($json, 'data.relationships.x5-item.id');
         $user_id = $this->getUser($request)->id;
 
-        return $this->createX5UserItem($item_id, $user_id, $likes);
+        return $this->createX5UserItem($item_id, $user_id, $likes, $read);
     }
 
-    private function createX5UserItem($item_id, $user_id, $likes)
+    private function createX5UserItem($item_id, $user_id, $likes, $read)
     {
         $currentTime = time();
         return X5UserItem::create(
@@ -70,6 +71,7 @@ class X5UserItemCreate extends JsonApiController
                 'item_id' => $item_id,
                 'user_id' => $user_id,
                 'likes' => $likes,
+                'read' => $read,
                 'mkdate' => $currentTime,
                 'chdate' => $currentTime,
             ]

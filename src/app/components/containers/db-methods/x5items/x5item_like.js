@@ -1,11 +1,35 @@
 import * as Connection from '../general';
 
 export const likeItem = (item, vueComponent) => {
-    if (item.userLiked) {
+    invokeCorrectFunction(item, vueComponent, 'like');
+};
+
+export const markItemAsRead = (item, vueComponent) => {
+    if (!item.userRead) {
+        invokeCorrectFunction(item, vueComponent, 'read');
+    } 
+};
+
+const invokeCorrectFunction = (item, vueComponent, colToUpdate) => {
+    // call delete function if userLiked and userRead will be 0 after execution
+    if ((colToUpdate === 'like' && item.userLiked && !item.userRead) || (colToUpdate === 'read' && item.userLiked && !item.userRead)){
         deleteUserItem(item, vueComponent);
+    // call create function if no db entry exists
+    } else if (!item.userLiked && !item.userRead) {
+        createUserItem(item, vueComponent, colToUpdate);
     } else {
-        createUserItem(item, vueComponent);
+        updateUserItem(item, vueComponent, colToUpdate); 
     }
+};
+
+const updateUserItem = (item, vueComponent, colToUpdate) => {
+    vueComponent.$http
+        .patch(Connection.REST_ENDPOINT + 'x5-user-items/' + item.id + "/update/" + colToUpdate, colToUpdate, {
+            headers: Connection.getHeaders()
+        })
+        .then(response => {
+            handleResponse(response, item, 'update');
+        });
 };
 
 const deleteUserItem = (item, vueComponent) => {
@@ -14,26 +38,27 @@ const deleteUserItem = (item, vueComponent) => {
             headers: Connection.getHeaders()
         })
         .then(response => {
-            handleResponse(response, item, false);
+            handleResponse(response, item, 'delete');
         });
 };
 
-const createUserItem = (item, vueComponent) => {
+const createUserItem = (item, vueComponent, colToUpdate) => {
     vueComponent.$http
-        .post(Connection.REST_ENDPOINT + 'x5-user-items/create', JSON.stringify(getUserItemJsonApiObject(item)), {
+        .post(Connection.REST_ENDPOINT + 'x5-user-items/create', JSON.stringify(getUserItemJsonApiObject(item, colToUpdate)), {
             headers: Connection.getHeaders()
         })
         .then(response => {
-            handleResponse(response, item, true);
+            handleResponse(response, item, 'create');
         });
 };
 
-const getUserItemJsonApiObject = item => {
+const getUserItemJsonApiObject = (item, colToUpdate) => {
     return {
         data: {
             type: 'x5-user-items',
             attributes: {
-                likes: true
+                likes: setCreateColState(colToUpdate, 'like'),
+                read: setCreateColState(colToUpdate, 'read')
             },
             relationships: {
                 'x5-item': {
@@ -45,18 +70,34 @@ const getUserItemJsonApiObject = item => {
     };
 };
 
-const handleResponse = (response, item, create) => {
-    if (response.ok) {
-        modifyItem(item, create);
+const setCreateColState = (colToUpdate, keyName) => {
+    if (colToUpdate === keyName)  {
+        return true;
+    } else if (colToUpdate === keyName) {
+        return true;
+    } else {
+        return false;
     }
 };
 
-const modifyItem = (item, create) => {
-    if (create) {
-        item.thumbsUps++;
-        item.userLiked = true;
-    } else {
+const handleResponse = (response, item, type) => {
+    if (response.ok) {
+        modifyItem(response, item, type);
+    }
+};
+
+const modifyItem = (response, item, type) => {
+    item.userLiked = Boolean(parseInt(response.body.data.attributes.likes));
+
+    if (type === 'create' || type === 'update') {
+        // increase thumbsUps count when update or create db entry ...
+        if (item.userLiked) {
+            item.thumbsUps++;
+        // ... except for a "dislike" (at db entry update)
+        } else if (!item.userLiked && type === 'update') {
+            item.thumbsUps--;
+        }
+    } else if (type === 'delete') {
         item.thumbsUps--;
-        item.userLiked = false;
     }
 };
