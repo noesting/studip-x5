@@ -1,4 +1,5 @@
 # Stud.IP X5GON Plugin
+[![Build Status](https://travis-ci.org/virtUOS/studip-x5.svg?branch=master)](https://travis-ci.org/virtUOS/studip-x5)
 This Plug-In for Stud.IP will provide teachers and students with OER recommended by the x5gon platform.
 
 ## Project status
