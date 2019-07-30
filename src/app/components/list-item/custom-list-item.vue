@@ -1,7 +1,7 @@
 <template>
     <div class="x5_list_item_container">
         <div @click="openModal()">
-            <div :class="{ x5_item_unread: !userRead }"></div>
+            <div :class="{ x5_item_unread: !item.userRead }"></div>
             <ListItem v-bind:item="item" v-bind:key="item.id"></ListItem>
         </div>
         <!-- <div class="x5_list_item_comment" @click="action(item.id)">
@@ -34,11 +34,6 @@
             ListItem,
             StudipIcon
         },
-        data() {
-            return {
-                userRead: this.item.userRead
-            }
-        },
         methods: {
             action(id) {
                 this.$emit('customListClickAction', id);
@@ -68,7 +63,7 @@
             },
 
             markItemAsRead() {
-                this.userRead = true;
+                this.$forceUpdate();
                 this.$emit('markItemAsRead', this.item);
             }
         }
