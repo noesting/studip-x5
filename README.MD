@@ -27,7 +27,7 @@ tbd
 - [ ] UI enhancements
 
 ## Contributing
-tbd
+GPLv2 (as derivative work of the Stud.IP code base)
 
 ## License
 tbd
