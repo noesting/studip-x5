@@ -1,6 +1,7 @@
 <template>
     <div v-bind:class="[item.inList ? 'x5_list_item_container_in_list' : 'x5_list_item_container']">
         <div @click="openModal()">
+            <div :class="{ x5_item_unread: !checkIfReadOrInList() }"></div>
             <ListItem v-bind:item="item" v-bind:iconColor="iconColor" v-bind:key="item.id"></ListItem>
         </div>
         <div
@@ -20,7 +21,7 @@
     import ListItem from './list-item-component.vue';
     import StudipIcon from '../studip-components/studip-clickable-icon-component';
 
-    import RecommendationsLiustItemDetailModal from '../modals/recommendation-list-item-detail-modal';
+    import RecommendationsListItemDetailModal from '../modals/recommendation-list-item-detail-modal';
 
     export default {
         props: ['item'],
@@ -46,7 +47,7 @@
                 const eventBus = new Vue();
 
                 this.$modal.show(
-                    RecommendationsLiustItemDetailModal,
+                    RecommendationsListItemDetailModal,
                     { item: this.item, eventBus: eventBus },
                     { height: 'auto', width: '70%' }
                 );
@@ -59,7 +60,16 @@
             },
 
             markItemAsRead() {
+                this.$forceUpdate();
                 this.$emit('markItemAsRead', this.item)
+            },
+
+            checkIfReadOrInList() {
+                if (this.item.inList) {
+                    return true;
+                } else {
+                    return this.item.userRead;
+                }
             }
         }
     };
@@ -100,6 +110,16 @@
         grid-column: 2;
 
         cursor: pointer;
+    }
+
+    .x5_item_unread {
+        position: absolute;
+        padding-bottom: 0.66em;
+        margin-top: -0.33em;
+        background-color: #1f3f70;
+        height: 4.5em;
+        width: 4px;
+        z-index: 10;
     }
 </style>
 
