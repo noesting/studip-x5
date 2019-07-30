@@ -11,7 +11,11 @@ class X5ItemUsers extends JsonApiController
 {
     public function __invoke(Request $request, Response $response, $args)
     {
-        if (!$likes = X5UserItem::findManyByItem_id($args['id'])) {
+        /* if (!$likes = X5UserItem::findManyByItem_id($args['id'])) {
+            $likes = [];
+        }  */
+
+        if (!$likes = X5UserItem::findBySQL('item_id = ? AND likes = 1', [$args['id']])) {
             $likes = [];
         }
 
