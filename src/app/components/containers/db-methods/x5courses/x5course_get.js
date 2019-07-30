@@ -9,7 +9,7 @@ export const getCourseMetadata = (dozentViewContainer) => {
     .then(response => handleCourseMetadataResponse(response, dozentViewContainer));
 };
 
-const handleCourseMetadataResponse = (response, dozentViewContainer) => {
+const handleCourseMetadataResponse = (response) => {
   if (response.ok) {
     return response.body.data.attributes;
   }

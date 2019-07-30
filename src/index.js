@@ -7,7 +7,7 @@ import StudentVue from './app/Student';
 const VueResource = require('vue-resource');
 
 const bootstrap = () => {
-    document.addEventListener('DOMContentLoaded', function(event) {
+    document.addEventListener('DOMContentLoaded', function() {
         startVue();
     });
 };
