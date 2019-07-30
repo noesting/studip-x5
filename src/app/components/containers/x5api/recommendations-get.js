@@ -1,9 +1,9 @@
-import * as X5API from './x5api-config'
+import * as X5API from './x5api-config';
 
 export const getX5Recommendations = (courseMetadata, dozentViewContainer) => {
   // check for page and results count
   let parameter = bundleTextParameter(courseMetadata);
-  console.log(parameter)
+  console.log(parameter);
   let recommendations = getRequestX5Api(parameter, dozentViewContainer);
   console.log(recommendations);
   // bundle response
@@ -31,7 +31,7 @@ const getRequestX5Api = (parameter, dozentViewContainer) => {
 };
 
 const handleX5GetResponse = (response, dozentViewContainer) => {
-  console.log(response)
+  console.log(response);
   return response;
 };
   
