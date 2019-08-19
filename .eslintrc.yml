@@ -79,7 +79,6 @@ rules:
   implicit-arrow-linebreak: 'off'
   indent: 'off'
   indent-legacy: 'off'
-  init-declarations: error
   jsx-quotes: error
   key-spacing: error
   keyword-spacing:
