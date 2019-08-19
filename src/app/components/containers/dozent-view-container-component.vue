@@ -1,37 +1,37 @@
 <template>
-    <div class="x5_dozent_view_container">
-        <RecommendationsListHeader
-            class="c x5_list_header"
-            @searchClicked="searchRecommendations"
-            :filters="filters"
-            @applyFilters="applyFilters"
-        ></RecommendationsListHeader>
-        <CustomListHeader
-            ref="customListHeader"
-            :customLists="customLists"
-            :currentCustomListIndex="currentCustomListIndex"
-            @setCurrentCustomListIndex="setCurrentCustomListIndex"
-            @addNewList="addNewCustomList"
-            @alterList="alterCustomList"
-            @removeCurrentListItem="removeCurrentListItem"
-            @shareListToggle="shareShareCurrentCustomList"
-        ></CustomListHeader>
-        <RecommendationsList
-            :recommendations="processedRecommendations"
-            class="x5_material_list"
-            @recommendationsListClick="recommendationsListClick"
-            @likeItem="likeItem"
-            @markItemAsRead="markItemAsRead"
-        ></RecommendationsList>
-        <CustomList
-            :customListItems="customListItemlist"
-            class="x5_custom_list"
-            @customListItemClick="customListItemClick"
-            @editItem="editItem"
-            @likeItem="likeItem"
-            @markItemAsRead="markItemAsRead"
-        ></CustomList>
-    </div>
+  <div class="x5_dozent_view_container">
+    <RecommendationsListHeader
+      class="c x5_list_header"
+      :filters="filters"
+      @searchClicked="searchRecommendations"
+      @applyFilters="applyFilters"
+    />
+    <CustomListHeader
+      ref="customListHeader"
+      :customLists="customLists"
+      :currentCustomListIndex="currentCustomListIndex"
+      @setCurrentCustomListIndex="setCurrentCustomListIndex"
+      @addNewList="addNewCustomList"
+      @alterList="alterCustomList"
+      @removeCurrentListItem="removeCurrentListItem"
+      @shareListToggle="shareShareCurrentCustomList"
+    />
+    <RecommendationsList
+      :recommendations="processedRecommendations"
+      class="x5_material_list"
+      @recommendationsListClick="recommendationsListClick"
+      @likeItem="likeItem"
+      @markItemAsRead="markItemAsRead"
+    />
+    <CustomList
+      :customListItems="customListItemlist"
+      class="x5_custom_list"
+      @customListItemClick="customListItemClick"
+      @editItem="editItem"
+      @likeItem="likeItem"
+      @markItemAsRead="markItemAsRead"
+    />
+  </div>
 </template>
 
 <script>
@@ -104,7 +104,7 @@
                 this.courseMetadata = response;
                 RecommendationsGet.getX5Recommendations(this.courseMetadata, this)
                 .then((recMaterial) => {
-                  this.requestedRecommendations = recMaterial;
+                    this.requestedRecommendations = recMaterial;
                 });
             });
             DBX5ListsGet.setCustomListsFromDB(this.customLists, data.recommendations, this).then(() => {
