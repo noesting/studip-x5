@@ -72,7 +72,8 @@
                     checkedFormats: []
                 },
                 searchtext: '',
-                courseMetadata: []
+                courseMetadata: [],
+                requestedRecommendations: []
             };
         },
 
@@ -101,18 +102,22 @@
         created() {
             DBX5CourseGet.getCourseMetadata(this).then((response) => {
                 this.courseMetadata = response;
-                RecommendationsGet.getX5Recommendations(this.courseMetadata, this);
+                RecommendationsGet.getX5Recommendations(this.courseMetadata, this)
+                .then((recMaterial) => {
+                  this.requestedRecommendations = recMaterial;
+                });
             });
             DBX5ListsGet.setCustomListsFromDB(this.customLists, data.recommendations, this).then(() => {
                 RecommendationsProcessor.prepareRecommendations();
             });
+            
         },
 
         methods: {
             recommendationsListClick(itemId) {
                 let exists = false;
                 if (!this.customLists[this.currentCustomListIndex] || !this.customLists[this.currentCustomListIndex].list) {
-                    return
+                    return;
                 }
                 for (let i = 0; i < this.customLists[this.currentCustomListIndex].list.length; i++) {
                     if (
