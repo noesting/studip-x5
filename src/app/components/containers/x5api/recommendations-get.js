@@ -31,5 +31,12 @@ const getRequestX5Api = (parameter, dozentViewContainer) => {
 };
 
 const handleX5GetResponse = (response, dozentViewContainer) => {
-  return response.body.rec_materials;
+  let recommendations = response.body.rec_materials;
+  
+  for (let i = 0; i < recommendations.length; i++) {
+    recommendations[i].id = recommendations[i].material_id;
+    Reflect.deleteProperty(recommendations[i], 'material_id');
+  }
+  
+  return recommendations;
 };
