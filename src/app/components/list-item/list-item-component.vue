@@ -13,8 +13,9 @@
       <StudipIcon 
         :icon_name="'thumbs_up'" 
         :color="iconColor"
+        :dataProcessed="dataProcessed"
       />
-      ({{ item.thumbsUps }}) - {{ item.language }}: {{ item.provider }}
+      ({{ item.thumbsUps }}) - {{ dataProcessed }} {{ item.language }}: {{ item.provider }}
     </div>
   </div>
 </template>
@@ -29,7 +30,20 @@
         components: {
             StudipIcon
         },
-        props: ['item', 'iconColor'],
+        props: {
+            item: {
+                type: Object,
+                required: true
+            }, 
+            iconColor: {
+                type: String,
+                default: 'grey'
+            }, 
+            dataProcessed: {
+                type: Number,
+                default: 0
+            }
+        },
         computed: {
             iconName() {
                 return IconHelper.getItemTypeIconName(this.item);

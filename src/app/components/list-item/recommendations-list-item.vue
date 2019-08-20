@@ -6,6 +6,7 @@
         :key="item.id"
         :item="item"
         :iconColor="iconColor"
+        :dataProcessed="dataProcessed"
       />
     </div>
     <div
@@ -35,7 +36,7 @@
             ListItem,
             StudipIcon
         },
-        props: ['item'],
+        props: ['item', 'dataProcessed'],
         computed: {
             iconColor() {
                 if (this.item.inList) {
@@ -55,7 +56,7 @@
 
                 this.$modal.show(
                     RecommendationsListItemDetailModal,
-                    { item: this.item, eventBus: eventBus },
+                    { item: this.item, eventBus },
                     { height: 'auto', width: '70%' }
                 );
 

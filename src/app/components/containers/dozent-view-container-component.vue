@@ -18,6 +18,7 @@
     />
     <RecommendationsList
       :recommendations="processedRecommendations"
+      :dataProcessed="dataProcessed"
       class="x5_material_list"
       @recommendationsListClick="recommendationsListClick"
       @likeItem="likeItem"
@@ -72,7 +73,8 @@
                     checkedFormats: []
                 },
                 searchtext: '',
-                courseMetadata: []
+                courseMetadata: [],
+                dataProcessed: 0
             };
         },
 
@@ -97,17 +99,21 @@
         },
 
         created() {
-            DBX5CourseGet.getCourseMetadata(this).then((response) => {
+            DBX5CourseGet.getCourseMetadata(this)
+            .then((response) => {
                 this.courseMetadata = response;
                 RecommendationsGet.getX5Recommendations(this.courseMetadata, this)
                 .then((recMaterial) => {
                     this.recommendations = recMaterial;
+                })
+                .then(() => {
+                    DBX5ListsGet.setCustomListsFromDB(this.customLists, this.recommendations, this)
+                    .then(() => {
+                        RecommendationsProcessor.prepareRecommendations();
+                        this.dataProcessed++;
+                    });
                 });
             });
-            DBX5ListsGet.setCustomListsFromDB(this.customLists, this.recommendations, this).then(() => {
-                RecommendationsProcessor.prepareRecommendations();
-            });
-            
         },
 
         methods: {
@@ -199,12 +205,14 @@
 
             likeItem(item) {
                 DBX5ItemLike.likeItem(item, this);
+                this.dataProcessed++;
             },
 
             markItemAsRead(item) {
                 DBX5ItemLike.markItemAsRead(item, this);
                 this.recommendations.find(recommendation => recommendation.id === item.id).userRead = true;
                 this.updateReadInCustomLists(item.id);
+                this.dataProcessed++;
             },
 
             updateReadInCustomLists(itemId) {
