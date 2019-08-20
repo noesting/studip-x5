@@ -72,8 +72,7 @@
                     checkedFormats: []
                 },
                 searchtext: '',
-                courseMetadata: [],
-                requestedRecommendations: []
+                courseMetadata: []
             };
         },
 
@@ -87,8 +86,6 @@
             },
 
             processedRecommendations() {
-                this.recommendations = data.recommendations;
-
                 return RecommendationsProcessor.processRecommendations(
                     this.recommendations,
                     this.customLists[this.currentCustomListIndex],
@@ -104,10 +101,10 @@
                 this.courseMetadata = response;
                 RecommendationsGet.getX5Recommendations(this.courseMetadata, this)
                 .then((recMaterial) => {
-                    this.requestedRecommendations = recMaterial;
+                    this.recommendations = recMaterial;
                 });
             });
-            DBX5ListsGet.setCustomListsFromDB(this.customLists, data.recommendations, this).then(() => {
+            DBX5ListsGet.setCustomListsFromDB(this.customLists, this.recommendations, this).then(() => {
                 RecommendationsProcessor.prepareRecommendations();
             });
             
@@ -205,9 +202,9 @@
             },
 
             markItemAsRead(item) {
+                DBX5ItemLike.markItemAsRead(item, this);
                 this.recommendations.find(recommendation => recommendation.id === item.id).userRead = true;
                 this.updateReadInCustomLists(item.id);
-                DBX5ItemLike.markItemAsRead(item, this);
             },
 
             updateReadInCustomLists(itemId) {
