@@ -1,19 +1,26 @@
 <template>
-    <div v-bind:class="[item.inList ? 'x5_list_item_container_in_list' : 'x5_list_item_container']">
-        <div @click="openModal()">
-            <div :class="{ x5_item_unread: !checkIfReadOrInList() }"></div>
-            <ListItem v-bind:item="item" v-bind:iconColor="iconColor" v-bind:key="item.id"></ListItem>
-        </div>
-        <div
-            class="x5_list_item_action"
-            name="recommendations_actionButton"
-            @click="action(item.id)"
-        >
-            <h3>
-                <StudipIcon v-bind:icon_name="'arr_1right'" v-bind:color="iconColor"></StudipIcon>
-            </h3>
-        </div>
+  <div :class="[item.inList ? 'x5_list_item_container_in_list' : 'x5_list_item_container']">
+    <div @click="openModal()">
+      <div :class="{ x5_item_unread: !checkIfReadOrInList() }" />
+      <ListItem 
+        :key="item.id"
+        :item="item"
+        :iconColor="iconColor"
+      />
     </div>
+    <div
+      class="x5_list_item_action"
+      name="recommendations_actionButton"
+      @click="action(item.id)"
+    >
+      <h3>
+        <StudipIcon 
+          :icon_name="'arr_1right'" 
+          :color="iconColor"
+        />
+      </h3>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -24,11 +31,11 @@
     import RecommendationsListItemDetailModal from '../modals/recommendation-list-item-detail-modal';
 
     export default {
-        props: ['item'],
         components: {
             ListItem,
             StudipIcon
         },
+        props: ['item'],
         computed: {
             iconColor() {
                 if (this.item.inList) {
