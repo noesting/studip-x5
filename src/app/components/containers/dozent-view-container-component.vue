@@ -212,6 +212,8 @@
 
             likeItem(item) {
                 DBX5ItemLike.likeItem(item, this);
+                this.recommendations.find(recommendation => recommendation.id === item.id).userLiked = !this.recommendations.find(recommendation => recommendation.id === item.id).userLiked;
+                this.updateLikeInCustomLists(item.id);
                 this.dataProcessed++;
             },
 
@@ -230,7 +232,16 @@
                         }
                     };
                 };
-                this.dataProcessed++;
+            },
+
+            updateLikeInCustomLists(itemId) {
+                for (let i = 0; i < this.customLists.length; i++) {
+                    for (let k = 0; k < this.customLists[i].list.length; k++) {
+                        if (this.customLists[i].list[k].id === itemId) {
+                            this.customLists[i].list[k].userLiked = !this.customLists[i].list[k].userLiked;
+                        }
+                    };
+                };
             }
         }
     };
