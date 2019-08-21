@@ -118,10 +118,20 @@
 
         methods: {
             recommendationsListClick(itemId) {
-                let exists = false;
                 if (!this.customLists[this.currentCustomListIndex] || !this.customLists[this.currentCustomListIndex].list) {
                     return;
                 }
+
+                if (!this.checkItemInList(itemId)) {
+                    this.recommendations.find(recommendation => recommendation.id === itemId).inList = true;
+                    this.customLists[this.currentCustomListIndex].list.push(this.recommendations.find(recommendation => recommendation.id === itemId));
+                    this.dataProcessed++;
+                    DBX5LISTAddItems.addItemsToCustomList(this.customLists, this.currentCustomListIndex, this);
+                }
+            },
+
+            checkItemInList(itemId) {
+                let exists = false;
                 for (let i = 0; i < this.customLists[this.currentCustomListIndex].list.length; i++) {
                     if (
                         this.customLists[this.currentCustomListIndex].list[i] &&
@@ -130,14 +140,7 @@
                         exists = true;
                     }
                 }
-
-                if (!exists) {
-                    this.customLists[this.currentCustomListIndex].list.push(this.recommendations.find(recommendation => recommendation.id === itemId));
-                }
-
-                this.recommendations.find(recommendation => recommendation.id === itemId).inList = true;
-
-                DBX5LISTAddItems.addItemsToCustomList(this.customLists, this.currentCustomListIndex, this);
+                return exists;
             },
 
             customListItemClick(itemId) {
