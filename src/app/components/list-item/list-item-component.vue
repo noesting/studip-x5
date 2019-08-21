@@ -37,7 +37,7 @@
             }, 
             iconColor: {
                 type: String,
-                default: 'grey'
+                default: 'blue'
             }, 
             dataProcessed: {
                 type: Number,
