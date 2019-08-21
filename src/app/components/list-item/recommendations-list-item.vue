@@ -5,7 +5,7 @@
       <ListItem 
         :key="item.id"
         :item="item"
-        :iconColor="iconColor"
+        :iconColor="[item.inList ? 'grey' : 'blue']"
         :dataProcessed="dataProcessed"
       />
     </div>
@@ -17,7 +17,8 @@
       <h3>
         <StudipIcon 
           :icon_name="'arr_1right'" 
-          :color="iconColor"
+          :color="[item.inList ? 'grey' : 'blue']"
+          :dataProcessed="dataProcessed"
         />
       </h3>
     </div>
@@ -37,15 +38,6 @@
             StudipIcon
         },
         props: ['item', 'dataProcessed'],
-        computed: {
-            iconColor() {
-                if (this.item.inList) {
-                    return 'grey';
-                } else {
-                    return 'blue';
-                }
-            }
-        },
         methods: {
             action(id) {
                 this.$emit('recListClickAction', id);
@@ -68,8 +60,7 @@
             },
 
             markItemAsRead() {
-                this.$forceUpdate();
-                this.$emit('markItemAsRead', this.item)
+                this.$emit('markItemAsRead', this.item);
             },
 
             checkIfReadOrInList() {

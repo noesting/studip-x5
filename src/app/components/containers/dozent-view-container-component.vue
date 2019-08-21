@@ -26,6 +26,7 @@
     />
     <CustomList
       :customListItems="customListItemlist"
+      :dataProcessed="dataProcessed"
       class="x5_custom_list"
       @customListItemClick="customListItemClick"
       @editItem="editItem"
@@ -36,7 +37,7 @@
 </template>
 
 <script>
-    import { data } from '../../../data';
+    //import { data } from '../../../data';
 
     import RecommendationsListHeader from '../recommendations-list-header/recommendations-list-header-component.vue';
     import CustomListHeader from '../custom-list-header/custom-list-header-component.vue';
@@ -81,6 +82,7 @@
         computed: {
             customListItemlist() {
                 if (this.customLists && this.customLists.length > 0) {
+                    this.dataProcessed++;
                     return this.customLists[this.currentCustomListIndex].list;
                 }
 
@@ -105,6 +107,7 @@
                 RecommendationsGet.getX5Recommendations(this.courseMetadata, this)
                 .then((recMaterial) => {
                     this.recommendations = recMaterial;
+                    this.dataProcessed++;
                 })
                 .then(() => {
                     DBX5ListsGet.setCustomListsFromDB(this.customLists, this.recommendations, this)
@@ -125,9 +128,9 @@
                 if (!this.checkItemInList(itemId)) {
                     this.recommendations.find(recommendation => recommendation.id === itemId).inList = true;
                     this.customLists[this.currentCustomListIndex].list.push(this.recommendations.find(recommendation => recommendation.id === itemId));
-                    this.dataProcessed++;
                     DBX5LISTAddItems.addItemsToCustomList(this.customLists, this.currentCustomListIndex, this);
                 }
+                this.dataProcessed++;
             },
 
             checkItemInList(itemId) {
@@ -154,8 +157,8 @@
                     }
                 }
                 this.customLists[this.currentCustomListIndex].list.splice(itemIndex, 1);
-
                 DBX5LISTAddItems.addItemsToCustomList(this.customLists, this.currentCustomListIndex, this);
+                this.dataProcessed++;
             },
 
             setCurrentCustomListIndex(newIndex) {
@@ -164,7 +167,7 @@
                 }
 
                 this.currentCustomListIndex = newIndex;
-
+                
                 RecommendationsProcessor.markRecommendationsAsAdded();
             },
 
@@ -175,6 +178,7 @@
 
             alterCustomList() {
                 DBX5ListEdit.alterCustomList(this.customLists, this.currentCustomListIndex, this);
+                this.dataProcessed++;
             },
 
             removeCurrentListItem() {
@@ -226,6 +230,7 @@
                         }
                     };
                 };
+                this.dataProcessed++;
             }
         }
     };

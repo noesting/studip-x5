@@ -2,7 +2,7 @@
     <div class="x5_list_item_container">
         <div @click="openModal()">
             <div :class="{ x5_item_unread: !item.userRead }"></div>
-            <ListItem v-bind:item="item" v-bind:key="item.id"></ListItem>
+            <ListItem v-bind:item="item" v-bind:key="item.id" :dataProcessed="dataProcessed"></ListItem>
         </div>
         <!-- <div class="x5_list_item_comment" @click="action(item.id)">
             <h3>
@@ -29,7 +29,7 @@
     import CustomListItemDetailModal from '../modals/custom-list-item-detail-modal.vue';
 
     export default {
-        props: ['item'],
+        props: ['item', 'dataProcessed'],
         components: {
             ListItem,
             StudipIcon
@@ -50,6 +50,7 @@
                 );
 
                 this.markItemAsRead();
+                this.$forceUpdate();
 
                 eventBus.$on('like', () => {
                     console.log('i like!');
@@ -63,7 +64,6 @@
             },
 
             markItemAsRead() {
-                this.$forceUpdate();
                 this.$emit('markItemAsRead', this.item);
             }
         }
