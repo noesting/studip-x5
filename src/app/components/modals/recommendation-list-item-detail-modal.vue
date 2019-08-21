@@ -8,7 +8,7 @@
             <div class="description">{{ item.description }}</div>
 
             <div class="link">
-                <a :href="itemLink" target="blank">{{ item.link }}</a>
+                <a :href="itemLink" target="blank">{{ item.url }}</a>
             </div>
 
             <div class="interaction-grid-item">Gefällt mir 
@@ -47,7 +47,7 @@
         props: ['item', 'eventBus'],
         computed: {
             itemLink() {
-                return getValidLink(this.item.link);
+                return getValidLink(this.item.url);
             }
         },
         data() {

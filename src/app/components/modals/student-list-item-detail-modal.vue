@@ -8,7 +8,7 @@
             <div class="description">{{ item.description }}</div>
 
             <div class="link">
-                <a :href="itemLink" target="blank">{{ item.link }}</a>
+                <a :href="itemLink" target="blank">{{ item.url }}</a>
             </div>
 
             <div class="interaction-fields">
@@ -59,7 +59,7 @@
         computed: {
             itemLink() {
                 console.log('this.item', this.item);
-                return getValidLink(this.item.link);
+                return getValidLink(this.item.url);
             }
         },
         data() {
