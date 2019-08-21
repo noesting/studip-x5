@@ -132,7 +132,7 @@
                 }
 
                 if (!exists) {
-                    this.customLists[this.currentCustomListIndex].list.push(this.recommendations[itemId]);
+                    this.customLists[this.currentCustomListIndex].list.push(this.recommendations.find(recommendation => recommendation.id === itemId));
                 }
 
                 this.recommendations.find(recommendation => recommendation.id === itemId).inList = true;
