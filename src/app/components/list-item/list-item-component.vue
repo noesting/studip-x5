@@ -39,8 +39,7 @@
                 required: true
             }, 
             iconColor: {
-                type: String,
-                default: 'blue'
+                type: Array
             }, 
             dataProcessed: {
                 type: Number,
