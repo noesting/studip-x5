@@ -4,19 +4,15 @@
     <div class="x5_list_item_thumbnail">
       <StudipIcon 
         class="thumbnail-icon"
-        :key="dataProcessed" 
         :icon_name="iconName" 
         :color="iconColor"
-        :dataProcessed="dataProcessed"
       />
     </div>
     <div class="x5_list_item_title">{{ item.title }}</div>
     <div class="x5_list_item_subtitle">
       <StudipIcon 
-        :key="dataProcessed"
         :icon_name="'thumbs_up'" 
         :color="iconColor"
-        :dataProcessed="dataProcessed"
       />
       ({{ item.thumbsUps }}) - {{ item.language }}: {{ item.provider }}
     </div>
@@ -40,10 +36,6 @@
             }, 
             iconColor: {
                 type: Array
-            }, 
-            dataProcessed: {
-                type: Number,
-                default: 0
             }
         },
         computed: {

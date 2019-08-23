@@ -4,7 +4,6 @@
       v-for="item in recommendations"
       :key="item.id"
       :item="item"
-      :dataProcessed="dataProcessed"
       @recListClickAction="recListClickAction"
       @likeItem="likeItem"
       @markItemAsRead="markItemAsRead"
@@ -20,7 +19,7 @@
         components: {
             RecommendationsListItem
         },
-        props: ['recommendations', 'dataProcessed'],
+        props: ['recommendations'],
         methods: {
             recListClickAction(itemId) {
                 this.$emit('recommendationsListClick', itemId);

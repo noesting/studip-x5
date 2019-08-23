@@ -4,7 +4,6 @@
             v-for="item in customListItems"
             v-bind:item="item"
             v-bind:key="item.id"
-            :dataProcessed="dataProcessed"
             @customListClickAction="customListClickAction"
             @editItem="editItem"
             @likeItem="likeItem"
@@ -21,7 +20,7 @@
         components: {
             CustomListItem
         },
-        props: ['customListItems', 'dataProcessed'],
+        props: ['customListItems'],
         methods: {
             customListClickAction(itemId) {
                 this.$emit('customListItemClick', itemId);

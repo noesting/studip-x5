@@ -18,7 +18,6 @@
     />
     <RecommendationsList
       :recommendations="processedRecommendations"
-      :dataProcessed="dataProcessed"
       class="x5_material_list"
       @recommendationsListClick="recommendationsListClick"
       @likeItem="likeItem"
@@ -26,7 +25,6 @@
     />
     <CustomList
       :customListItems="customListItemlist"
-      :dataProcessed="dataProcessed"
       class="x5_custom_list"
       @customListItemClick="customListItemClick"
       @editItem="editItem"
@@ -72,8 +70,7 @@
                     checkedFormats: []
                 },
                 searchtext: '',
-                courseMetadata: [],
-                dataProcessed: 0
+                courseMetadata: []
             };
         },
 

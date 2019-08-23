@@ -6,7 +6,6 @@
         :key="item.id"
         :item="item"
         :iconColor="[item.inList ? 'grey' : 'blue']"
-        :dataProcessed="dataProcessed"
       />
     </div>
     <div
@@ -18,7 +17,6 @@
         <StudipIcon 
           :icon_name="'arr_1right'" 
           :color="[item.inList ? 'grey' : 'blue']"
-          :dataProcessed="dataProcessed"
         />
       </h3>
     </div>
@@ -37,7 +35,7 @@
             ListItem,
             StudipIcon
         },
-        props: ['item', 'dataProcessed'],
+        props: ['item'],
         methods: {
             action(id) {
                 this.$emit('recListClickAction', id);

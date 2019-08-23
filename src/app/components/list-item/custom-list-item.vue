@@ -2,7 +2,7 @@
     <div class="x5_list_item_container">
         <div @click="openModal()">
             <div :class="{ x5_item_unread: !item.userRead }"></div>
-            <ListItem v-bind:item="item" v-bind:key="item.id" :dataProcessed="dataProcessed"></ListItem>
+            <ListItem v-bind:item="item" v-bind:key="item.id"></ListItem>
         </div>
         <!-- <div class="x5_list_item_comment" @click="action(item.id)">
             <h3>
@@ -29,7 +29,7 @@
     import CustomListItemDetailModal from '../modals/custom-list-item-detail-modal.vue';
 
     export default {
-        props: ['item', 'dataProcessed'],
+        props: ['item'],
         components: {
             ListItem,
             StudipIcon
