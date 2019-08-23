@@ -27,7 +27,7 @@
                         class="x5_btn_like">
                         <h3>
                             <StudipIcon
-                                v-if="itemLikedByUser"
+                                v-if="item.userLiked"
                                 :icon_name="'thumbs_up'"
                                 :color="'blue'">
                             </StudipIcon>
@@ -61,14 +61,8 @@
                 return getValidLink(this.item.url);
             }
         },
-        data() {
-            return {
-                itemLikedByUser: this.item.userLiked
-            }
-        },
         methods: {
             likeItem() {
-                this.itemLikedByUser = !this.itemLikedByUser;
                 this.eventBus.$emit('like', this.item);
             }
         }
