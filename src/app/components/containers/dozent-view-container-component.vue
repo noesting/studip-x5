@@ -82,7 +82,6 @@
         computed: {
             customListItemlist() {
                 if (this.customLists && this.customLists.length > 0) {
-                    this.dataProcessed++;
                     return this.customLists[this.currentCustomListIndex].list;
                 }
 
@@ -90,6 +89,7 @@
             },
 
             processedRecommendations() {
+                debugger;
                 return RecommendationsProcessor.processRecommendations(
                     this.recommendations,
                     this.customLists[this.currentCustomListIndex],
@@ -100,23 +100,24 @@
             }
         },
 
-        created() {
-            DBX5CourseGet.getCourseMetadata(this)
+        async created() {
+            await DBX5CourseGet.getCourseMetadata(this)
             .then((response) => {
                 this.courseMetadata = response;
                 RecommendationsGet.getX5Recommendations(this.courseMetadata, this)
                 .then((recMaterial) => {
                     this.recommendations = recMaterial;
-                    this.dataProcessed++;
                 })
                 .then(() => {
                     DBX5ListsGet.setCustomListsFromDB(this.customLists, this.recommendations, this)
                     .then(() => {
                         RecommendationsProcessor.prepareRecommendations();
-                        this.dataProcessed++;
-                    });
-                });
-            });
+                    })
+                    .catch((error) => console.log(error));
+                })
+                .catch((error) => console.log(error));
+            })
+            .catch((error) => console.log(error));
         },
 
         methods: {
@@ -130,7 +131,6 @@
                     this.customLists[this.currentCustomListIndex].list.push(this.recommendations.find(recommendation => recommendation.id === itemId));
                     DBX5LISTAddItems.addItemsToCustomList(this.customLists, this.currentCustomListIndex, this);
                 }
-                this.dataProcessed++;
             },
 
             checkItemInList(itemId) {
@@ -158,7 +158,6 @@
                 }
                 this.customLists[this.currentCustomListIndex].list.splice(itemIndex, 1);
                 DBX5LISTAddItems.addItemsToCustomList(this.customLists, this.currentCustomListIndex, this);
-                this.dataProcessed++;
             },
 
             setCurrentCustomListIndex(newIndex) {
@@ -178,7 +177,6 @@
 
             alterCustomList() {
                 DBX5ListEdit.alterCustomList(this.customLists, this.currentCustomListIndex, this);
-                this.dataProcessed++;
             },
 
             removeCurrentListItem() {
@@ -214,14 +212,12 @@
                 DBX5ItemLike.likeItem(item, this);
                 this.recommendations.find(recommendation => recommendation.id === item.id).userLiked = !this.recommendations.find(recommendation => recommendation.id === item.id).userLiked;
                 this.updateLikeInCustomLists(item.id);
-                this.dataProcessed++;
             },
 
             markItemAsRead(item) {
                 DBX5ItemLike.markItemAsRead(item, this);
                 this.recommendations.find(recommendation => recommendation.id === item.id).userRead = true;
                 this.updateReadInCustomLists(item.id);
-                this.dataProcessed++;
             },
 
             updateReadInCustomLists(itemId) {
