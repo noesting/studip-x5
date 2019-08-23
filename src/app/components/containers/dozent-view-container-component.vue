@@ -37,8 +37,6 @@
 </template>
 
 <script>
-    //import { data } from '../../../data';
-
     import RecommendationsListHeader from '../recommendations-list-header/recommendations-list-header-component.vue';
     import CustomListHeader from '../custom-list-header/custom-list-header-component.vue';
     import RecommendationsList from '../recommendations-list/recommendations-list-component.vue';
@@ -89,7 +87,6 @@
             },
 
             processedRecommendations() {
-                debugger;
                 return RecommendationsProcessor.processRecommendations(
                     this.recommendations,
                     this.customLists[this.currentCustomListIndex],
