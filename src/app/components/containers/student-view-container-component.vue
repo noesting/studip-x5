@@ -18,11 +18,17 @@
     import * as DBX5ListsGet from './db-methods/x5lists/x5lists_get';
     import * as DBX5ItemLike from './db-methods/x5items/x5item_like';
 
+    import * as RecommendationsGet from './x5api/recommendations-get';
+
     export default {
         components: {
             StudentList
         },
         created() {
+            RecommendationsGet.getX5RecommendationById('26886', this)
+                .then((response) => {
+                    console.log(response);
+                });
             DBX5ListsGet.setStudentListsFromDB(this, this.studentLists, data.recommendations);
         },
         data() {

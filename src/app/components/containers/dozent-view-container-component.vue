@@ -98,7 +98,7 @@
             await DBX5CourseGet.getCourseMetadata(this)
             .then((response) => {
                 this.courseMetadata = response;
-                RecommendationsGet.getX5Recommendations(this.courseMetadata, this)
+                RecommendationsGet.getX5RecommendationsByCourse(this.courseMetadata, this)
                 .then((recMaterial) => {
                     this.recommendations = recMaterial;
                 })
