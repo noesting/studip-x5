@@ -1,15 +1,22 @@
 <template>
-    <!-- <div class="x5_list_item_inner" @click="openModal"> -->
-    <div class="x5_list_item_inner">
-        <div class="x5_list_item_thumbnail">
-            <StudipIcon class="thumbnail-icon" v-bind:icon_name="iconName" v-bind:color="iconColor"></StudipIcon>
-        </div>
-        <div class="x5_list_item_title">{{ item.title }}</div>
-        <div class="x5_list_item_subtitle">
-            <StudipIcon v-bind:icon_name="'thumbs_up'" v-bind:color="iconColor"></StudipIcon>
-            ({{ item.thumbsUps }}) - {{ item.publishingYear }}: {{ item.author }}
-        </div>
+  <!-- <div class="x5_list_item_inner" @click="openModal"> -->
+  <div class="x5_list_item_inner">
+    <div class="x5_list_item_thumbnail">
+      <StudipIcon 
+        class="thumbnail-icon"
+        :icon_name="iconName" 
+        :color="iconColor"
+      />
     </div>
+    <div class="x5_list_item_title">{{ item.title }}</div>
+    <div class="x5_list_item_subtitle">
+      <StudipIcon 
+        :icon_name="'thumbs_up'" 
+        :color="iconColor"
+      />
+      ({{ item.thumbsUps }}) - {{ item.language }}: {{ item.provider }}
+    </div>
+  </div>
 </template>
 
 <script>
@@ -19,18 +26,26 @@
     import * as IconHelper from './icon-helpers';
 
     export default {
-        props: ['item', 'iconColor'],
         components: {
             StudipIcon
         },
-        methods: {
-            openModal() {
-                this.$modal.show(ItemDetailModal, { item: this.item }, { height: 'auto', width: '70%' });
+        props: {
+            item: {
+                type: Object,
+                required: true
+            }, 
+            iconColor: {
+                type: Array
             }
         },
         computed: {
             iconName() {
                 return IconHelper.getItemTypeIconName(this.item);
+            }
+        },
+        methods: {
+            openModal() {
+                this.$modal.show(ItemDetailModal, { item: this.item }, { height: 'auto', width: '70%' });
             }
         }
     };

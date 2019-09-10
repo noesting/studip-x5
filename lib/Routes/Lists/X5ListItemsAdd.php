@@ -74,6 +74,7 @@ class X5ListItemsAdd extends JsonApiController
         $x5ListItem->chdate = $now;
 
         $x5ListItem->position = 0;
+        $x5ListItem->comment = NULL;
 
         $x5ListItem->store();
     }

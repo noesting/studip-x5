@@ -1,4 +1,5 @@
 import * as Connection from '../general';
+import * as RecommendationsGet from '../../x5api/recommendations-get';
 
 export const setInitialCustomLists = () => {
     return [{}];
@@ -60,13 +61,13 @@ const setItems = (customList, recommendations, dozentViewContainer) => {
         }));
 };
 
-const enrichItems = (getItemsResponse, recommendations, vueComponent) => {
+const enrichItems = async (getItemsResponse, recommendations, vueComponent) => {
     const listItemsData = getItemsResponse.body.data.relationships['x5-items'].data;
     const listItemsMeta = getItemsResponse.body.data.relationships['x5-items'].meta;
     //console.log("listItemsData > " + JSON.stringify(listItemsData))
     //console.log("listItemsMeta > " + JSON.stringify(listItemsMeta))
 
-    const itemsFromRecommendations = enrichFromRecommendations(listItemsData, recommendations);
+    const itemsFromRecommendations = await enrichFromRecommendations(listItemsData, recommendations, vueComponent);
     //console.log("itemsFromRecommendations > " + JSON.stringify(itemsFromRecommendations))
 
     const commentedItems = enrichWithComments(itemsFromRecommendations, listItemsMeta);
@@ -75,10 +76,13 @@ const enrichItems = (getItemsResponse, recommendations, vueComponent) => {
     return enrichWithLikes(commentedItems, vueComponent);
 };
 
-const enrichFromRecommendations = (listItemsData, recommendations) => {
+const enrichFromRecommendations = (listItemsData, recommendations, vueComponent) => {
     return listItemsData.map(listItemData => {
-        const item = getItemFromRecommendations(listItemData.id, recommendations);
-
+        let item = getItemFromRecommendations(listItemData.id, recommendations, vueComponent);
+ 
+        if (typeof item === "undefined") {
+            item = RecommendationsGet.getX5RecommendationById(itemId, vueComponent);
+        } 
         return { ...item };
     });
 };
@@ -94,7 +98,6 @@ const enrichWithComments = (items, listItemsMeta) => {
         const itemComment = listItemsMeta.find(meta => {
             return meta.item_id === item.id;
         }).comment;
-
         return { ...item, comment: itemComment };
     });
 };

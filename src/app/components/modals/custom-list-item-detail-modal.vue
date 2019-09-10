@@ -8,7 +8,7 @@
             <div class="description">{{ item.description }}</div>
 
             <div class="link">
-                <a :href="itemLink" target="blank">{{ item.link }}</a>
+                <a :href="itemLink" target="blank">{{ item.url }}</a>
             </div>
 
             <div class="interaction-fields">
@@ -27,7 +27,7 @@
                         class="x5_btn_like">
                         <h3>
                             <StudipIcon
-                                v-if="itemLikedByUser"
+                                v-if="item.userLiked"
                                 :icon_name="'thumbs_up'"
                                 :color="'blue'">
                             </StudipIcon>
@@ -58,17 +58,11 @@
         computed: {
             itemLink() {
                 console.log('this.item', this.item);
-                return getValidLink(this.item.link);
-            }
-        },
-        data() {
-            return {
-                itemLikedByUser: this.item.userLiked
+                return getValidLink(this.item.url);
             }
         },
         methods: {
             likeItem() {
-                this.itemLikedByUser = !this.itemLikedByUser;
                 this.eventBus.$emit('like', this.item);
             }
         }

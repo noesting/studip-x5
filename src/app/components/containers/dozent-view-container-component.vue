@@ -1,42 +1,40 @@
 <template>
-    <div class="x5_dozent_view_container">
-        <RecommendationsListHeader
-            class="c x5_list_header"
-            @searchClicked="searchRecommendations"
-            :filters="filters"
-            @applyFilters="applyFilters"
-        ></RecommendationsListHeader>
-        <CustomListHeader
-            ref="customListHeader"
-            :customLists="customLists"
-            :currentCustomListIndex="currentCustomListIndex"
-            @setCurrentCustomListIndex="setCurrentCustomListIndex"
-            @addNewList="addNewCustomList"
-            @alterList="alterCustomList"
-            @removeCurrentListItem="removeCurrentListItem"
-            @shareListToggle="shareShareCurrentCustomList"
-        ></CustomListHeader>
-        <RecommendationsList
-            :recommendations="processedRecommendations"
-            class="x5_material_list"
-            @recommendationsListClick="recommendationsListClick"
-            @likeItem="likeItem"
-            @markItemAsRead="markItemAsRead"
-        ></RecommendationsList>
-        <CustomList
-            :customListItems="customListItemlist"
-            class="x5_custom_list"
-            @customListItemClick="customListItemClick"
-            @editItem="editItem"
-            @likeItem="likeItem"
-            @markItemAsRead="markItemAsRead"
-        ></CustomList>
-    </div>
+  <div class="x5_dozent_view_container">
+    <RecommendationsListHeader
+      class="c x5_list_header"
+      :filters="filters"
+      @searchClicked="searchRecommendations"
+      @applyFilters="applyFilters"
+    />
+    <CustomListHeader
+      ref="customListHeader"
+      :customLists="customLists"
+      :currentCustomListIndex="currentCustomListIndex"
+      @setCurrentCustomListIndex="setCurrentCustomListIndex"
+      @addNewList="addNewCustomList"
+      @alterList="alterCustomList"
+      @removeCurrentListItem="removeCurrentListItem"
+      @shareListToggle="shareShareCurrentCustomList"
+    />
+    <RecommendationsList
+      :recommendations="processedRecommendations"
+      class="x5_material_list"
+      @recommendationsListClick="recommendationsListClick"
+      @likeItem="likeItem"
+      @markItemAsRead="markItemAsRead"
+    />
+    <CustomList
+      :customListItems="customListItemlist"
+      class="x5_custom_list"
+      @customListItemClick="customListItemClick"
+      @editItem="editItem"
+      @likeItem="likeItem"
+      @markItemAsRead="markItemAsRead"
+    />
+  </div>
 </template>
 
 <script>
-    import { data } from '../../../data';
-
     import RecommendationsListHeader from '../recommendations-list-header/recommendations-list-header-component.vue';
     import CustomListHeader from '../custom-list-header/custom-list-header-component.vue';
     import RecommendationsList from '../recommendations-list/recommendations-list-component.vue';
@@ -51,8 +49,8 @@
     import * as DBX5ItemEdit from './db-methods/x5items/x5item_edit';
     import * as DBX5CourseGet from './db-methods/x5courses/x5course_get';
 
-    import * as RecommendationsGet from './recommendations-get';
-    import * as RecommendationsProcessor from './recommendations-processor';
+    import * as RecommendationsGet from './x5api/recommendations-get';
+    import * as RecommendationsProcessor from './x5api/recommendations-processor';
 
     export default {
         components: {
@@ -86,8 +84,6 @@
             },
 
             processedRecommendations() {
-                this.recommendations = data.recommendations;
-
                 return RecommendationsProcessor.processRecommendations(
                     this.recommendations,
                     this.customLists[this.currentCustomListIndex],
@@ -98,22 +94,41 @@
             }
         },
 
-        created() {
-            DBX5CourseGet.getCourseMetadata(this).then((response) => {
+        async created() {
+            await DBX5CourseGet.getCourseMetadata(this)
+            .then((response) => {
                 this.courseMetadata = response;
-                RecommendationsGet.getX5Recommendations(this.courseMetadata);
-            });
-            DBX5ListsGet.setCustomListsFromDB(this.customLists, data.recommendations, this).then(() => {
-                RecommendationsProcessor.prepareRecommendations();
-            });
+                RecommendationsGet.getX5RecommendationsByCourse(this.courseMetadata, this)
+                .then((recMaterial) => {
+                    this.recommendations = recMaterial;
+                })
+                .then(() => {
+                    DBX5ListsGet.setCustomListsFromDB(this.customLists, this.recommendations, this)
+                    .then(() => {
+                        RecommendationsProcessor.prepareRecommendations();
+                    })
+                    .catch((error) => console.log(error));
+                })
+                .catch((error) => console.log(error));
+            })
+            .catch((error) => console.log(error));
         },
 
         methods: {
             recommendationsListClick(itemId) {
-                let exists = false;
                 if (!this.customLists[this.currentCustomListIndex] || !this.customLists[this.currentCustomListIndex].list) {
-                    return
+                    return;
                 }
+
+                if (!this.checkItemInList(itemId)) {
+                    this.recommendations.find(recommendation => recommendation.id === itemId).inList = true;
+                    this.customLists[this.currentCustomListIndex].list.push(this.recommendations.find(recommendation => recommendation.id === itemId));
+                    DBX5LISTAddItems.addItemsToCustomList(this.customLists, this.currentCustomListIndex, this);
+                }
+            },
+
+            checkItemInList(itemId) {
+                let exists = false;
                 for (let i = 0; i < this.customLists[this.currentCustomListIndex].list.length; i++) {
                     if (
                         this.customLists[this.currentCustomListIndex].list[i] &&
@@ -122,14 +137,7 @@
                         exists = true;
                     }
                 }
-
-                if (!exists) {
-                    this.customLists[this.currentCustomListIndex].list.push(this.recommendations[itemId]);
-                }
-
-                this.recommendations.find(recommendation => recommendation.id === itemId).inList = true;
-
-                DBX5LISTAddItems.addItemsToCustomList(this.customLists, this.currentCustomListIndex, this);
+                return exists;
             },
 
             customListItemClick(itemId) {
@@ -143,7 +151,6 @@
                     }
                 }
                 this.customLists[this.currentCustomListIndex].list.splice(itemIndex, 1);
-
                 DBX5LISTAddItems.addItemsToCustomList(this.customLists, this.currentCustomListIndex, this);
             },
 
@@ -153,7 +160,7 @@
                 }
 
                 this.currentCustomListIndex = newIndex;
-
+                
                 RecommendationsProcessor.markRecommendationsAsAdded();
             },
 
@@ -197,19 +204,31 @@
 
             likeItem(item) {
                 DBX5ItemLike.likeItem(item, this);
+                this.recommendations.find(recommendation => recommendation.id === item.id).userLiked = !this.recommendations.find(recommendation => recommendation.id === item.id).userLiked;
+                this.updateLikeInCustomLists(item.id);
             },
 
             markItemAsRead(item) {
+                DBX5ItemLike.markItemAsRead(item, this);
                 this.recommendations.find(recommendation => recommendation.id === item.id).userRead = true;
                 this.updateReadInCustomLists(item.id);
-                DBX5ItemLike.markItemAsRead(item, this);
             },
 
             updateReadInCustomLists(itemId) {
-                for (var i = 0; i < this.customLists.length; i++) {
-                    for (var k = 0; k < this.customLists[i].list.length; k++) {
+                for (let i = 0; i < this.customLists.length; i++) {
+                    for (let k = 0; k < this.customLists[i].list.length; k++) {
                         if (this.customLists[i].list[k].id === itemId) {
                             this.customLists[i].list[k].userRead = true;
+                        }
+                    };
+                };
+            },
+
+            updateLikeInCustomLists(itemId) {
+                for (let i = 0; i < this.customLists.length; i++) {
+                    for (let k = 0; k < this.customLists[i].list.length; k++) {
+                        if (this.customLists[i].list[k].id === itemId) {
+                            this.customLists[i].list[k].userLiked = !this.customLists[i].list[k].userLiked;
                         }
                     };
                 };

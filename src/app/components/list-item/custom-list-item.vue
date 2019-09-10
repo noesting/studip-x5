@@ -50,6 +50,7 @@
                 );
 
                 this.markItemAsRead();
+                this.$forceUpdate();
 
                 eventBus.$on('like', () => {
                     console.log('i like!');
@@ -63,7 +64,6 @@
             },
 
             markItemAsRead() {
-                this.$forceUpdate();
                 this.$emit('markItemAsRead', this.item);
             }
         }
