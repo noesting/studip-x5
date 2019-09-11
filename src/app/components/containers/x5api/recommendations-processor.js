@@ -5,7 +5,7 @@ export const processRecommendations = (recommendations, currentCustomList, filte
     //recommendations = data.recommendations;
     recommendations = prepareRecommendations(recommendations, currentCustomList, vueInstance);
 
-    recommendations = setRecommendationsBySearchText(recommendations, searchtext);
+    //recommendations = setRecommendationsBySearchText(recommendations, searchtext);
     recommendations = setRecommendationsByFilters(recommendations, filters);
 
     return recommendations;

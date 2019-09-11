@@ -10,9 +10,16 @@ export const getX5RecommendationsByCourse = (courseMetadata, viewContainer) => {
   return recMaterial;
 };
 
-export const getX5RecommendationById = (itemId, viewContainer) => {
-  let recMaterial = getRequestX5ApiById(itemId, viewContainer).then(recommendations => {
+export const getX5RecommendationsByText = (textParameter, viewContainer) => {
+  let recMaterial = getRequestX5ApiSearch(textParameter, viewContainer).then(recommendations => {
     return recommendations;
+  });
+  return recMaterial;
+};
+
+export const getX5RecommendationById = (itemId, viewContainer) => {
+  let recMaterial = getRequestX5ApiById(itemId, viewContainer).then(recommendation => {
+    return recommendation;
   });
   return recMaterial;
 };
