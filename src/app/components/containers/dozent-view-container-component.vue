@@ -94,8 +94,8 @@
             }
         },
 
-        async created() {
-            await DBX5CourseGet.getCourseMetadata(this)
+        created() {
+            DBX5CourseGet.getCourseMetadata(this)
             .then((response) => {
                 this.courseMetadata = response;
                 RecommendationsGet.getX5RecommendationsByCourse(this.courseMetadata, this)
@@ -192,6 +192,20 @@
 
             searchRecommendations(searchtext) {
                 this.searchtext = searchtext;
+                
+                if (this.searchtext === '') {
+                    RecommendationsGet.getX5RecommendationsByCourse(this.courseMetadata, this)
+                    .then((recMaterial) => {
+                        this.recommendations = recMaterial;
+                    })
+                    .catch((error) => console.log(error));
+                } else {
+                    RecommendationsGet.getX5RecommendationsByText(this.searchtext, this)
+                    .then((recMaterial) => {
+                        this.recommendations = recMaterial;
+                    })
+                    .catch((error) => console.log(error));
+                }   
             },
 
             applyFilters(filters) {
