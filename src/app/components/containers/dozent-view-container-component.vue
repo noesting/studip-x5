@@ -114,6 +114,10 @@
             .catch((error) => console.log(error));
         },
 
+        updated() {
+            this.updateDummyItemsFromApi();
+        },
+
         methods: {
             recommendationsListClick(itemId) {
                 if (!this.customLists[this.currentCustomListIndex] || !this.customLists[this.currentCustomListIndex].list) {
@@ -245,6 +249,31 @@
                             this.customLists[i].list[k].userLiked = !this.customLists[i].list[k].userLiked;
                         }
                     };
+                };
+            },
+
+            updateDummyItemsFromApi() {
+                for (let i = 0; i < this.customLists.length; i++) {
+                    if (!this.customLists[i].list) {
+                        return;
+                    } else {
+                        for (let k = 0; k < this.customLists[i].list.length; k++) {
+                            if (this.customLists[i].list[k].dummy) {
+                                let itemId = this.customLists[i].list[k].id;
+                                RecommendationsGet.getX5RecommendationById(itemId, this)
+                                .then(response => {
+                                    this.customLists[i].list[k].title = response.title;
+                                    this.customLists[i].list[k].description = response.description;
+                                    this.customLists[i].list[k].language = response.language;
+                                    this.customLists[i].list[k].provider = response.provider.provider_name;
+                                    this.customLists[i].list[k].type = response.type;
+                                    this.customLists[i].list[k].url = response.url;
+                                    this.customLists[i].list[k].extension = response.extension;
+                                    this.customLists[i].list[k].license = response.license;
+                                });
+                            }
+                        };
+                    } 
                 };
             }
         }

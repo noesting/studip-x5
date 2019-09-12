@@ -81,6 +81,8 @@ const addObjectKeys = (recommendations) => {
     recommendations[i].userRead = false;
     recommendations[i].userLiked = false;
     recommendations[i].thumbsUps = 0;
+    recommendations[i].extension = '';
+    recommendations[i].license = '';
   };
   return recommendations;
 };
