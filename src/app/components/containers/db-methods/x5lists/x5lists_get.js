@@ -61,15 +61,13 @@ const setItems = (customList, recommendations, dozentViewContainer) => {
         }));
 };
 
-const enrichItems = async (getItemsResponse, recommendations, vueComponent) => {
+const enrichItems = (getItemsResponse, recommendations, vueComponent) => {
     const listItemsData = getItemsResponse.body.data.relationships['x5-items'].data;
     const listItemsMeta = getItemsResponse.body.data.relationships['x5-items'].meta;
     //console.log("listItemsData > " + JSON.stringify(listItemsData))
     //console.log("listItemsMeta > " + JSON.stringify(listItemsMeta))
-
-    const itemsFromRecommendations = await enrichFromRecommendations(listItemsData, recommendations, vueComponent);
+    const itemsFromRecommendations = enrichFromRecommendations(listItemsData, recommendations, vueComponent);
     //console.log("itemsFromRecommendations > " + JSON.stringify(itemsFromRecommendations))
-
     const commentedItems = enrichWithComments(itemsFromRecommendations, listItemsMeta);
     //console.log("commentedItems > " + JSON.stringify(commentedItems))
 
@@ -78,12 +76,24 @@ const enrichItems = async (getItemsResponse, recommendations, vueComponent) => {
 
 const enrichFromRecommendations = (listItemsData, recommendations, vueComponent) => {
     return listItemsData.map(listItemData => {
-        let item = getItemFromRecommendations(listItemData.id, recommendations, vueComponent);
- 
-        if (typeof item === "undefined") {
-            item = RecommendationsGet.getX5RecommendationById(itemId, vueComponent);
-        } 
-        return { ...item };
+        const item = getItemFromRecommendations(listItemData.id, recommendations, vueComponent);
+        
+        if (typeof item === 'undefined') {
+            return { ...{ 
+                'id': listItemData.id, 
+                'dummy': true,
+                'title': '',
+                'description': '',
+                'language': '',
+                'provider': '',
+                'type': '',
+                'url': '',
+                'extension': '',
+                'license': ''
+            } };
+        } else {
+            return { ...item };
+        }
     });
 };
 
