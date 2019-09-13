@@ -222,13 +222,17 @@
 
             likeItem(item) {
                 DBX5ItemLike.likeItem(item, this);
-                this.recommendations.find(recommendation => recommendation.id === item.id).userLiked = !this.recommendations.find(recommendation => recommendation.id === item.id).userLiked;
+                if (this.recommendations.find(recommendation => recommendation.id === item.id)) {
+                    this.recommendations.find(recommendation => recommendation.id === item.id).userLiked = !this.recommendations.find(recommendation => recommendation.id === item.id).userLiked;
+                }
                 this.updateLikeInCustomLists(item.id);
             },
 
             markItemAsRead(item) {
                 DBX5ItemLike.markItemAsRead(item, this);
-                this.recommendations.find(recommendation => recommendation.id === item.id).userRead = true;
+                if (this.recommendations.find(recommendation => recommendation.id === item.id)) {
+                    this.recommendations.find(recommendation => recommendation.id === item.id).userRead = true;
+                }
                 this.updateReadInCustomLists(item.id);
             },
 
