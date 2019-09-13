@@ -1,17 +1,17 @@
 <template>
-    <div class="x5_student_view_container">
-        <StudentList
-            class="x5_student_list"
-            v-for="list in studentLists"
-            :list="list"
-            v-bind:key="list.title"
-            @likeItem="likeItem"
-        ></StudentList>
-    </div>
+  <div class="x5_student_view_container">
+    <StudentList
+      v-for="list in studentLists"
+      :key="list.title"
+      :list="list"
+      class="x5_student_list"      
+      @likeItem="likeItem"
+    />
+  </div>
 </template>
 
 <script>
-    import { data } from '../../../data';
+    //import { data } from '../../../data';
 
     import StudentList from '../student-list/student-list-component.vue';
 
@@ -24,17 +24,17 @@
         components: {
             StudentList
         },
+        data() {
+            return {
+                studentLists: DBX5ListsGet.setInitialCustomLists()
+            };
+        },
         created() {
             RecommendationsGet.getX5RecommendationById('26886', this)
                 .then((response) => {
                     console.log(response);
                 });
             DBX5ListsGet.setStudentListsFromDB(this, this.studentLists, data.recommendations);
-        },
-        data() {
-            return {
-                studentLists: DBX5ListsGet.setInitialCustomLists()
-            };
         },
         methods: {
             likeItem(item) {
