@@ -1,5 +1,4 @@
 import * as Connection from '../general';
-import * as RecommendationsGet from '../../x5api/recommendations-get';
 
 export const setInitialCustomLists = () => {
     return [{}];
@@ -137,7 +136,7 @@ const enrichWithLikesAndReadHandler = (commentedItems, allItemLikesJSON) => {
     return commentedItems;
 };
 
-export const setStudentListsFromDB = (studentViewContainer, lists, recommendations) => {
+export const setStudentListsFromDB = (lists, recommendations, studentViewContainer) => {
     const headers = Connection.getHeaders();
     const rangeId = Connection.getRangeId();
 
