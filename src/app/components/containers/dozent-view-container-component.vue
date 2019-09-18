@@ -263,22 +263,25 @@
                     } else {
                         for (let k = 0; k < this.customLists[i].list.length; k++) {
                             if (this.customLists[i].list[k].dummy) {
-                                let itemId = this.customLists[i].list[k].id;
-                                RecommendationsGet.getX5RecommendationById(itemId, this)
-                                .then(response => {
-                                    this.customLists[i].list[k].title = response.title;
-                                    this.customLists[i].list[k].description = response.description;
-                                    this.customLists[i].list[k].language = response.language;
-                                    this.customLists[i].list[k].provider = response.provider.provider_name;
-                                    this.customLists[i].list[k].type = response.type;
-                                    this.customLists[i].list[k].url = response.url;
-                                    this.customLists[i].list[k].extension = response.extension;
-                                    this.customLists[i].list[k].license = response.license;
-                                });
+                                this.updateItemContentFromApi(this.customLists[i].list[k].id, i, k); 
                             }
                         };
                     } 
                 };
+            },
+
+            updateItemContentFromApi(itemId, i, k) {
+                RecommendationsGet.getX5RecommendationById(itemId, this)
+                .then(response => {
+                    this.customLists[i].list[k].title = response.title;
+                    this.customLists[i].list[k].description = response.description;
+                    this.customLists[i].list[k].language = response.language;
+                    this.customLists[i].list[k].provider = response.provider.provider_name;
+                    this.customLists[i].list[k].type = response.type;
+                    this.customLists[i].list[k].url = response.url;
+                    this.customLists[i].list[k].extension = response.extension;
+                    this.customLists[i].list[k].license = response.license;
+                });
             }
         }
     };
