@@ -98,18 +98,14 @@
             DBX5CourseGet.getCourseMetadata(this)
             .then((response) => {
                 this.courseMetadata = response;
-                RecommendationsGet.getX5RecommendationsByCourse(this.courseMetadata, this)
-                .then((recMaterial) => {
-                    this.recommendations = recMaterial;
-                })
-                .then(() => {
-                    DBX5ListsGet.setCustomListsFromDB(this.customLists, this.recommendations, this)
-                    .then(() => {
-                        RecommendationsProcessor.prepareRecommendations();
-                    })
-                    .catch((error) => console.log(error));
-                })
-                .catch((error) => console.log(error));
+                return RecommendationsGet.getX5RecommendationsByCourse(this.courseMetadata, this)
+            })
+            .then((recMaterial) => {
+                this.recommendations = recMaterial;
+                return DBX5ListsGet.setCustomListsFromDB(this.customLists, this.recommendations, this)
+            })
+            .then(() => {
+                RecommendationsProcessor.prepareRecommendations();
             })
             .catch((error) => console.log(error));
         },
