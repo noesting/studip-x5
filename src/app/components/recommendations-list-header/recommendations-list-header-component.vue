@@ -84,6 +84,7 @@
 
     .x5_headline {
         padding: 0.5em;
+        margin-right: 1.5px;
 
         font-weight: bold;
         font-size: 1.5em;
@@ -95,6 +96,7 @@
 
     .x5_searchbar {
         padding: 0.5em;
+        margin-right: 1.5px;
         background-color: #e7ebf1;
     }
 
@@ -112,6 +114,7 @@
         text-align: center;
 
         width: 100%;
+        margin-right: 1.5px;
 
         padding-left: 0.5em;
         padding-right: 0.5em;
