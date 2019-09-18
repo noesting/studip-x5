@@ -29,7 +29,10 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ['.vue', '.js']
+        extensions: ['.vue', '.js'],
+        alias: {
+            '@': path.resolve('/')
+        }
     },
     plugins: [new VueLoaderPlugin()]
 };

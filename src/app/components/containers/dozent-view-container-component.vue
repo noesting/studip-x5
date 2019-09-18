@@ -31,6 +31,21 @@
       @likeItem="likeItem"
       @markItemAsRead="markItemAsRead"
     />
+    <cookie-consent>
+      <template slot="message">
+        This site uses the X5GON (EU project) recommendation service to provide personalized Open Educational Ressources. 
+        <a 
+          class="btn btn-link" 
+          href="https://platform.x5gon.org/privacy_policy"
+          target="_blank"
+        >More information</a>
+      </template>
+      <template slot="button">
+        <button class="btn btn-info">
+          Accept
+        </button>
+      </template>
+    </cookie-consent>
   </div>
 </template>
 
@@ -70,7 +85,8 @@
                     checkedFormats: []
                 },
                 searchtext: '',
-                courseMetadata: []
+                courseMetadata: [],
+                cookieConsent: this.checkForCookieConsent()
             };
         },
 
@@ -278,12 +294,24 @@
                     this.customLists[i].list[k].extension = response.extension;
                     this.customLists[i].list[k].license = response.license;
                 });
+            },
+
+            checkForCookieConsent() {
+              if (document.cookie.split(';').filter((item) => item.trim().startsWith('cookieconsent_status')).length){
+                return true;
+              } else {
+                return false;
+              }
             }
         }
     };
 </script>
 
 <style lang="scss" scoped>
+@import "./node_modules/vue-cookieconsent-component/src/scss/cookie-consent";
+@import "./node_modules/vue-cookieconsent-component/src/scss/cookie-consent-bottom";
+@import "./node_modules/vue-cookieconsent-component/src/scss/cookie-consent-transition";
+
 .x5_dozent_view_container {
     display: grid;
     grid-column-gap: 10px;
