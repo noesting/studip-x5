@@ -93,8 +93,6 @@
 
     import EditListAssitentModal from '../modals/edit-list-assistent-modal.vue';
 
-    import { data } from '../../../data';
-
     export default {
         components: {
             StudipButton,
@@ -215,6 +213,7 @@
 
     .x5_headline {
         padding: 0.5em;
+        margin-right: 1.5px;
 
         font-weight: bold;
         font-size: 1.5em;
@@ -233,6 +232,7 @@
         text-align: center;
 
         width: 100%;
+        margin-right: 1.5px;
 
         padding-left: 0.5em;
         padding-right: 0.5em;
@@ -306,7 +306,7 @@
         color: #1f3f70;
         width: 100%;
 
-        border-top: 1px solid #1f3f70;
+        border-top: 1.5px solid #1f3f70;
 
         display: grid;
         grid-template-columns: 95% 5%;
