@@ -1,22 +1,21 @@
 <template>
-    <div class="x5_student_view_container">
-        <StudentList
-            class="x5_student_list"
-            v-for="list in studentLists"
-            :list="list"
-            v-bind:key="list.title"
-            @likeItem="likeItem"
-        ></StudentList>
-    </div>
+  <div class="x5_student_view_container">
+    <StudentList
+      v-for="list in studentLists"
+      :key="list.title"
+      :list="list"
+      class="x5_student_list"      
+      @likeItem="likeItem"
+    />
+  </div>
 </template>
 
 <script>
-    import { data } from '../../../data';
-
     import StudentList from '../student-list/student-list-component.vue';
 
     import * as DBX5ListsGet from './db-methods/x5lists/x5lists_get';
     import * as DBX5ItemLike from './db-methods/x5items/x5item_like';
+    import * as DBX5CourseGet from './db-methods/x5courses/x5course_get';
 
     import * as RecommendationsGet from './x5api/recommendations-get';
 
@@ -24,21 +23,62 @@
         components: {
             StudentList
         },
-        created() {
-            RecommendationsGet.getX5RecommendationById('26886', this)
-                .then((response) => {
-                    console.log(response);
-                });
-            DBX5ListsGet.setStudentListsFromDB(this, this.studentLists, data.recommendations);
-        },
         data() {
             return {
-                studentLists: DBX5ListsGet.setInitialCustomLists()
+                studentLists: DBX5ListsGet.setInitialCustomLists(),
+                recommendations: [],
+                courseMetadata: [],
+                requestResolved: false
             };
+        },
+        created() {
+            DBX5CourseGet.getCourseMetadata(this)
+            .then(response => {
+                this.courseMetadata = response;
+                return RecommendationsGet.getX5RecommendationsByCourse(this.courseMetadata, this);
+            })
+            .then(recMaterial => {
+                this.recommendations = recMaterial;
+                return DBX5ListsGet.setStudentListsFromDB(this.studentLists, this.recommendations, this);
+            })
+            .then(() => {
+                this.updateItemsFromApi();
+            })
+            .catch(error => console.log(error));
+        },
+        updated() {
+            this.updateItemsFromApi();
         },
         methods: {
             likeItem(item) {
                 DBX5ItemLike.likeItem(item, this);
+            },
+            updateItemsFromApi() {
+                for (let i = 0; i < this.studentLists.length; i++) {
+                    if (!this.studentLists[i].list) {
+                        return;
+                    } else {
+                        for (let k = 0; k < this.studentLists[i].list.length; k++) {
+                            if (this.studentLists[i].list[k].dummy) {
+                                this.updateItemContentFromApi(this.studentLists[i].list[k].id, i, k);
+                            }
+                        };
+                    }; 
+                } 
+            },
+            updateItemContentFromApi(itemId, i, k) {
+                RecommendationsGet.getX5RecommendationById(itemId, this)
+                .then(response => {
+                    this.studentLists[i].list[k].title = response.title;
+                    this.studentLists[i].list[k].description = response.description;
+                    this.studentLists[i].list[k].language = response.language;
+                    this.studentLists[i].list[k].provider = response.provider.provider_name;
+                    this.studentLists[i].list[k].type = response.type;
+                    this.studentLists[i].list[k].url = response.url;
+                    this.studentLists[i].list[k].extension = response.extension;
+                    this.studentLists[i].list[k].license = response.license;
+                    Reflect.deleteProperty(this.studentLists[i].list[k], 'dummy');
+                });
             }
         }
     };

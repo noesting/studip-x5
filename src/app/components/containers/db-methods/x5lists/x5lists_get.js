@@ -1,5 +1,5 @@
 import * as Connection from '../general';
-import * as RecommendationsGet from '../../x5api/recommendations-get';
+//import { resolve } from 'dns';
 
 export const setInitialCustomLists = () => {
     return [{}];
@@ -16,15 +16,19 @@ export const setCustomListsFromDB = (customLists, recommendations, dozentViewCon
 
 const handleGetListsResponse = (response, customLists, recommendations, dozentViewContainer) => {
     if (response.ok) {
-        setCustomListsFromResponse(response, customLists, recommendations, dozentViewContainer);
+        return setCustomListsFromResponse(response, customLists, recommendations, dozentViewContainer);
+    } else {
+        return Promise.reject(new Error(response.status + ': ' + response.statusText));
     }
 };
 
 const setCustomListsFromResponse = (response, customLists, recommendations, dozentViewContainer) => {
+    const promises = [];
     for (let i = 0; i < response.body.data.length; i++) {
-        addListToArray(customLists, response.body.data[i], recommendations, dozentViewContainer);
+        promises.push(addListToArray(customLists, response.body.data[i], recommendations, dozentViewContainer));
     }
     customLists.shift();
+    return Promise.all(promises);
 };
 
 const addListToArray = (customLists, data, recommendations, dozentViewContainer) => {
@@ -36,7 +40,7 @@ const addListToArray = (customLists, data, recommendations, dozentViewContainer)
         list: []
     });
 
-    setItems(customLists[customLists.length - 1], recommendations, dozentViewContainer);
+    return setItems(customLists[customLists.length - 1], recommendations, dozentViewContainer);
 };
 
 const getReleaseDate = data => {
@@ -52,13 +56,13 @@ const setItems = (customList, recommendations, dozentViewContainer) => {
 
     return dozentViewContainer.$http
         .get(Connection.REST_ENDPOINT + 'x5-lists/' + customList.id + '/items', { headers })
-        .then(response => enrichItems(response, recommendations, dozentViewContainer)           
+        .then(response => enrichItems(response, recommendations, dozentViewContainer))           
         .then(items => {
             customList.list.push(...items);
         })
         .catch(error => {
             console.error('Some Error occured', error);
-        }));
+        });
 };
 
 const enrichItems = (getItemsResponse, recommendations, vueComponent) => {
@@ -137,13 +141,16 @@ const enrichWithLikesAndReadHandler = (commentedItems, allItemLikesJSON) => {
     return commentedItems;
 };
 
-export const setStudentListsFromDB = (studentViewContainer, lists, recommendations) => {
+export const setStudentListsFromDB = (lists, recommendations, studentViewContainer) => {
     const headers = Connection.getHeaders();
     const rangeId = Connection.getRangeId();
 
     return studentViewContainer.$http
         .get(Connection.REST_ENDPOINT + 'courses/' + rangeId + '/x5-lists/student', { headers })
-        .then(response => handleGetListsResponse(response, lists, recommendations, studentViewContainer));
+        .then(response => {
+            return handleGetListsResponse(response, lists, recommendations, studentViewContainer);
+        })
+        .catch(err => console.log(err));  
 };
 
 export const enrichRecommendations = (dozentViewContainer, recommendations) => {
