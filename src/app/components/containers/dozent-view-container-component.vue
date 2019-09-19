@@ -86,7 +86,8 @@
                 },
                 searchtext: '',
                 courseMetadata: [],
-                cookieConsent: this.checkForCookieConsent()
+                cookieConsent: this.checkForCookieConsent(),
+                currentPage: 1
             };
         },
 
@@ -114,11 +115,11 @@
             DBX5CourseGet.getCourseMetadata(this)
             .then((response) => {
                 this.courseMetadata = response;
-                return RecommendationsGet.getX5RecommendationsByCourse(this.courseMetadata, this)
+                return RecommendationsGet.getX5RecommendationsByCourse(this.courseMetadata, 1, this);
             })
             .then((recMaterial) => {
                 this.recommendations = recMaterial;
-                return DBX5ListsGet.setCustomListsFromDB(this.customLists, this.recommendations, this)
+                return DBX5ListsGet.setCustomListsFromDB(this.customLists, this.recommendations, this);
             })
             .then(() => {
                 RecommendationsProcessor.prepareRecommendations();
@@ -210,13 +211,13 @@
                 this.searchtext = searchtext;
                 
                 if (this.searchtext === '') {
-                    RecommendationsGet.getX5RecommendationsByCourse(this.courseMetadata, this)
+                    RecommendationsGet.getX5RecommendationsByCourse(this.courseMetadata, 1, this)
                     .then((recMaterial) => {
                         this.recommendations = recMaterial;
                     })
                     .catch((error) => console.log(error));
                 } else {
-                    RecommendationsGet.getX5RecommendationsByText(this.searchtext, this)
+                    RecommendationsGet.getX5RecommendationsByText(this.searchtext, this.currentPage, this)
                     .then((recMaterial) => {
                         this.recommendations = recMaterial;
                     })
