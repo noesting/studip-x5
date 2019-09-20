@@ -1,15 +1,6 @@
 import * as X5API from './x5api-config';
 import VueJSModal from 'vue-js-modal';
 
-export const getX5RecommendationsByCourse = (courseMetadata, pageParameter, viewContainer) => {
-  // check for page and results count
-  let textParameter = bundleTextParameter(courseMetadata);
-  let recMaterial = getRequestX5ApiSearch(textParameter, pageParameter, viewContainer).then(recommendations => {
-    return recommendations;
-  });
-  return recMaterial;
-};
-
 export const getX5RecommendationsByText = (textParameter, pageParameter, viewContainer) => {
   let recMaterial = getRequestX5ApiSearch(textParameter, pageParameter, viewContainer).then(recommendations => {
     return recommendations;
