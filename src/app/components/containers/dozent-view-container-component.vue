@@ -130,8 +130,8 @@
         created() {
             DBX5CourseGet.getCourseMetadata(this)
             .then(response => {
-                this.courseMetadata = response;
-                return RecommendationsGet.getX5RecommendationsByCourse(this.courseMetadata, this.currentPage, this);
+                this.courseMetadata = this.bundleCourseMetadata(response);
+                return RecommendationsGet.getX5RecommendationsByText(this.courseMetadata, this.currentPage, this);
             })
             .then(recMaterial => {
                 this.useRecommendations(recMaterial, 1);
@@ -226,9 +226,6 @@
             searchRecommendations(searchtext) {
                 this.searchtext = searchtext;
                 let searchParam = this.searchtext === '' ? this.courseMetadata : this.searchtext;
-                //TODO in GET function (recommendations-get.js)
-                //bundle course metadata in this component, not in recommendations-get.js
-                //getX5RecommendationsByText vs. getX5RecommendationsByCourse 
                 
                 RecommendationsGet.getX5RecommendationsByText(searchParam, 1, this)
                 .then((recMaterial) => {
@@ -236,6 +233,19 @@
                     this.useRecommendations(recMaterial, 1);
                 })
                 .catch((error) => console.log(error)); 
+            },
+
+            bundleCourseMetadata(courseMetadata) {
+            //let keysToInclude = ['title', 'subtitle', 'description'];
+            let keysToInclude = ['title', 'subtitle'];
+            var textParameter = '';
+
+            keysToInclude.forEach((key) => {
+                if (courseMetadata[key] !== null || undefined || '')
+                textParameter += courseMetadata[key] + ' ';
+            });
+
+            return textParameter.replace(/\s?$/, '');
             },
 
             useRecommendations(recMaterial, page) {
