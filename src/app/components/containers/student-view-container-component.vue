@@ -51,7 +51,7 @@
             DBX5CourseGet.getCourseMetadata(this)
             .then(response => {
                 this.courseMetadata = response;
-                return RecommendationsGet.getX5RecommendationsByCourse(this.courseMetadata, this);
+                return RecommendationsGet.getX5RecommendationsByCourse(this.courseMetadata, 1, this);
             })
             .then(recMaterial => {
                 this.recommendations = recMaterial;

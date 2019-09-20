@@ -16,6 +16,18 @@
       @removeCurrentListItem="removeCurrentListItem"
       @shareListToggle="shareShareCurrentCustomList"
     />
+    <PageChooser 
+        :max-page="maxPage"
+        :current-page="currentPage"
+        @page-up="pageUp"
+        @page-down="pageDown"
+    />
+    <PageChooser 
+        :max-page="1"
+        :current-page="1"
+        @page-up="pageUp"
+        @page-down="pageDown"
+    />
     <RecommendationsList
       :recommendations="processedRecommendations"
       class="x5_material_list"
@@ -54,6 +66,7 @@
     import CustomListHeader from '../custom-list-header/custom-list-header-component.vue';
     import RecommendationsList from '../recommendations-list/recommendations-list-component.vue';
     import CustomList from '../custom-list/custom-list.component.vue';
+    import PageChooser from '../studip-components/studip-pagechooser-component';
 
     import * as DBX5ListsGet from './db-methods/x5lists/x5lists_get';
     import * as DBX5ListCreate from './db-methods/x5lists/x5lists_create';
@@ -72,12 +85,14 @@
             RecommendationsListHeader,
             CustomListHeader,
             RecommendationsList,
-            CustomList
+            CustomList,
+            PageChooser
         },
 
         data() {
             return {
                 recommendations: [],
+                recommendationsVault: [],
                 customLists: DBX5ListsGet.setInitialCustomLists(),
                 currentCustomListIndex: 0,
                 filters: {
@@ -86,7 +101,9 @@
                 },
                 searchtext: '',
                 courseMetadata: [],
-                cookieConsent: this.checkForCookieConsent()
+                cookieConsent: this.checkForCookieConsent(),
+                currentPage: 1,
+                maxPage: 1
             };
         },
 
@@ -112,18 +129,18 @@
 
         created() {
             DBX5CourseGet.getCourseMetadata(this)
-            .then((response) => {
+            .then(response => {
                 this.courseMetadata = response;
-                return RecommendationsGet.getX5RecommendationsByCourse(this.courseMetadata, this)
+                return RecommendationsGet.getX5RecommendationsByCourse(this.courseMetadata, this.currentPage, this);
             })
-            .then((recMaterial) => {
-                this.recommendations = recMaterial;
-                return DBX5ListsGet.setCustomListsFromDB(this.customLists, this.recommendations, this)
+            .then(recMaterial => {
+                this.useRecommendations(recMaterial, 1);
+                return DBX5ListsGet.setCustomListsFromDB(this.customLists, this.recommendations, this);
             })
             .then(() => {
                 RecommendationsProcessor.prepareRecommendations();
             })
-            .catch((error) => console.log(error));
+            .catch(error => console.log(error));
         },
 
         updated() {
@@ -208,22 +225,29 @@
 
             searchRecommendations(searchtext) {
                 this.searchtext = searchtext;
+                let searchParam = this.searchtext === '' ? this.courseMetadata : this.searchtext;
+                //TODO in GET function (recommendations-get.js)
+                //bundle course metadata in this component, not in recommendations-get.js
+                //getX5RecommendationsByText vs. getX5RecommendationsByCourse 
                 
-                if (this.searchtext === '') {
-                    RecommendationsGet.getX5RecommendationsByCourse(this.courseMetadata, this)
-                    .then((recMaterial) => {
-                        this.recommendations = recMaterial;
-                    })
-                    .catch((error) => console.log(error));
-                } else {
-                    RecommendationsGet.getX5RecommendationsByText(this.searchtext, this)
-                    .then((recMaterial) => {
-                        this.recommendations = recMaterial;
-                    })
-                    .catch((error) => console.log(error));
-                }   
+                RecommendationsGet.getX5RecommendationsByText(searchParam, 1, this)
+                .then((recMaterial) => {
+                    this.currentPage = 1;
+                    this.useRecommendations(recMaterial, 1);
+                })
+                .catch((error) => console.log(error)); 
             },
 
+            useRecommendations(recMaterial, page) {
+                this.recommendations = recMaterial;
+                this.recommendationsVault[this.currentPage] = this.recommendations;
+                this.setTotalPageCount();
+            },
+
+            prefetchRecommendations() {
+
+            },
+ 
             applyFilters(filters) {
                 this.filters = filters;
             },
@@ -302,6 +326,34 @@
               } else {
                 return false;
               }
+            },
+
+            setTotalPageCount() {
+                this.maxPage = this.recommendations.meta.total_pages;
+            },
+
+            pageUp(event) {
+                let searchParam = this.searchtext === '' ? this.courseMetadata : this.searchtext;
+                if (this.currentPage < this.maxPage) {
+                    this.recommendationsVault[this.currentPage] = this.recommendations;
+                    this.currentPage++;
+                    RecommendationsGet.getX5RecommendationsByText(searchParam, this.currentPage, this)
+                    .then(recMaterial => {
+                        this.useRecommendations(recMaterial, 1);
+                    });
+                }
+            },
+
+            pageDown(event) {
+                let searchParam = this.searchtext === '' ? this.courseMetadata : this.searchtext;
+                if (this.currentPage > 1) {
+                    this.recommendationsVault[this.currentPage] = this.recommendations;
+                    this.currentPage--;
+                    RecommendationsGet.getX5RecommendationsByText(searchParam, this.currentPage, this)
+                    .then(recMaterial => {
+                        this.useRecommendations(recMaterial, 1);
+                    });
+                }
             }
         }
     };
