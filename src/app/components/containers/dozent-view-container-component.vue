@@ -327,6 +327,7 @@
                     this.customLists[i].list[k].url = response.url;
                     this.customLists[i].list[k].extension = response.extension;
                     this.customLists[i].list[k].license = response.license;
+                    Reflect.deleteProperty(this.customLists[i].list[k], 'dummy');
                 });
             },
 
