@@ -22,6 +22,12 @@
         @page-up="pageUp"
         @page-down="pageDown"
     />
+    <PageChooser 
+        :max-page="1"
+        :current-page="1"
+        @page-up="pageUp"
+        @page-down="pageDown"
+    />
     <RecommendationsList
       :recommendations="processedRecommendations"
       class="x5_material_list"
