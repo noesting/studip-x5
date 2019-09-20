@@ -61,6 +61,7 @@ const handleX5GetResponse = (response, viewContainer) => {
     recommendations = response.body.rec_materials;
     recommendations = renameObjectKeys(recommendations);
     recommendations = addObjectKeys(recommendations);
+    recommendations = addMetaDataForPagination(recommendations, response);
   } else {
     recommendations = response.body.oer_materials;
     recommendations = addAndRenameObjectKeys(recommendations);
@@ -97,5 +98,12 @@ const addAndRenameObjectKeys = (recommendations) => {
   recommendations.userLiked = false;
   recommendations.thumbsUps = 0;
 
+  return recommendations;
+};
+
+const addMetaDataForPagination = (recommendations, response) => {
+  recommendations.meta = {};
+  recommendations.meta.total_pages = response.body.metadata.max_pages;
+  recommendations.meta.total_items = response.body.metadata.count;
   return recommendations;
 };
