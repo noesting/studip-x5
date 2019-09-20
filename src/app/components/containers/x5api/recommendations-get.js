@@ -24,19 +24,6 @@ export const getX5RecommendationById = (itemId, viewContainer) => {
   return recMaterial;
 };
 
-const bundleTextParameter = (courseMetadata) => {
-  //let keysToInclude = ['title', 'subtitle', 'description'];
-  let keysToInclude = ['title', 'subtitle'];
-  var textParameter = '';
-
-  keysToInclude.forEach((key) => {
-    if (courseMetadata[key] !== null || undefined || '')
-      textParameter += courseMetadata[key] + ' ';
-  });
-
-  return textParameter.replace(/\s?$/, '');
-};
-
 const getRequestX5ApiSearch = (textParameter, pageParameter, viewContainer) => {
   let headers = X5API.getHeaders;
   let params = '?text="' + textParameter + '"&page=' + pageParameter;
