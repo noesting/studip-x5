@@ -50,8 +50,8 @@
         created() {
             DBX5CourseGet.getCourseMetadata(this)
             .then(response => {
-                this.courseMetadata = response;
-                return RecommendationsGet.getX5RecommendationsByCourse(this.courseMetadata, 1, this);
+                this.courseMetadata = this.bundleCourseMetadata(response);
+                return RecommendationsGet.getX5RecommendationsByText(this.courseMetadata, 1, this);
             })
             .then(recMaterial => {
                 this.recommendations = recMaterial;
@@ -95,6 +95,18 @@
                     this.studentLists[i].list[k].license = response.license;
                     Reflect.deleteProperty(this.studentLists[i].list[k], 'dummy');
                 });
+            },
+            bundleCourseMetadata(courseMetadata) {
+            //let keysToInclude = ['title', 'subtitle', 'description'];
+            let keysToInclude = ['title', 'subtitle'];
+            var textParameter = '';
+
+            keysToInclude.forEach((key) => {
+                if (courseMetadata[key] !== null || undefined || '')
+                textParameter += courseMetadata[key] + ' ';
+            });
+
+            return textParameter.replace(/\s?$/, '');
             },
             checkForCookieConsent() {
               if (document.cookie.split(';').filter((item) => item.trim().startsWith('cookieconsent_status')).length){
