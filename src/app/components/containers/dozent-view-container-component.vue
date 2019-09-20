@@ -226,6 +226,7 @@
                 
                 RecommendationsGet.getX5RecommendationsByText(searchParam, 1, this)
                 .then((recMaterial) => {
+                    this.currentPage = 1;
                     this.useRecommendations(recMaterial, 1);
                 })
                 .catch((error) => console.log(error)); 
@@ -330,7 +331,7 @@
                 if (this.currentPage < this.maxPage) {
                     this.recommendationsVault[this.currentPage] = this.recommendations;
                     this.currentPage++;
-                    RecommendationsGet.getX5RecommendationsByCourse(searchParam, this.currentPage, this)
+                    RecommendationsGet.getX5RecommendationsByText(searchParam, this.currentPage, this)
                     .then(recMaterial => {
                         this.useRecommendations(recMaterial, 1);
                     });
@@ -340,10 +341,10 @@
             pageDown(event) {
                 let searchParam = this.searchtext === '' ? this.courseMetadata : this.searchtext;
                 if (this.currentPage > 1) {
-                    this.recommendationsVault[this.currentPage] = this.recommendations
+                    this.recommendationsVault[this.currentPage] = this.recommendations;
                     this.currentPage--;
-                    RecommendationsGet.getX5RecommendationsByCourse(searchParam, this.currentPage, this)
-                    .then(recMaterial => {;
+                    RecommendationsGet.getX5RecommendationsByText(searchParam, this.currentPage, this)
+                    .then(recMaterial => {
                         this.useRecommendations(recMaterial, 1);
                     });
                 }
