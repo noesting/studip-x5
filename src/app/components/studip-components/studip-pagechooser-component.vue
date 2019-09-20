@@ -9,7 +9,7 @@
       >Zurück</button>
       <span 
         type="pagechooser-pages">
-        {{ currentPage }} / {{ maxPage }}
+        {{ currentPage }} von {{ maxPage }}
       </span>
       <button 
         type="pagechooser-button" 
