@@ -79,6 +79,7 @@
 
     import * as RecommendationsGet from './x5api/recommendations-get';
     import * as RecommendationsProcessor from './x5api/recommendations-processor';
+    import * as X5API from './x5api/x5api-config';
 
     export default {
         components: {
@@ -130,11 +131,12 @@
         created() {
             DBX5CourseGet.getCourseMetadata(this)
             .then(response => {
-                this.courseMetadata = response;
-                return RecommendationsGet.getX5RecommendationsByCourse(this.courseMetadata, this.currentPage, this);
+                this.courseMetadata = this.bundleCourseMetadata(response);
+                return RecommendationsGet.getX5RecommendationsByText(this.courseMetadata, this.currentPage, this);
             })
             .then(recMaterial => {
-                this.useRecommendations(recMaterial, 1);
+                this.setRecommendations(1, recMaterial);
+                this.prefetchRecommendations(this.courseMetadata);
                 return DBX5ListsGet.setCustomListsFromDB(this.customLists, this.recommendations, this);
             })
             .then(() => {
@@ -198,7 +200,6 @@
             },
 
             addNewCustomList(newList) {
-                console.log('create new customList', newList);
                 DBX5ListCreate.addNewList(this.customLists, newList, this);
             },
 
@@ -226,26 +227,56 @@
             searchRecommendations(searchtext) {
                 this.searchtext = searchtext;
                 let searchParam = this.searchtext === '' ? this.courseMetadata : this.searchtext;
-                //TODO in GET function (recommendations-get.js)
-                //bundle course metadata in this component, not in recommendations-get.js
-                //getX5RecommendationsByText vs. getX5RecommendationsByCourse 
                 
                 RecommendationsGet.getX5RecommendationsByText(searchParam, 1, this)
                 .then((recMaterial) => {
                     this.currentPage = 1;
-                    this.useRecommendations(recMaterial, 1);
+                    this.setRecommendations(1, recMaterial);
+                    this.prefetchRecommendations(searchParam);
                 })
                 .catch((error) => console.log(error)); 
             },
 
-            useRecommendations(recMaterial, page) {
-                this.recommendations = recMaterial;
-                this.recommendationsVault[this.currentPage] = this.recommendations;
+            setRecommendations(page, recMaterial) {
+                if (recMaterial) {
+                    this.recommendations = recMaterial;
+                    this.recommendationsVault[page] = recMaterial;
+                } else {
+                    this.recommendations = this.recommendationsVault[page];
+                }
                 this.setTotalPageCount();
             },
 
-            prefetchRecommendations() {
+            prefetchRecommendations(searchParam) {
+                let maxPrefetchIndex = this.getMaxPrefetchIndex();
 
+                if (this.currentPage <= this.maxPage) {
+                    for (let i = this.currentPage; i <= maxPrefetchIndex; i++) {
+                        RecommendationsGet.getX5RecommendationsByText(searchParam, i, this)
+                        .then(recMaterial => {
+                            this.recommendationsVault[i] = recMaterial;
+                        });
+                    }
+                }
+            },
+
+            getMaxPrefetchIndex() {
+                let maxPrefetchIndex = this.currentPage + X5API.PREFETCH_RANGE;
+
+                return maxPrefetchIndex > this.maxPage ? this.maxPage : maxPrefetchIndex;
+            },
+
+            bundleCourseMetadata(courseMetadata) {
+            //let keysToInclude = ['title', 'subtitle', 'description'];
+            let keysToInclude = ['title', 'subtitle'];
+            var textParameter = '';
+
+            keysToInclude.forEach((key) => {
+                if (courseMetadata[key] !== null || undefined || '')
+                textParameter += courseMetadata[key] + ' ';
+            });
+
+            return textParameter.replace(/\s?$/, '');
             },
  
             applyFilters(filters) {
@@ -317,6 +348,7 @@
                     this.customLists[i].list[k].url = response.url;
                     this.customLists[i].list[k].extension = response.extension;
                     this.customLists[i].list[k].license = response.license;
+                    Reflect.deleteProperty(this.customLists[i].list[k], 'dummy');
                 });
             },
 
@@ -335,24 +367,17 @@
             pageUp(event) {
                 let searchParam = this.searchtext === '' ? this.courseMetadata : this.searchtext;
                 if (this.currentPage < this.maxPage) {
-                    this.recommendationsVault[this.currentPage] = this.recommendations;
                     this.currentPage++;
-                    RecommendationsGet.getX5RecommendationsByText(searchParam, this.currentPage, this)
-                    .then(recMaterial => {
-                        this.useRecommendations(recMaterial, 1);
-                    });
+                    this.setRecommendations(this.currentPage, false);
+                    this.prefetchRecommendations(searchParam);
                 }
             },
 
             pageDown(event) {
                 let searchParam = this.searchtext === '' ? this.courseMetadata : this.searchtext;
                 if (this.currentPage > 1) {
-                    this.recommendationsVault[this.currentPage] = this.recommendations;
                     this.currentPage--;
-                    RecommendationsGet.getX5RecommendationsByText(searchParam, this.currentPage, this)
-                    .then(recMaterial => {
-                        this.useRecommendations(recMaterial, 1);
-                    });
+                    this.setRecommendations(this.currentPage, false);
                 }
             }
         }

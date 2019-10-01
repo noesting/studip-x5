@@ -1,15 +1,6 @@
 import * as X5API from './x5api-config';
 import VueJSModal from 'vue-js-modal';
 
-export const getX5RecommendationsByCourse = (courseMetadata, pageParameter, viewContainer) => {
-  // check for page and results count
-  let textParameter = bundleTextParameter(courseMetadata);
-  let recMaterial = getRequestX5ApiSearch(textParameter, pageParameter, viewContainer).then(recommendations => {
-    return recommendations;
-  });
-  return recMaterial;
-};
-
 export const getX5RecommendationsByText = (textParameter, pageParameter, viewContainer) => {
   let recMaterial = getRequestX5ApiSearch(textParameter, pageParameter, viewContainer).then(recommendations => {
     return recommendations;
@@ -22,19 +13,6 @@ export const getX5RecommendationById = (itemId, viewContainer) => {
     return recommendation;
   });
   return recMaterial;
-};
-
-const bundleTextParameter = (courseMetadata) => {
-  //let keysToInclude = ['title', 'subtitle', 'description'];
-  let keysToInclude = ['title', 'subtitle'];
-  var textParameter = '';
-
-  keysToInclude.forEach((key) => {
-    if (courseMetadata[key] !== null || undefined || '')
-      textParameter += courseMetadata[key] + ' ';
-  });
-
-  return textParameter.replace(/\s?$/, '');
 };
 
 const getRequestX5ApiSearch = (textParameter, pageParameter, viewContainer) => {
