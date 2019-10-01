@@ -79,6 +79,7 @@
 
     import * as RecommendationsGet from './x5api/recommendations-get';
     import * as RecommendationsProcessor from './x5api/recommendations-processor';
+    import * as X5API from './x5api/x5api-config';
 
     export default {
         components: {
@@ -237,12 +238,27 @@
 
             setRecommendations(recMaterial, page) {
                 this.recommendations = recMaterial;
-                this.recommendationsVault[this.currentPage] = this.recommendations;
+                this.recommendationsVault[page] = this.recommendations;
                 this.setTotalPageCount();
             },
 
-            prefetchRecommendations() {
-                
+            prefetchRecommendations(searchParam) {
+                let maxPrefetchIndex = this.getMaxPrefetchIndex();
+
+                if (this.currentPage <= this.maxPage) {
+                    for (let i = this.currentPage; i <= maxPrefetchIndex; i++) {
+                        RecommendationsGet.getX5RecommendationsByText(searchParam, i, this)
+                        .then(recMaterial => {
+                            this.setRecommendations(recMaterial, i);
+                        });
+                    }
+                }
+            },
+
+            getMaxPrefetchIndex() {
+                let maxPrefetchIndex = this.currentPage + X5API.PREFETCH_RANGE;
+
+                return maxPrefetchIndex > this.maxPage ? this.maxPage : maxPrefetchIndex;
             },
 
             bundleCourseMetadata(courseMetadata) {
@@ -346,20 +362,21 @@
             pageUp(event) {
                 let searchParam = this.searchtext === '' ? this.courseMetadata : this.searchtext;
                 if (this.currentPage < this.maxPage) {
-                    this.recommendationsVault[this.currentPage] = this.recommendations;
                     this.currentPage++;
+                    this.recommendationsVault[this.currentPage] = this.recommendations;
                     RecommendationsGet.getX5RecommendationsByText(searchParam, this.currentPage, this)
                     .then(recMaterial => {
                         this.setRecommendations(recMaterial, 1);
                     });
+                    this.prefetchRecommendations(searchParam);
                 }
             },
 
             pageDown(event) {
                 let searchParam = this.searchtext === '' ? this.courseMetadata : this.searchtext;
                 if (this.currentPage > 1) {
-                    this.recommendationsVault[this.currentPage] = this.recommendations;
                     this.currentPage--;
+                    this.recommendationsVault[this.currentPage] = this.recommendations;
                     RecommendationsGet.getX5RecommendationsByText(searchParam, this.currentPage, this)
                     .then(recMaterial => {
                         this.setRecommendations(recMaterial, 1);
