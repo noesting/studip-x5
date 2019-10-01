@@ -200,7 +200,6 @@
             },
 
             addNewCustomList(newList) {
-                console.log('create new customList', newList);
                 DBX5ListCreate.addNewList(this.customLists, newList, this);
             },
 
@@ -240,11 +239,9 @@
 
             setRecommendations(page, recMaterial) {
                 if (recMaterial) {
-                    console.log("with recMaterial")
                     this.recommendations = recMaterial;
                     this.recommendationsVault[page] = recMaterial;
                 } else {
-                    console.log("without recMaterial")
                     this.recommendations = this.recommendationsVault[page];
                 }
                 this.setTotalPageCount();
