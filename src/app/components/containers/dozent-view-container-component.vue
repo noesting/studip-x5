@@ -135,7 +135,8 @@
                 return RecommendationsGet.getX5RecommendationsByText(this.courseMetadata, this.currentPage, this);
             })
             .then(recMaterial => {
-                this.setRecommendations(recMaterial, 1);
+                this.setRecommendations(1, recMaterial);
+                this.prefetchRecommendations(this.courseMetadata);
                 return DBX5ListsGet.setCustomListsFromDB(this.customLists, this.recommendations, this);
             })
             .then(() => {
@@ -231,14 +232,21 @@
                 RecommendationsGet.getX5RecommendationsByText(searchParam, 1, this)
                 .then((recMaterial) => {
                     this.currentPage = 1;
-                    this.setRecommendations(recMaterial, 1);
+                    this.setRecommendations(1, recMaterial);
+                    this.prefetchRecommendations(searchParam);
                 })
                 .catch((error) => console.log(error)); 
             },
 
-            setRecommendations(recMaterial, page) {
-                this.recommendations = recMaterial;
-                this.recommendationsVault[page] = this.recommendations;
+            setRecommendations(page, recMaterial) {
+                if (recMaterial) {
+                    console.log("with recMaterial")
+                    this.recommendations = recMaterial;
+                    this.recommendationsVault[page] = recMaterial;
+                } else {
+                    console.log("without recMaterial")
+                    this.recommendations = this.recommendationsVault[page];
+                }
                 this.setTotalPageCount();
             },
 
@@ -249,7 +257,7 @@
                     for (let i = this.currentPage; i <= maxPrefetchIndex; i++) {
                         RecommendationsGet.getX5RecommendationsByText(searchParam, i, this)
                         .then(recMaterial => {
-                            this.setRecommendations(recMaterial, i);
+                            this.recommendationsVault[i] = recMaterial;
                         });
                     }
                 }
@@ -363,11 +371,7 @@
                 let searchParam = this.searchtext === '' ? this.courseMetadata : this.searchtext;
                 if (this.currentPage < this.maxPage) {
                     this.currentPage++;
-                    this.recommendationsVault[this.currentPage] = this.recommendations;
-                    RecommendationsGet.getX5RecommendationsByText(searchParam, this.currentPage, this)
-                    .then(recMaterial => {
-                        this.setRecommendations(recMaterial, 1);
-                    });
+                    this.setRecommendations(this.currentPage, false);
                     this.prefetchRecommendations(searchParam);
                 }
             },
@@ -376,11 +380,7 @@
                 let searchParam = this.searchtext === '' ? this.courseMetadata : this.searchtext;
                 if (this.currentPage > 1) {
                     this.currentPage--;
-                    this.recommendationsVault[this.currentPage] = this.recommendations;
-                    RecommendationsGet.getX5RecommendationsByText(searchParam, this.currentPage, this)
-                    .then(recMaterial => {
-                        this.setRecommendations(recMaterial, 1);
-                    });
+                    this.setRecommendations(this.currentPage, false);
                 }
             }
         }
