@@ -134,7 +134,7 @@
                 return RecommendationsGet.getX5RecommendationsByText(this.courseMetadata, this.currentPage, this);
             })
             .then(recMaterial => {
-                this.useRecommendations(recMaterial, 1);
+                this.setRecommendations(recMaterial, 1);
                 return DBX5ListsGet.setCustomListsFromDB(this.customLists, this.recommendations, this);
             })
             .then(() => {
@@ -230,9 +230,19 @@
                 RecommendationsGet.getX5RecommendationsByText(searchParam, 1, this)
                 .then((recMaterial) => {
                     this.currentPage = 1;
-                    this.useRecommendations(recMaterial, 1);
+                    this.setRecommendations(recMaterial, 1);
                 })
                 .catch((error) => console.log(error)); 
+            },
+
+            setRecommendations(recMaterial, page) {
+                this.recommendations = recMaterial;
+                this.recommendationsVault[this.currentPage] = this.recommendations;
+                this.setTotalPageCount();
+            },
+
+            prefetchRecommendations() {
+                
             },
 
             bundleCourseMetadata(courseMetadata) {
@@ -246,16 +256,6 @@
             });
 
             return textParameter.replace(/\s?$/, '');
-            },
-
-            useRecommendations(recMaterial, page) {
-                this.recommendations = recMaterial;
-                this.recommendationsVault[this.currentPage] = this.recommendations;
-                this.setTotalPageCount();
-            },
-
-            prefetchRecommendations() {
-
             },
  
             applyFilters(filters) {
@@ -350,7 +350,7 @@
                     this.currentPage++;
                     RecommendationsGet.getX5RecommendationsByText(searchParam, this.currentPage, this)
                     .then(recMaterial => {
-                        this.useRecommendations(recMaterial, 1);
+                        this.setRecommendations(recMaterial, 1);
                     });
                 }
             },
@@ -362,7 +362,7 @@
                     this.currentPage--;
                     RecommendationsGet.getX5RecommendationsByText(searchParam, this.currentPage, this)
                     .then(recMaterial => {
-                        this.useRecommendations(recMaterial, 1);
+                        this.setRecommendations(recMaterial, 1);
                     });
                 }
             }
