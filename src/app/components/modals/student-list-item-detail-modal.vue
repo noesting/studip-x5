@@ -58,7 +58,6 @@
         props: ['item', 'eventBus'],
         computed: {
             itemLink() {
-                console.log('this.item', this.item);
                 return getValidLink(this.item.url);
             }
         },
