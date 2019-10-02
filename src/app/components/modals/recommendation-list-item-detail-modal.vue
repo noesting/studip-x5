@@ -52,7 +52,6 @@
         },
         methods: {
             likeItem() {
-                console.log('like it!')
                 this.eventBus.$emit('like', this.item);
             }
         }
