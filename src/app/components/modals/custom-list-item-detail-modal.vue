@@ -57,7 +57,6 @@
         props: ['item', 'eventBus'],
         computed: {
             itemLink() {
-                console.log('this.item', this.item);
                 return getValidLink(this.item.url);
             }
         },
@@ -109,9 +108,9 @@
     }
 
     .interaction-fields {
-        margin: 1em;
+        margin: 0.1em;
         display: grid;
-        grid-template-columns: 33% 33% 33%;
+        grid-template-columns: 66% 33%;
         grid-column-gap: 10px;
     }
 

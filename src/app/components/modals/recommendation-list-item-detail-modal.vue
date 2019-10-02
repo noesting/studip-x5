@@ -52,7 +52,6 @@
         },
         methods: {
             likeItem() {
-                console.log('like it!')
                 this.eventBus.$emit('like', this.item);
             }
         }
@@ -99,7 +98,7 @@
     }
 
     .interaction-fields {
-        margin: 1em;
+        margin: 0.1em;
         display: grid;
         grid-template-columns: 33% 33% 33%;
         grid-column-gap: 10px;
