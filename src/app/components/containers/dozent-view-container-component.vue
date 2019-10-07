@@ -135,6 +135,7 @@
                 return RecommendationsGet.getX5RecommendationsByText(this.courseMetadata, this.currentPage, this);
             })
             .then(recMaterial => {
+                this.resetRecommendationsVault();
                 this.setRecommendations(1, recMaterial);
                 this.prefetchRecommendations(this.courseMetadata);
                 return DBX5ListsGet.setCustomListsFromDB(this.customLists, this.recommendations, this);
@@ -227,11 +228,12 @@
             searchRecommendations(searchtext) {
                 this.searchtext = searchtext;
                 let searchParam = this.searchtext === '' ? this.courseMetadata : this.searchtext;
-                
+                this.resetRecommendationsVault();
+
                 RecommendationsGet.getX5RecommendationsByText(searchParam, 1, this)
                 .then((recMaterial) => {
                     this.currentPage = 1;
-                    this.setRecommendations(1, recMaterial);
+                    this.setRecommendations(this.currentPage, recMaterial);
                     this.prefetchRecommendations(searchParam);
                 })
                 .catch((error) => console.log(error)); 
@@ -241,21 +243,27 @@
                 if (recMaterial) {
                     this.recommendations = recMaterial;
                     this.recommendationsVault[page] = recMaterial;
+                    this.setTotalPageCount(recMaterial);
                 } else {
                     this.recommendations = this.recommendationsVault[page];
                 }
-                this.setTotalPageCount();
+            },
+
+            resetRecommendationsVault() {
+                this.recommendationsVault = [];
             },
 
             prefetchRecommendations(searchParam) {
                 let maxPrefetchIndex = this.getMaxPrefetchIndex();
 
                 if (this.currentPage <= this.maxPage) {
-                    for (let i = this.currentPage; i <= maxPrefetchIndex; i++) {
-                        RecommendationsGet.getX5RecommendationsByText(searchParam, i, this)
-                        .then(recMaterial => {
-                            this.recommendationsVault[i] = recMaterial;
-                        });
+                    for (let i = this.currentPage + 1; i <= maxPrefetchIndex; i++) {
+                        if (!this.recommendationsVault[i]) {
+                            RecommendationsGet.getX5RecommendationsByText(searchParam, i, this)
+                            .then(recMaterial => {
+                                this.setRecommendations(i, recMaterial);
+                            });
+                        }
                     }
                 }
             },
@@ -360,8 +368,8 @@
               }
             },
 
-            setTotalPageCount() {
-                this.maxPage = this.recommendations.meta.total_pages;
+            setTotalPageCount(recMaterial) {
+                this.maxPage = recMaterial.meta.total_pages;
             },
 
             pageUp(event) {
