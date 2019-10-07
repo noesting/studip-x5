@@ -233,7 +233,7 @@
                 RecommendationsGet.getX5RecommendationsByText(searchParam, 1, this)
                 .then((recMaterial) => {
                     this.currentPage = 1;
-                    this.setRecommendations(this.currentPage, recMaterial);
+                    this.setRecommendations(1, recMaterial);
                     this.prefetchRecommendations(searchParam);
                 })
                 .catch((error) => console.log(error)); 
@@ -261,7 +261,7 @@
                         if (!this.recommendationsVault[i]) {
                             RecommendationsGet.getX5RecommendationsByText(searchParam, i, this)
                             .then(recMaterial => {
-                                this.setRecommendations(i, recMaterial);
+                                this.recommendationsVault[i] = recMaterial;
                             });
                         }
                     }
