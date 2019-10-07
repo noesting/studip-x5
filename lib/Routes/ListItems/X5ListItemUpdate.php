@@ -16,15 +16,16 @@ class X5ListItemUpdate extends JsonApiController
     use ValidationTrait;
     public function __invoke(Request $request, Response $response, $args)
     {
+        global $perm;
+
+        /* Needs other range_id
+        if (!$perm->have_studip_perm('dozent', $args['range_id'])) {
+            throw new AuthorizationFailedException();
+        }; */
+
         if (!$x5listitem = X5ListItem::findOneBySql('item_id = ? AND list_id = ?', [$args['item_id'], $args['list_id']])) {
             throw new RecordNotFoundException();
         }
-
-        global $perm;
-
-        if ($perm->have_studip_perm('dozent', $args['range_id'])) {
-            throw new AuthorizationFailedException();
-        };
 
         $result = $this->updateX5ListItem($request, $x5listitem);
 
