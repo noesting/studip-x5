@@ -275,16 +275,16 @@
             },
 
             bundleCourseMetadata(courseMetadata) {
-            //let keysToInclude = ['title', 'subtitle', 'description'];
-            let keysToInclude = ['title', 'subtitle'];
-            var textParameter = '';
+                //let keysToInclude = ['title', 'subtitle', 'description'];
+                let keysToInclude = ['title', 'subtitle'];
+                var textParameter = '';
 
-            keysToInclude.forEach((key) => {
-                if (courseMetadata[key] !== null || undefined || '')
-                textParameter += courseMetadata[key] + ' ';
-            });
+                keysToInclude.forEach((key) => {
+                    if (courseMetadata[key] !== null || undefined || '')
+                    textParameter += courseMetadata[key] + ' ';
+                });
 
-            return textParameter.replace(/\s?$/, '');
+                return textParameter.replace(/\s?$/, '');
             },
  
             applyFilters(filters) {
