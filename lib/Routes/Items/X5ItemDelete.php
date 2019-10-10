@@ -14,9 +14,11 @@ class X5ItemDelete extends JsonApiController
         //     throw new RecordNotFoundException();
         // }
 
-        // if (1 == 2) {
-        //     throw new AuthorizationFailedException();
-        // }
+        global $perm;
+
+        if (!$perm->have_studip_perm('dozent', Context::getId())) {
+            throw new AuthorizationFailedException();
+        }; 
 
         // return $this->getContentResponse($lists);
 
