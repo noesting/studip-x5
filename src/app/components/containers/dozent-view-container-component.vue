@@ -143,7 +143,7 @@
             .then(() => {
                 RecommendationsProcessor.prepareRecommendations();
             })
-            .catch(error => console.log(error));
+            .catch(error => console.error(error));
         },
 
         updated() {
@@ -236,7 +236,7 @@
                     this.setRecommendations(1, recMaterial);
                     this.prefetchRecommendations(searchParam);
                 })
-                .catch((error) => console.log(error)); 
+                .catch((error) => console.error(error)); 
             },
 
             setRecommendations(page, recMaterial) {

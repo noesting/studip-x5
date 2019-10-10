@@ -60,7 +60,7 @@
             .then(() => {
                 this.updateItemsFromApi();
             })
-            .catch(error => console.log(error));
+            .catch(error => console.error(error));
         },
         updated() {
             this.updateItemsFromApi();
