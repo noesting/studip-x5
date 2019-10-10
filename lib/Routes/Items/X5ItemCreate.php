@@ -10,6 +10,8 @@ class X5ItemCreate extends JsonApiController
 {
     public function __invoke(Request $request, Response $response, $args)
     {
+        // This route is currentliy not used 
+
         // if (!$lists = X5List::find($args['id'])) {
         //     throw new RecordNotFoundException();
         // }

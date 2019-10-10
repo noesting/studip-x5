@@ -16,15 +16,16 @@ class X5UserItemUpdateRead extends JsonApiController
   use ValidationTrait;
   public function __invoke(Request $request, Response $response, $args)
   {
+    global $perm;
+
+    if (!$perm->have_perm('autor')) {
+        throw new AuthorizationFailedException();
+    };
+
     $user_id = $this->getUser($request)->id;
     if (!$userItem = X5UserItem::findOneBySql('user_id = ? AND item_id = ?', [$user_id, $args['id']])) {
       throw new RecordNotFoundException('Not able to update an non-existing database entry (Call create instead');
     }
-
-    // TODO Authorization
-    // if (1 == 2) {
-    //     throw new AuthorizationFailedException();
-    // }
 
     $result = $this->updateX5UserItem($request, $userItem);
 

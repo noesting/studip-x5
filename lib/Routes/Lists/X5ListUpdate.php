@@ -16,14 +16,15 @@ class X5ListUpdate extends JsonApiController
     use ValidationTrait, TimestampTrait;
     public function __invoke(Request $request, Response $response, $args)
     {
+        global $perm;
+
         if (!$x5list = X5List::find($args['id'])) {
             throw new RecordNotFoundException();
         }
 
-        // TODO Authorization
-        // if (1 == 2) {
-        //     throw new AuthorizationFailedException();
-        // }
+        if (!$perm->have_studip_perm('dozent', $x5list->course->id)) {
+            throw new AuthorizationFailedException();
+        };     
 
         $result = $this->updateX5List($request, $x5list);
 

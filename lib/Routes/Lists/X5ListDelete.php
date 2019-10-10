@@ -12,16 +12,17 @@ class X5ListDelete extends JsonApiController
 {
     public function __invoke(Request $request, Response $response, $args)
     {
-        if (!$list = X5List::find($args['id'])) {
+        global $perm;
+
+        if (!$x5list = X5List::find($args['id'])) {
             throw new RecordNotFoundException();
         }
 
-        // TODO: Authorization
-        // if (1 == 2) {
-        //     throw new AuthorizationFailedException();
-        // }
+        if (!$perm->have_studip_perm('dozent', $x5list->course->id)) {
+            throw new AuthorizationFailedException();
+        };     
 
-        if (!$list->delete()) {
+        if (!$x5list->delete()) {
             throw new InternalServerError('Could not delete x5list.');
         }
 

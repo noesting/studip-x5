@@ -15,14 +15,16 @@ class X5UserItemCreate extends JsonApiController
     use ValidationTrait;
     public function __invoke(Request $request, Response $response, $args)
     {
+        global $perm;
+
+        if (!$perm->have_perm('autor')) {
+            throw new AuthorizationFailedException();
+        };
+
         $user_id = $this->getUser($request)->id;
         if ($find = X5UserItem::findOneBySql('user_id = ? AND item_id = ?', [$user_id, $args['id']])) {
             return 'Item Exists already';
         }
-        // TODO Authorization
-        // if (1 == 2) {
-        //     throw new AuthorizationFailedException();
-        // }
 
         $x5list = $this->addX5UserItem($request);
 

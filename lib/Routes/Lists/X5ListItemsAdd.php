@@ -17,9 +17,15 @@ class X5ListItemsAdd extends JsonApiController
     use ValidationTrait;
     public function __invoke(Request $request, Response $response, $args)
     {
+        global $perm;
+        
         if (!$x5list = X5List::find($args['id'])) {
             throw new RecordNotFoundException();
         }
+
+        if (!$perm->have_studip_perm('dozent', $x5list->course->id)) {
+            throw new AuthorizationFailedException();
+        };  
 
         $itemIdsToAdd = $this->getItemsToAdd($request, $x5list);
 
@@ -34,11 +40,6 @@ class X5ListItemsAdd extends JsonApiController
                 $this->addListItem($args['id'], $itemIdsToAdd[$i]);
             }
         }
-
-        // TODO Authorization
-        // if (1 == 2) {
-        //     throw new AuthorizationFailedException();
-        // }
 
         // $result = $this->updateX5List($request, $x5list);
 
