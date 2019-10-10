@@ -11,6 +11,12 @@ class X5ItemUsers extends JsonApiController
 {
     public function __invoke(Request $request, Response $response, $args)
     {
+        global $perm;
+
+        if (!$perm->have_perm('student')) {
+            throw new AuthorizationFailedException();
+        };
+
         if (!$likes = X5UserItem::findBySQL('item_id = ? AND likes = 1', [$args['id']])) {
             $likes = [];
         }
@@ -31,12 +37,7 @@ class X5ItemUsers extends JsonApiController
             $iRead = true;
         } else {
             $iRead = false;
-        }        
-
-        // TODO Authorization
-        // if (1 == 2) {
-        //     throw new AuthorizationFailedException();
-        // }
+        }
 
         $meta = ['likes' => count($likes), 'liked' => $iLiked, 'read' => $iRead];
 
