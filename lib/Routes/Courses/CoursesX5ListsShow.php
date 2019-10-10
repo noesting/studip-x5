@@ -14,8 +14,7 @@ class CoursesX5ListsShow extends JsonApiController
     {
         global $perm;
 
-        //TODO: other role?
-        if (!$perm->have_studip_perm('student', $args['range_id'])) {
+        if (!$perm->have_studip_perm('dozent', $args['range_id'])) {
             throw new AuthorizationFailedException();
         };
 
