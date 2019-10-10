@@ -11,16 +11,17 @@ class X5ListItemsShow extends JsonApiController
 {
     public function __invoke(Request $request, Response $response, $args)
     {
+        global $perm;
+
         if (!$x5list = X5List::find($args['id'])) {
             throw new RecordNotFoundException();
         }
 
-        // $x5ListItems = X5ListItem::findManyByList_id($args['id']);
+        if (!$perm->have_studip_perm('dozent', $x5list->course->id)) {
+            throw new AuthorizationFailedException();
+        };
 
-        // // TODO Authorization
-        // // if (1 == 2) {
-        // //     throw new AuthorizationFailedException();
-        // // }
+        // $x5ListItems = X5ListItem::findManyByList_id($args['id']);
 
         // $response->data = ['type' => 'x5lists', 'id' => $x5list->id];
 
