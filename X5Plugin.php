@@ -132,8 +132,20 @@ JsonApiPlugin
             $navigation->addSubNavigation('dozent_view', new Navigation('Listen bearbeiten', $url));
         }
         $navigation->addSubNavigation('student_view', new Navigation('Studierendenansicht', PluginEngine::getURL($this, [], 'oer/student_view')));
+        $this->getX5gonTemplate();
 
         return array('oer' => $navigation);
+    }
+
+    public function getX5gonTemplate() 
+    {
+        $sidebar = Sidebar::get();
+
+        $template_factory = new Flexi_TemplateFactory(dirname(__FILE__) . "/templates");
+        $template = $template_factory->open('x5gon');
+
+        $image = new TemplateWidget('', $template);
+        $sidebar->addWidget($image);
     }
 
     /**
