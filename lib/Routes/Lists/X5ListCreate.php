@@ -11,17 +11,19 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use X5\Models\X5List;
 use X5\Schemas\X5List as X5ListSchema;
 
-class X5Listcreate extends JsonApiController
+class X5ListCreate extends JsonApiController
 {
     use ValidationTrait, TimestampTrait;
     public function __invoke(Request $request, Response $response, $args)
     {
-        // TODO Authorization
-        // if (1 == 2) {
-        //     throw new AuthorizationFailedException();
-        // }
+        global $perm;
 
         $x5list = $this->addX5List($request);
+
+        if (!$perm->have_studip_perm('dozent', $x5list->range_id)) {
+            throw new AuthorizationFailedException();
+        };     
+
 
         return $this->getCreatedResponse($x5list);
     }
