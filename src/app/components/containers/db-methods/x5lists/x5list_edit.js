@@ -4,7 +4,6 @@ export const alterCustomList = (customLists, currentCustomListIndex, dozentViewC
     const json = getJsonApiFormatForUpdate(customLists[currentCustomListIndex]);
     alterListInDatabase(json, dozentViewContainer).then(response => {
         if (response.ok) {
-            console.log('WOHOO update worked');
         }
     });
 };

@@ -157,7 +157,6 @@
             },
 
             editListClick() {
-                console.log('Editing List');
                 const eventBus = new Vue();
                 const listFromParent = this.customLists[this.currentCustomListIndex];
 
@@ -180,7 +179,6 @@
                 this.$modal.show(EditListAssitentModal, { eventBus: eventBus }, { height: 'auto', width: '50%' });
 
                 eventBus.$on('addList', newListData => {
-                    console.log('adding list', newListData);
                     this.$emit('addNewList', newListData);
                 });
             },

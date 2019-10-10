@@ -150,7 +150,7 @@ export const setStudentListsFromDB = (lists, recommendations, studentViewContain
         .then(response => {
             return handleGetListsResponse(response, lists, recommendations, studentViewContainer);
         })
-        .catch(err => console.log(err));  
+        .catch(err => console.error(err));  
 };
 
 export const enrichRecommendations = (dozentViewContainer, recommendations) => {

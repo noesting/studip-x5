@@ -53,13 +53,11 @@
                 this.$forceUpdate();
 
                 eventBus.$on('like', () => {
-                    console.log('i like!');
                     this.$emit('likeItem', this.item);
                 });
             },
 
             detailModalClose() {
-                console.log('closed modal', this.item);
                 this.$emit('editItem', this.item);
             },
 

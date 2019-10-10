@@ -5,7 +5,6 @@ export const addItemsToCustomList = (customLists, currentCustomListIndex, dozent
 
     alterListInDatabase(json, dozentViewContainer).then(response => {
         if (response.ok) {
-            console.log('yeah!!!');
         }
     });
 };

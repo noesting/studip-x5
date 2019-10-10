@@ -9,7 +9,7 @@
         props: ['icon_name', 'color', 'action'],
         methods: {
             performClick() {
-                console.log('clicked button');
+
             }
         },
         computed: {
