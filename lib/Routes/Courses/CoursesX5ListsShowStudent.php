@@ -14,7 +14,7 @@ class CoursesX5ListsShowStudent extends JsonApiController
     {
         global $perm;
 
-        if (!$perm->have_studip_perm('autor', Context::getId())) {
+        if (!$perm->have_studip_perm('autor', $args['id'])) {
             throw new AuthorizationFailedException();
         }; 
 
