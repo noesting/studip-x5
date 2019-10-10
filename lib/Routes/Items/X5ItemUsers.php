@@ -11,10 +11,6 @@ class X5ItemUsers extends JsonApiController
 {
     public function __invoke(Request $request, Response $response, $args)
     {
-        /* if (!$likes = X5UserItem::findManyByItem_id($args['id'])) {
-            $likes = [];
-        }  */
-
         if (!$likes = X5UserItem::findBySQL('item_id = ? AND likes = 1', [$args['id']])) {
             $likes = [];
         }
@@ -29,7 +25,6 @@ class X5ItemUsers extends JsonApiController
             $iLiked = false;
         }
         
-        // x5_user_items.read > got error without table "x5_user_items"
         $read = X5UserItem::findOneBySql('user_id = ? AND item_id = ? AND x5_user_items.read = 1', [$user, $args['id']]);
 
         if ($read) {
