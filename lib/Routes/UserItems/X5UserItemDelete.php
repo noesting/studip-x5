@@ -14,7 +14,7 @@ class X5UserItemDelete extends JsonApiController
     {
         global $perm;
 
-        if (!$perm->have_perm('student')) {
+        if (!$perm->have_perm('autor')) {
             throw new AuthorizationFailedException();
         };
 

@@ -17,7 +17,7 @@ class X5UserItemCreate extends JsonApiController
     {
         global $perm;
 
-        if (!$perm->have_perm('user')) {
+        if (!$perm->have_perm('autor')) {
             throw new AuthorizationFailedException();
         };
 
