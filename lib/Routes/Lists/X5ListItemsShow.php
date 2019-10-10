@@ -17,7 +17,7 @@ class X5ListItemsShow extends JsonApiController
             throw new RecordNotFoundException();
         }
 
-        if (!$perm->have_studip_perm('dozent', $x5list->course->id)) {
+        if (!$perm->have_studip_perm('autor', $x5list->course->id)) {
             throw new AuthorizationFailedException();
         };
 
