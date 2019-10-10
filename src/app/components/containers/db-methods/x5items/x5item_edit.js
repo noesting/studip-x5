@@ -23,6 +23,5 @@ const getJSONAPICommentObject = item => {
 
 const handleResponse = response => {
     if (response.ok) {
-        console.log('yippi');
     }
 };

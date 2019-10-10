@@ -58,7 +58,6 @@
             },
 
             applyFilter(filters) {
-                console.log('applying filters', filters);
                 this.$emit('applyFilters', filters);
             },
 

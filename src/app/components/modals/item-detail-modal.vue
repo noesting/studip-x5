@@ -56,7 +56,7 @@
         },
         methods: {
             pickDate() {
-                console.log('picking date');
+
             }
         }
     };
