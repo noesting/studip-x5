@@ -144,7 +144,8 @@ JsonApiPlugin
         $template_factory = new Flexi_TemplateFactory(dirname(__FILE__) . "/templates");
         $template = $template_factory->open('x5gon');
 
-        $image = new TemplateWidget('', $template);
+        $image = new TemplateWidget('Plugin-Informationen', $template);
+        
         $sidebar->addWidget($image);
     }
 
