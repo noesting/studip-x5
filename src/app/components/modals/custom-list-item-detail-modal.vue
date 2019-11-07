@@ -4,7 +4,7 @@
 
         <div class="content">
             <div class="title">{{ item.title }}</div>
-            <div class="subtitle">{{ item.publishingYear }} - {{ item.author }}</div>
+            <div class="subtitle">{{ getItemInfos }}</div>
             <div class="description">{{ item.description }}</div>
 
             <div class="link">
@@ -58,6 +58,14 @@
         computed: {
             itemLink() {
                 return getValidLink(this.item.url);
+            },
+            getItemInfos() {
+                let provider = this.item.provider ? this.item.provider + " | " : "";
+                let author = this.item.author ? this.item.author + " | " : "";
+                let year = this.item.publishingYear ? this.item.publishingYear + " | " : "";
+                let license = this.item.license ? this.item.license : "keine Lizenz definiert";
+
+                return provider + author + year + license;
             }
         },
         methods: {
