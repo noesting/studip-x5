@@ -7,8 +7,7 @@
         <div class="x5_list_item_title">{{ item.title }}</div>
         <div class="x5_list_item_subtitle">
             <StudipIcon :icon_name="'thumbs_up'" :color="iconColor" />
-            ({{ item.thumbsUps }}) - {{ item.language }}:
-            <a href="item.provider.domain" target="_blank">{{ item.provider.name }}</a>
+            ({{ item.thumbsUps }}) - {{ item.language }}: {{ item.provider.name ? item.provider.name : item.provider }}
         </div>
     </div>
 </template>
